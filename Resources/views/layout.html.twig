@@ -1,0 +1,19 @@
+{# Dywee\CMSBundle\Resources\View\index.html.twig #}
+
+{% extends "::layout.html.twig" %}
+
+{% block title %}
+     {{ parent() }}
+{% endblock %}
+
+{% block translationLinks %}
+     <a href="{{ path('dywee_cms_view', {data: page.id, _locale: 'fr'}) }}"><img src="{{ asset('bundles/dyweecore/images/flags/48/fr.png') }}" alt="Version francophone" width="28" /></a>
+     {#
+     <a href="{{ path('dywee_cms_view', {data: page.id, _locale: 'nl'}) }}">
+     <img src="{{ asset('bundles/dyweecore/images/flags/48/nl.png') }}" alt="Nederlandse Versie" width="28" />
+     </a>
+     <a href="{{ path('dywee_cms_view', {data: page.id, _locale: 'en'}) }}">
+     <img src="{{ asset('bundles/dyweecore/images/flags/48/en.png') }}" alt="English Version" width="28" />
+     </a>
+     #}
+{% endblock %}

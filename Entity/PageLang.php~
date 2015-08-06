@@ -1,0 +1,339 @@
+<?php
+
+namespace Dywee\CMSBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * PageLang
+ *
+ * @ORM\Table(name="pages_lang")
+ * @ORM\Entity(repositoryClass="Dywee\CMSBundle\Entity\PageLangRepository")
+ */
+class PageLang
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255)
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="content", type="text")
+     */
+    private $content;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="metaTitle", type="string", length=255)
+     */
+    private $metaTitle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="metaDescription", type="text")
+     */
+    private $metaDescription;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="metaKeywords", type="text")
+     */
+    private $metaKeywords;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="seoUrl", type="string", length=255)
+     */
+    private $seoUrl;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="menuName", type="string", length=255)
+     */
+    private $menuName;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="updateDate", type="datetime")
+     */
+    private $updateDate;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="state", type="smallint")
+     */
+    private $state;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Dywee\EshopBundle\Entity\Lang")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $lang;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Dywee\CMSBundle\Entity\Page", inversedBy="pageLangs")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $page;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return PageLang
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set content
+     *
+     * @param string $content
+     * @return PageLang
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * Get content
+     *
+     * @return string 
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * Set metaTitle
+     *
+     * @param string $metaTitle
+     * @return PageLang
+     */
+    public function setMetaTitle($metaTitle)
+    {
+        $this->metaTitle = $metaTitle;
+
+        return $this;
+    }
+
+    /**
+     * Get metaTitle
+     *
+     * @return string 
+     */
+    public function getMetaTitle()
+    {
+        return $this->metaTitle;
+    }
+
+    /**
+     * Set metaDescription
+     *
+     * @param string $metaDescription
+     * @return PageLang
+     */
+    public function setMetaDescription($metaDescription)
+    {
+        $this->metaDescription = $metaDescription;
+
+        return $this;
+    }
+
+    /**
+     * Get metaDescription
+     *
+     * @return string 
+     */
+    public function getMetaDescription()
+    {
+        return $this->metaDescription;
+    }
+
+    /**
+     * Set metaKeywords
+     *
+     * @param string $metaKeywords
+     * @return PageLang
+     */
+    public function setMetaKeywords($metaKeywords)
+    {
+        $this->metaKeywords = $metaKeywords;
+
+        return $this;
+    }
+
+    /**
+     * Get metaKeywords
+     *
+     * @return string 
+     */
+    public function getMetaKeywords()
+    {
+        return $this->metaKeywords;
+    }
+
+    /**
+     * Set seoUrl
+     *
+     * @param string $seoUrl
+     * @return PageLang
+     */
+    public function setSeoUrl($seoUrl)
+    {
+        $this->seoUrl = $seoUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get seoUrl
+     *
+     * @return string 
+     */
+    public function getSeoUrl()
+    {
+        return $this->seoUrl;
+    }
+
+    /**
+     * Set menuName
+     *
+     * @param string $menuName
+     * @return PageLang
+     */
+    public function setMenuName($menuName)
+    {
+        $this->menuName = $menuName;
+
+        return $this;
+    }
+
+    /**
+     * Get menuName
+     *
+     * @return string 
+     */
+    public function getMenuName()
+    {
+        return $this->menuName;
+    }
+
+    /**
+     * Set state
+     *
+     * @param string $state
+     * @return PageLang
+     */
+    public function setState($state)
+    {
+        $this->state = $state;
+
+        return $this;
+    }
+
+    /**
+     * Get state
+     *
+     * @return string 
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    /**
+     * Set lang
+     *
+     * @param \Dywee\EshopBundle\Entity\Lang $lang
+     * @return PageLang
+     */
+    public function setLang(\Dywee\EshopBundle\Entity\Lang $lang)
+    {
+        $this->lang = $lang;
+
+        return $this;
+    }
+
+    /**
+     * Get lang
+     *
+     * @return \Dywee\EshopBundle\Entity\Lang 
+     */
+    public function getLang()
+    {
+        return $this->lang;
+    }
+
+    /**
+     * Set page
+     *
+     * @param \Dywee\CMSBundle\Entity\Page $page
+     * @return PageLang
+     */
+    public function setPage(\Dywee\CMSBundle\Entity\Page $page)
+    {
+        $this->page = $page;
+
+        return $this;
+    }
+
+    /**
+     * Get page
+     *
+     * @return \Dywee\CMSBundle\Entity\Page 
+     */
+    public function getPage()
+    {
+        return $this->page;
+    }
+}

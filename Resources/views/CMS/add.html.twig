@@ -1,0 +1,13 @@
+{# Dywee\CMSBundle\Resources\View\CMS\edit.html.twig #}
+
+{%  extends "DyweeCMSBundle::admin.html.twig" %}
+
+{% block title %}
+    Ajout d'une page {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <h1>Ajout d'une page</h1>
+
+    {%  include "DyweeCMSBundle:CMS:form.html.twig" %}
+{% endblock %}

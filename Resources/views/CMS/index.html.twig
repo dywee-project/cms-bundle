@@ -1,0 +1,26 @@
+{# Dywee\CMSBundle\Resources\View\CMS\index.html.twig #}
+
+{%  extends "::layout.html.twig" %}
+
+{% block title %}
+    {{ page.name }} {{ parent() }}
+{% endblock %}
+
+{% block metaDescription %}
+    {{ page.metaDescription }}
+{% endblock %}
+
+{% block metaKeywords %}
+    {{ page.metaKeywords }}
+{% endblock %}
+
+{% block translate %}
+{% endblock %}
+
+{% block bodyContent %}
+    {{ page.content|raw }}
+
+    modules
+
+    {% if pageBottom is not null %}{{ pageBottom.content|raw }}{% endif %}
+{% endblock %}

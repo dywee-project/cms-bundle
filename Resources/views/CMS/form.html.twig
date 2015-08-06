@@ -1,0 +1,171 @@
+{# Dywee\CMSBundle\Resources\View\CMS\form.html.twig #}
+
+{% set langDropDown %}
+<div class="input-group-btn">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+        <img src="{{ asset('bundles/dyweecore/images/flags/48/fr.png') }}" width="18" />
+        <i class="fa fa-caret-down fa-caret-down-btn-correct"></i>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+        <li><a href="javascript:void(0)" onclick="showLang(1)">
+                <img src="{{ asset('bundles/dyweecore/images/flags/48/fr.png') }}" width="18" /> Français
+            </a>
+        </li>
+        <li><a href="javascript:void(0)" onclick="showLang(2)">
+                <img src="{{ asset('bundles/dyweecore/images/flags/48/en.png') }}" width="18" /> Anglais
+            </a>
+        </li>
+        <li><a href="javascript:void(0)" onclick="showLang(3)">
+                <img src="{{ asset('bundles/dyweecore/images/flags/48/nl.png') }}" width="18" /> Néerlandais
+            </a>
+        </li>
+    </ul>
+</div>
+{% endset %}
+
+{{ form_start(form, {"attr": {"class": "form-horizontal"}}) }}
+
+{{ form_errors(form) }}
+
+<div class="col-md-3 col-xs-5 pull-right">
+    <div class="row">
+        <div class="col-md-8 col-xs-6">
+            {{ form_widget(form.state) }}
+        </div>
+        <div class="col-md-3 col-xs-6">
+            {{ form_widget(form.sauvegarder, {"attr": {"class": "btn btn-success"}}) }}
+        </div>
+    </div>
+</div>
+
+<ul id="descriptions" class="nav nav-tabs">
+    <li class="active"><a href="#content" data-toggle="tab"><i class="fa fa-font"></i> Contenu</a></li>
+    <li><a href="#seo" data-toggle="tab"><i class="fa fa-bar-chart-o"></i> Référencement</a></li>
+    <li><a href="#settings" data-toggle="tab"><i class="fa fa-cog"></i> Paramètres</a></li>
+</ul>
+
+<div class="spacer"></div>
+
+<div class="tab-content">
+    <div class="tab-pane fade in active" id="content">
+        <div class="form-group">
+            {{ form_label(form.name, "Nom", {"label_attr": {"class": "control-label col-sm-2"}}) }}
+            {{ form_errors(form.name) }}
+            <div class="col-md-9">
+                {{ form_widget(form.name) }}
+            </div>
+        </div>
+
+        <div class="col-md-12">
+                {{ form_errors(form.content) }}
+                <div class="col-md-11 medium">
+                    {{ form_widget(form.content) }}
+                </div>
+        </div>
+    </div>
+    <div class="tab-pane fade in" id="seo">
+        <div class="form-group">
+            {{ form_label(form.metaTitle, "Meta Titre") }}
+            {{ form_errors(form.metaTitle) }}
+            <div class="col-sm-9">
+                    {{ form_widget(form.metaTitle) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.metaDescription, "Meta Description") }}
+            {{ form_errors(form.metaDescription) }}
+            <div class="col-sm-9">
+                    {{ form_widget(form.metaDescription) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.metaKeywords, "Meta Keywords") }}
+            {{ form_errors(form.metaKeywords) }}
+            <div class="col-sm-9">
+                    {{ form_widget(form.metaKeywords) }}
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.seoUrl, "Url") }}
+            {{ form_errors(form.seoUrl) }}
+            <div class="col-sm-9">
+                    {{ form_widget(form.seoUrl) }}
+            </div>
+        </div>
+
+    </div>
+    <div class="tab-pane fade in" id="settings">
+
+        <div class="form-group">
+            {{ form_label(form.type, "Type de page") }}
+            {{ form_errors(form.type) }}
+            <div class="col-md-9">
+                {{ form_widget(form.type) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <div class="checkbox">
+                    <label>
+                        {{ form_widget(form.inMenu, {label: "Affichée dans le menu"}) }}
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div id="menuSettings">
+
+            <div class="form-group">
+                {{ form_label(form.menuName, "Nom dans le menu") }}
+                {{ form_errors(form.menuName) }}
+                <div class="col-md-9">
+                    {{ form_widget(form.menuName) }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.menuOrder, "Ordre dans le menu") }}
+                {{ form_errors(form.menuOrder) }}
+                <div class="col-md-9">
+                    {{ form_widget(form.menuOrder) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.parent, "Page parente") }}
+            {{ form_errors(form.parent) }}
+            <div class="col-md-9">
+                {{ form_widget(form.parent) }}
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{{ form_rest(form) }}
+
+{{ form_end(form) }}
+
+<script>
+    $(document).ready(function()
+    {
+        function showLang(idLang){
+            console.log('changement langue');
+            $("[aria-translatable='true'][data-idLang != '"+idLang+"']").addClass("hide");
+            $("[data-idLang = '"+idLang+"']").removeClass('hide');
+        }
+
+        if(!$("#dywee_cmsbundle_page_inMenu").attr("checked"))
+            $("#menuSettings").attr('style', 'display: none');
+
+
+        $("#dywee_cmsbundle_page_inMenu").on('change', function()
+        {
+            $("#menuSettings").slideToggle('slow');
+        });
+
+    })
+
+</script>

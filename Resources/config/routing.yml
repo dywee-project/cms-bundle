@@ -1,0 +1,51 @@
+dywee_cms_homepage:
+    path:     /
+    defaults: { _controller: DyweeCMSBundle:Page:index }
+
+dywee_cms_list:
+    path:     /cms/list
+    defaults: { _controller: DyweeCMSBundle:Page:list }
+
+dywee_cms_table:
+    path:     /admin6833/cms/table
+    defaults: { _controller: DyweeCMSBundle:Page:table }
+
+dywee_cms_view:
+    path:     /page/{data}
+    defaults: { _controller: DyweeCMSBundle:Page:view }
+
+dywee_cms_view_content:
+    path:     /page/{data}/onlyContent
+    defaults: { _controller: DyweeCMSBundle:Page:viewContent }
+
+dywee_cms_add:
+    path:     /admin6833/cms/add
+    defaults: { _controller: DyweeCMSBundle:Page:add }
+
+dywee_cms_update:
+    path:     /admin6833/page/update/{id}
+    defaults: { _controller: DyweeCMSBundle:Page:update }
+    requirements:
+        id: \d+
+
+dywee_cms_details:
+    path:     /admin6833/page/{id}
+    defaults: { _controller: DyweeCMSBundle:Page:adminView }
+    requirements:
+        id: \d+
+
+dywee_cms_delete:
+    path:     /admin6833/page/delete/{id}
+    defaults: { _controller: DyweeCMSBundle:Page:delete }
+    requirements:
+        id: \d+
+
+dywee_cms_view_contact_page:
+    path:     /page/contact
+    defaults: { _controller: DyweeCMSBundle:Page:viewContact }
+
+dywee_cms_inMenu_switch:
+    path:     /admin6833/page/{id}/inMenuSwitch
+    defaults: { _controller: DyweeCMSBundle:Page:inMenuSwitch }
+    requirements:
+        id: \d+

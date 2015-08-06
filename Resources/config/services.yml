@@ -1,0 +1,4 @@
+services:
+#    dywee_cms.example:
+#        class: Dywee\CMSBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

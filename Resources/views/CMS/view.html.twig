@@ -1,0 +1,23 @@
+{# Dywee\CMSBundle\Resources\View\CMS\view.html.twig #}
+
+{% if page.template != '' %}
+    {% set pageTemplate = ':Core:' ~ page.template ~ '.html.twig' %}
+{% else %}
+    {% set pageTemplate = ':Core:default.html.twig' %}
+{% endif %}
+
+{% extends pageTemplate %}
+
+{% block title %}
+    {{ page.metaTitle }} {{ parent() }}
+{% endblock %}
+
+{% block metaDescription %}
+    {{ page.metaDescription }}
+{% endblock %}
+
+{% block metaKeywords %}
+    {{ page.metaKeywords }}
+{% endblock %}
+
+{#{% block bodyContent %}{{ page.content|raw }}{% endblock %}#}
