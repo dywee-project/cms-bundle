@@ -1,0 +1,24 @@
+{
+  "name": "dywee/cms-bundle",
+  "type": "symfony-bundle",
+  "description": "Symfony2 bundle, the Dywee CMS bundle",
+  "keywords": ["cms"],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Olivier Delbruyère",
+      "email": "olivier.delbruyere@hotmail.com",
+      "homepage": "http://dywee.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=5.3.0",
+    "symfony/framework-bundle": "2.*,<2.8"
+  },
+  "autoload": {
+    "psr-0": {
+      "Dywee\\CMSBundle": ""
+    }
+  }
+}
