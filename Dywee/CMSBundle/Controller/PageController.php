@@ -40,22 +40,15 @@ class PageController extends Controller
         }
     }
 
-    public function inMenuSwitchAction($id)
+    public function inMenuSwitchAction(Page $page)
     {
         $em = $this->getDoctrine()->getManager();
-        $ar = $em->getRepository('DyweeCMSBundle:Page');
 
-        $page = $ar->findOneById($id);
+        $page->setInMenu(!$page->getInMenu());
+        $em->persist($page);
+        $em->flush();
 
-        if($page)
-        {
-            $page->setInMenu(!$page->getInMenu());
-            $em->persist($page);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('dywee_cms_table'));
-        }
-        else throw $this->createNotFoundException('Page introuvable');
+        return $this->redirect($this->generateUrl('dywee_cms_table'));
     }
 
     public function renderHomeAction($page)
@@ -76,19 +69,13 @@ class PageController extends Controller
         return $this->render('DyweeCMSBundle:CMS:view.html.twig', $data);
     }
 
-    public function adminViewAction($id)
+    public function adminViewAction(Page $page)
     {
         $em = $this->getDoctrine()->getManager();
-        $pr = $em->getRepository('DyweeCMSBundle:Page');
-        $page = $pr->findById($id);
 
-        if($page)
-        {
-            $psr = $em->getRepository('DyweeCMSBundle:PageStat');
-            $pss = $psr->findLastStatsForPage($page);
-            return $this->render('DyweeCMSBundle:Admin:details.html.twig', array('page' => $page, 'stats' => $pss));
-        }
-        throw $this->createNotFoundException('Page introuvable');
+        $psr = $em->getRepository('DyweeCMSBundle:PageStat');
+        $pss = $psr->findLastStatsForPage($page);
+        return $this->render('DyweeCMSBundle:Admin:details.html.twig', array('page' => $page, 'stats' => $pss));
     }
 
     public function tableAction()
@@ -157,49 +144,32 @@ class PageController extends Controller
         return $this->render('DyweeCMSBundle:CMS:add.html.twig', array('form' => $form->createView()));
     }
 
-    public function updateAction($id, Request $request)
+    public function updateAction(Page $page, Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $pr = $em->getRepository('DyweeCMSBundle:Page');
+        $form = $this->get('form.factory')->create(new PageType(), $page);
 
-        $page = $pr->findOneById($id);
-
-        if($page != null)
+        if($form->handleRequest($request)->isValid())
         {
-            $form = $this->get('form.factory')->create(new PageType(), $page);
-
-            if($form->handleRequest($request)->isValid())
-            {
-                $page->setUpdatedBy($this->get('security.token_storage')->getToken()->getUser());
-                $em->persist($page);
-                $em->flush();
-
-                $request->getSession()->getFlashBag()->add('success', 'Page bien modifiée');
-
-                return $this->redirect($this->generateUrl('dywee_cms_table'));
-            }
-
-            return $this->render('DyweeCMSBundle:CMS:edit.html.twig', array('page' => $page, 'form' => $form->createView()));
-        }
-        throw $this->createNotFoundException('La page à éditer est introuvable');
-    }
-
-    public function deleteAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $pr = $em->getRepository('DyweeCMSBundle:Page');
-
-        $page = $pr->findOneById($id);
-
-        if($page !== null)
-        {
-            $em->remove($page);
+            $page->setUpdatedBy($this->get('security.token_storage')->getToken()->getUser());
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($page);
             $em->flush();
 
-            $this->get('session')->getFlashBag()->add('success', 'Page bien supprimée');
+            $request->getSession()->getFlashBag()->add('success', 'Page bien modifiée');
 
             return $this->redirect($this->generateUrl('dywee_cms_table'));
         }
-        throw $this->createNotFoundException('Cette page n\'existe plus');
+        return $this->render('DyweeCMSBundle:CMS:edit.html.twig', array('page' => $page, 'form' => $form->createView()));
+    }
+
+    public function deleteAction(Page $page)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($page);
+        $em->flush();
+
+        $this->get('session')->getFlashBag()->add('success', 'Page bien supprimée');
+
+        return $this->redirect($this->generateUrl('dywee_cms_table'));
     }
 }
