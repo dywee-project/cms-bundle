@@ -65,31 +65,31 @@
     </div>
     <div class="tab-pane fade in" id="seo">
         <div class="form-group">
-            {{ form_label(form.metaTitle, "Meta Titre") }}
-            {{ form_errors(form.metaTitle) }}
+            {{ form_label(form.seo.metaTitle, "Meta Titre") }}
+            {{ form_errors(form.seo.metaTitle) }}
             <div class="col-sm-9">
-                    {{ form_widget(form.metaTitle) }}
+                    {{ form_widget(form.seo.metaTitle) }}
             </div>
         </div>
         <div class="form-group">
-            {{ form_label(form.metaDescription, "Meta Description") }}
-            {{ form_errors(form.metaDescription) }}
+            {{ form_label(form.seo.metaDescription, "Meta Description") }}
+            {{ form_errors(form.seo.metaDescription) }}
             <div class="col-sm-9">
-                    {{ form_widget(form.metaDescription) }}
+                    {{ form_widget(form.seo.metaDescription) }}
             </div>
         </div>
         <div class="form-group">
-            {{ form_label(form.metaKeywords, "Meta Keywords") }}
-            {{ form_errors(form.metaKeywords) }}
+            {{ form_label(form.seo.metaKeywords, "Meta Keywords") }}
+            {{ form_errors(form.seo.metaKeywords) }}
             <div class="col-sm-9">
-                    {{ form_widget(form.metaKeywords) }}
+                    {{ form_widget(form.seo.metaKeywords) }}
             </div>
         </div>
         <div class="form-group">
-            {{ form_label(form.seoUrl, "Url") }}
-            {{ form_errors(form.seoUrl) }}
+            {{ form_label(form.seo.seoUrl, "Url") }}
+            {{ form_errors(form.seo.seoUrl) }}
             <div class="col-sm-9">
-                    {{ form_widget(form.seoUrl) }}
+                    {{ form_widget(form.seo.seoUrl) }}
             </div>
         </div>
 

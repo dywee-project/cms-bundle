@@ -2,6 +2,7 @@
 
 namespace Dywee\CMSBundle\Form;
 
+use Dywee\CoreBundle\Form\Type\SeoType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,9 +17,21 @@ class PageType extends AbstractType
     {
         $builder
             ->add('name',               'text')
-            ->add('type',               'choice', array('choices' => array(1 => 'Index', 2 => 'Page', 3 => 'Contact', 4 => 'News', 5 => 'Calendrier', 6 => 'Magasin', 7 => 'Blog', 9 => 'FAQ')))
+            ->add('type',               'choice', array(
+                'choices' => array(
+                    1 => 'Index',
+                    2 => 'Page',
+                    3 => 'Contact',
+                    4 => 'News',
+                    5 => 'Calendrier',
+                    6 => 'Magasin',
+                    7 => 'Blog',
+                    8 => 'Formulaire',
+                    9 => 'FAQ'
+                )
+            ))
             ->add('content',            'ckeditor')
-            ->add('foo',                new SeoType(),      array(
+            ->add('seo',                new SeoType(),      array(
                 'data_class' => 'Dywee\CMSBundle\Entity\Page'
             ))
             ->add('menuName',           'text',     array('required' => false))
