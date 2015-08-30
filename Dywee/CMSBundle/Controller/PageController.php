@@ -35,7 +35,7 @@ class PageController extends Controller
             case 5: return $this->render('DyweeCMSBundle:CMS:view.html.twig', array('page' => $page));
             case 6: return $this->forward('DyweeEshopBundle:Eshop:pageHandler', array('page' => $page));
             case 7: return $this->render('DyweeBlogBundle:Blog:page.html.twig', array('page' => $page));
-            case 8: return $this->render('DyweeModuleBundle:CustomForm:page.html.twig', array('page' => $page));
+            case 8: return $this->forward('DyweeModuleBundle:Form:page', array('page' => $page));
             case 9: return $this->forward('DyweeFaqBundle:Faq:page', array('page' => $page));
             default: return $this->render('DyweeCMSBundle:CMS:page.html.twig', array('page' => $page));
         }
