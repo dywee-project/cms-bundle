@@ -42,6 +42,7 @@ class PageType extends AbstractType
                 'property'  => 'menuName',
                 'required'  => false
             ))
+            ->add('childArguments', 'text', array('required' => false))
             ->add('state',              'choice',       array('choices' => array(0 => 'Brouillon', 1 => 'Publiée')))
             ->add('sauvegarder',        'submit')
         ;

@@ -105,6 +105,14 @@
         </div>
 
         <div class="form-group">
+            {{ form_label(form.childArguments, "Arguments") }}
+            {{ form_errors(form.childArguments) }}
+            <div class="col-md-9">
+                {{ form_widget(form.childArguments) }}
+            </div>
+        </div>
+
+        <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <div class="checkbox">
                     <label>

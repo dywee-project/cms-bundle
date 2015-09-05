@@ -27,13 +27,6 @@ class Page
     /**
      * @var integer
      *
-     * @ORM\Column(name="idSite", type="smallint")
-     */
-    private $idSite;
-
-    /**
-     * @var integer
-     *
      * @ORM\Column(name="type", type="smallint")
      */
     private $type = 2;
@@ -170,7 +163,12 @@ class Page
     /**
      * @ORM\OneToMany(targetEntity="Dywee\CMSBundle\Entity\PageStat", mappedBy="page")
      */
-    private $productStat;
+    private $pageStat;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Dywee\WebsiteBundle\Entity\Website", inversedBy="pages")
+     */
+    private $website;
 
 
     /**
@@ -328,29 +326,6 @@ class Page
         $this->creationDate = new \DateTime();
         $this->updateDate = new \DateTime();
         $this->createdAt = new \DateTime();
-    }
-
-    /**
-     * Set idSite
-     *
-     * @param integer $idSite
-     * @return Page
-     */
-    public function setIdSite($idSite)
-    {
-        $this->idSite = $idSite;
-
-        return $this;
-    }
-
-    /**
-     * Get idSite
-     *
-     * @return integer 
-     */
-    public function getIdSite()
-    {
-        return $this->idSite;
     }
 
     /**
@@ -713,5 +688,38 @@ class Page
     public function getUpdatedBy()
     {
         return $this->updatedBy;
+    }
+
+    /**
+     * Add pageStat
+     *
+     * @param \Dywee\CMSBundle\Entity\PageStat $pageStat
+     * @return Page
+     */
+    public function addPageStat(\Dywee\CMSBundle\Entity\PageStat $pageStat)
+    {
+        $this->pageStat[] = $pageStat;
+
+        return $this;
+    }
+
+    /**
+     * Remove pageStat
+     *
+     * @param \Dywee\CMSBundle\Entity\PageStat $pageStat
+     */
+    public function removePageStat(\Dywee\CMSBundle\Entity\PageStat $pageStat)
+    {
+        $this->pageStat->removeElement($pageStat);
+    }
+
+    /**
+     * Get pageStat
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPageStat()
+    {
+        return $this->pageStat;
     }
 }

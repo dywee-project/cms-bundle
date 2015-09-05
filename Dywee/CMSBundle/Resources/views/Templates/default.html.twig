@@ -1,0 +1,15 @@
+{# app\Resources\View\Admin\page.html.twig #}
+
+{% extends '::layout.html.twig' %}
+
+{% block body %}
+
+    {% block title %}<h1>{{ page.name }}</h1>{% endblock %}
+
+    <div class="container">
+        {% block bodySubContent %}
+            {{ page.content|raw }}
+        {% endblock %}
+    </div>
+
+{% endblock %}

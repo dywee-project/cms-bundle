@@ -13,12 +13,12 @@ use Symfony\Component\Config\Definition\Exception\Exception;
  */
 class PageRepository extends EntityRepository
 {
-    public function findHomePage()
+    public function findHomePage($websiteId)
     {
         $queryBuilder = $this->createQueryBuilder('p')
             ->select('p')
-            ->where('p.idSite = :idSite and p.type = 1')
-            ->setParameters(array('idSite' => 1))
+            ->where('p.website = :website and p.type = 1')
+            ->setParameters(array('website' => $websiteId))
             ;
 
         $query = $queryBuilder->getQuery();

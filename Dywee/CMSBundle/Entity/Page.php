@@ -12,6 +12,7 @@ use Gedmo\Translatable\Translatable;
  * @ORM\Table(name="pages")
  * @ORM\Entity(repositoryClass="Dywee\CMSBundle\Entity\PageRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @Gedmo\Tree(type="nested")
  */
 class Page
 {
@@ -23,13 +24,6 @@ class Page
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="idSite", type="smallint")
-     */
-    private $idSite;
 
     /**
      * @var integer
@@ -143,16 +137,6 @@ class Page
     private $updateDate;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Dywee\CMSBundle\Entity\Page", inversedBy="childs")
-     */
-    private $parent;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Dywee\CMSBundle\Entity\Page", mappedBy="parent")
-     */
-    private $childs;
-
-    /**
      * @ORM\Column(name="childArguments", type="string", length=255, nullable=true)
      */
     private $childArguments;
@@ -171,6 +155,48 @@ class Page
      * @ORM\OneToMany(targetEntity="Dywee\CMSBundle\Entity\PageStat", mappedBy="page")
      */
     private $pageStat;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Dywee\WebsiteBundle\Entity\Website", inversedBy="pages")
+     */
+    private $website;
+
+    /**
+     * @Gedmo\TreeLeft
+     * @ORM\Column(name="lft", type="integer")
+     */
+    private $lft;
+
+    /**
+     * @Gedmo\TreeLevel
+     * @ORM\Column(name="lvl", type="integer")
+     */
+    private $lvl;
+
+    /**
+     * @Gedmo\TreeRight
+     * @ORM\Column(name="rgt", type="integer")
+     */
+    private $rgt;
+
+    /**
+     * @Gedmo\TreeRoot
+     * @ORM\Column(name="root", type="integer", nullable=true)
+     */
+    private $root;
+
+    /**
+     * @Gedmo\TreeParent
+     * @ORM\ManyToOne(targetEntity="Dywee\CMSBundle\Entity\Page", inversedBy="children")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    private $parent;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Dywee\CMSBundle\Entity\Page", mappedBy="parent")
+     * @ORM\OrderBy({"lft" = "ASC"})
+     */
+    private $children;
 
 
     /**
@@ -328,29 +354,6 @@ class Page
         $this->creationDate = new \DateTime();
         $this->updateDate = new \DateTime();
         $this->createdAt = new \DateTime();
-    }
-
-    /**
-     * Set idSite
-     *
-     * @param integer $idSite
-     * @return Page
-     */
-    public function setIdSite($idSite)
-    {
-        $this->idSite = $idSite;
-
-        return $this;
-    }
-
-    /**
-     * Get idSite
-     *
-     * @return integer 
-     */
-    public function getIdSite()
-    {
-        return $this->idSite;
     }
 
     /**
@@ -593,10 +596,10 @@ class Page
      * @param \Dywee\CMSBundle\Entity\Page $childs
      * @return Page
      */
-    public function addChild(\Dywee\CMSBundle\Entity\Page $childs)
+    public function addChild(\Dywee\CMSBundle\Entity\Page $child)
     {
-        $this->childs[] = $childs;
-        $childs->setParent($this);
+        $this->children[] = $child;
+        $child->setParent($this);
 
         return $this;
     }
@@ -606,9 +609,9 @@ class Page
      *
      * @param \Dywee\CMSBundle\Entity\Page $childs
      */
-    public function removeChild(\Dywee\CMSBundle\Entity\Page $childs)
+    public function removeChild(\Dywee\CMSBundle\Entity\Page $child)
     {
-        $this->childs->removeElement($childs);
+        $this->childs->removeElement($child);
     }
 
     /**
@@ -616,9 +619,9 @@ class Page
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getChilds()
+    public function getChildren()
     {
-        return $this->childs;
+        return $this->children;
     }
 
     /**
@@ -746,5 +749,28 @@ class Page
     public function getPageStat()
     {
         return $this->pageStat;
+    }
+
+    /**
+     * Set website
+     *
+     * @param \Dywee\WebsiteBundle\Entity\Website $website
+     * @return Page
+     */
+    public function setWebsite(\Dywee\WebsiteBundle\Entity\Website $website = null)
+    {
+        $this->website = $website;
+
+        return $this;
+    }
+
+    /**
+     * Get website
+     *
+     * @return \Dywee\WebsiteBundle\Entity\Website 
+     */
+    public function getWebsite()
+    {
+        return $this->website;
     }
 }

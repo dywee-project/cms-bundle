@@ -1,0 +1,11 @@
+{# app\Resources\View\Admin\index.html.twig #}
+
+{% extends '::homepage.html.twig' %}
+
+{% block body %}
+
+    {{ page.content|raw }}
+
+    {% render(controller('DyweeBlogBundle:Blog:list', {limit: 4})) %}
+
+{% endblock %}

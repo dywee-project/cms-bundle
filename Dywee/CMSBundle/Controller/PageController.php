@@ -15,7 +15,7 @@ class PageController extends Controller
     public function indexAction()
     {
         $pr = $this->getDoctrine()->getManager()->getRepository('DyweeCMSBundle:Page');
-        $page = $pr->findHomePage();
+        $page = $pr->findHomePage($this->container->getParameter('website.id'));
 
         if($page == -1)
             return $this->redirect($this->generateUrl('dywee_install'));
@@ -37,7 +37,7 @@ class PageController extends Controller
             case 7: return $this->render('DyweeBlogBundle:Blog:page.html.twig', array('page' => $page));
             case 8: return $this->forward('DyweeModuleBundle:Form:page', array('page' => $page));
             case 9: return $this->forward('DyweeFaqBundle:Faq:page', array('page' => $page));
-            default: return $this->render('DyweeCMSBundle:CMS:page.html.twig', array('page' => $page));
+            default: return $this->render('DyweeCMSBundle:CMS:view.html.twig', array('page' => $page));
         }
     }
 
@@ -82,7 +82,7 @@ class PageController extends Controller
     public function tableAction()
     {
         $pr = $this->getDoctrine()->getManager()->getRepository('DyweeCMSBundle:Page');
-        $ps = $pr->findAll();
+        $ps = $pr->findByLvl(0);
         return $this->render('DyweeCMSBundle:CMS:table.html.twig', array('pageList' => $ps));
     }
 
@@ -128,13 +128,13 @@ class PageController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $page = new Page();
-        $page->setIdSite(1);
 
         $form = $this->get('form.factory')->create(new PageType(), $page);
 
         if($form->handleRequest($request)->isValid())
         {
             $page->setUpdatedBy($this->get('security.token_storage')->getToken()->getUser());
+            $page->setWebsite($this->get('session')->get('activeWebsite'));
             $em->persist($page);
             $em->flush();
 
