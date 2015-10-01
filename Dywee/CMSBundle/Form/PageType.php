@@ -27,7 +27,8 @@ class PageType extends AbstractType
                     6 => 'Magasin',
                     7 => 'Blog',
                     8 => 'Formulaire',
-                    9 => 'FAQ'
+                    9 => 'FAQ',
+                    10 => 'Musique'
                 )
             ))
             ->add('content',            'ckeditor')
