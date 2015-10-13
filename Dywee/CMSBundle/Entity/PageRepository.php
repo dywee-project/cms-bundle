@@ -89,4 +89,13 @@ class PageRepository extends EntityRepository
 
         return $result[0];
     }
+
+    public function countPage($state = null)
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->select('count(p)')
+            ;
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
 }

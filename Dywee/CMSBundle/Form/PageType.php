@@ -3,6 +3,7 @@
 namespace Dywee\CMSBundle\Form;
 
 use Dywee\CoreBundle\Form\Type\SeoType;
+use Dywee\CMSBundle\Form\PageElementType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -28,7 +29,7 @@ class PageType extends AbstractType
                     7 => 'Blog',
                     8 => 'Formulaire',
                     9 => 'FAQ',
-                    10 => 'Musique'
+                    12 => 'Musique'
                 )
             ))
             ->add('content',            'ckeditor')

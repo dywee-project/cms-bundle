@@ -57,12 +57,29 @@
             </div>
         </div>
 
-        <div class="col-md-12">
+        <div class="form-group">
                 {{ form_errors(form.content) }}
-                <div class="col-md-11 medium">
+                <div class="col-md-11">
                     {{ form_widget(form.content) }}
                 </div>
         </div>
+        {% if page is defined and page.type == 12 %}
+            <div class="col-md-11">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="panel-title">Galerie musicale associée</span>
+                    </div>
+                    <div class="panel-body">
+                        {% if page.childArguments is not null %}
+                            {% render(controller('DyweeModuleBundle:MusicGallery:show', {id: page.childArguments})) %}
+                            <a href="{{ path('dywee_musicGallery_update', {id: page.childArguments}) }}" class="btn btn-default btn-lg">Gérer la galerie musicale associée</a>
+                        {% else %}
+                            <a href="#settings" data-toggle="tab"><i class="fa fa-cog"></i> Renseigner une galerie musicale associée (champs "paramètres")</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
     </div>
     <div class="tab-pane fade in" id="seo">
         <div class="form-group">
@@ -188,6 +205,8 @@
 
 {{ form_end(form) }}
 
+
+
 <script>
     $(document).ready(function()
     {
@@ -209,3 +228,71 @@
     })
 
 </script>
+
+{% block footerJavascript %}
+    {# Voici le script en question : #}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
+            var $container = $('div#dywee_cmsbundle_page_pageElements');
+
+            // On ajoute un lien pour ajouter une nouvelle catégorie
+            var $addLink = $('<a href="#" id="add_category" class="btn btn-default">Ajouter une catégorie</a>');
+            $container.append($addLink);
+
+            // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
+            $addLink.click(function(e) {
+                addCategory($container);
+                e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+                return false;
+            });
+
+            // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
+            var index = $container.find(':input').length;
+
+            // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
+            if (index == 0) {
+                addCategory($container);
+            } else {
+                // Pour chaque catégorie déjà existante, on ajoute un lien de suppression
+                $container.children('div').each(function() {
+                    addDeleteLink($(this));
+                });
+            }
+
+            // La fonction qui ajoute un formulaire Categorie
+            function addCategory($container) {
+                // Dans le contenu de l'attribut « data-prototype », on remplace :
+                // - le texte "__name__label__" qu'il contient par le label du champ
+                // - le texte "__name__" qu'il contient par le numéro du champ
+                var $prototype = $($container.attr('data-prototype').replace(/__name__label__/g, 'Catégorie n°' + (index+1))
+                        .replace(/__name__/g, index));
+
+                // On ajoute au prototype un lien pour pouvoir supprimer la catégorie
+                addDeleteLink($prototype);
+
+                // On ajoute le prototype modifié à la fin de la balise <div>
+                $container.append($prototype);
+
+                // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
+                index++;
+            }
+
+            // La fonction qui ajoute un lien de suppression d'une catégorie
+            function addDeleteLink($prototype) {
+                // Création du lien
+                $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');
+
+                // Ajout du lien
+                $prototype.append($deleteLink);
+
+                // Ajout du listener sur le clic du lien
+                $deleteLink.click(function(e) {
+                    $prototype.remove();
+                    e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+                    return false;
+                });
+            }
+        });
+    </script>
+{% endblock %}

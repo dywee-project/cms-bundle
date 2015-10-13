@@ -3,7 +3,9 @@
 namespace Dywee\CMSBundle\Controller;
 
 use Dywee\CMSBundle\Entity\Page;
+use Dywee\CMSBundle\Entity\PageElement;
 use Dywee\CMSBundle\Entity\PageStat;
+use Dywee\CMSBundle\Entity\PageTextElement;
 use Dywee\CMSBundle\Form\PageType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
@@ -37,6 +39,9 @@ class PageController extends Controller
             case 7: return $this->render('DyweeBlogBundle:Blog:page.html.twig', array('page' => $page));
             case 8: return $this->forward('DyweeModuleBundle:Form:page', array('page' => $page));
             case 9: return $this->forward('DyweeFaqBundle:Faq:page', array('page' => $page));
+            case 10: return $this->forward('DyweeFaqBundle:PictureGallery:page', array('page' => $page));
+            case 11: return $this->forward('DyweeFaqBundle:VideoGallery:page', array('page' => $page));
+            case 12: return $this->forward('DyweeModuleBundle:MusicGallery:page', array('page' => $page));
             default: return $this->render('DyweeCMSBundle:CMS:view.html.twig', array('page' => $page));
         }
     }
@@ -134,7 +139,11 @@ class PageController extends Controller
         if($form->handleRequest($request)->isValid())
         {
             $page->setUpdatedBy($this->get('security.token_storage')->getToken()->getUser());
-            $page->setWebsite($this->get('session')->get('activeWebsite'));
+
+            $wr = $em->getRepository('DyweeWebsiteBundle:Website');
+            $website = $wr->findOneById(1);
+            $page->setWebsite($website);
+
             $em->persist($page);
             $em->flush();
 

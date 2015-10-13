@@ -152,7 +152,7 @@ class Page
     private $updatedBy;
 
     /**
-     * @ORM\OneToMany(targetEntity="Dywee\CMSBundle\Entity\PageStat", mappedBy="page")
+     * @ORM\OneToMany(targetEntity="Dywee\CMSBundle\Entity\PageStat", mappedBy="page", cascade={"persist", "remove"})
      */
     private $pageStat;
 
@@ -197,6 +197,11 @@ class Page
      * @ORM\OrderBy({"lft" = "ASC"})
      */
     private $children;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Dywee\CMSBundle\Entity\PageElement", mappedBy="page", cascade={"persist", "remove"})
+     */
+    private $pageElements;
 
 
     /**
@@ -772,5 +777,131 @@ class Page
     public function getWebsite()
     {
         return $this->website;
+    }
+
+    /**
+     * Set lft
+     *
+     * @param integer $lft
+     * @return Page
+     */
+    public function setLft($lft)
+    {
+        $this->lft = $lft;
+
+        return $this;
+    }
+
+    /**
+     * Get lft
+     *
+     * @return integer 
+     */
+    public function getLft()
+    {
+        return $this->lft;
+    }
+
+    /**
+     * Set lvl
+     *
+     * @param integer $lvl
+     * @return Page
+     */
+    public function setLvl($lvl)
+    {
+        $this->lvl = $lvl;
+
+        return $this;
+    }
+
+    /**
+     * Get lvl
+     *
+     * @return integer 
+     */
+    public function getLvl()
+    {
+        return $this->lvl;
+    }
+
+    /**
+     * Set rgt
+     *
+     * @param integer $rgt
+     * @return Page
+     */
+    public function setRgt($rgt)
+    {
+        $this->rgt = $rgt;
+
+        return $this;
+    }
+
+    /**
+     * Get rgt
+     *
+     * @return integer 
+     */
+    public function getRgt()
+    {
+        return $this->rgt;
+    }
+
+    /**
+     * Set root
+     *
+     * @param integer $root
+     * @return Page
+     */
+    public function setRoot($root)
+    {
+        $this->root = $root;
+
+        return $this;
+    }
+
+    /**
+     * Get root
+     *
+     * @return integer 
+     */
+    public function getRoot()
+    {
+        return $this->root;
+    }
+
+    /**
+     * Add pageElement
+     *
+     * @param \Dywee\CMSBundle\Entity\PageElement $pageElement
+     * @return Page
+     */
+    public function addPageElement(\Dywee\CMSBundle\Entity\PageElement $pageElement)
+    {
+        $this->pageElements[] = $pageElement;
+        $pageElement->setPage($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove pageElement
+     *
+     * @param \Dywee\CMSBundle\Entity\PageElement $pageElement
+     */
+    public function removePageElement(\Dywee\CMSBundle\Entity\PageElement $pageElement)
+    {
+        $this->pageElements->removeElement($pageElement);
+    }
+
+    /**
+     * Get pageElements
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPageElements()
+    {
+        return $this->pageElements;
     }
 }

@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class MenuController extends Controller
 {
-    public function navbarAction()
+    public function navbarAction($position = 'top')
     {
         $pr = $this->getDoctrine()->getManager()->getRepository('DyweeCMSBundle:Page');
         /*$pageList = $pr->findBy(
@@ -18,7 +18,11 @@ class MenuController extends Controller
 
         $pageList = $pr->getMenu();
 
-        return $this->render('DyweeCMSBundle:CMS:menu.html.twig', array('pageList' => $pageList)
-        );
+        if($position == 'top')
+            return $this->render('DyweeCMSBundle:CMS:menu.html.twig', array('pageList' => $pageList)
+            );
+        else if($position == 'footer')
+            return $this->render('DyweeCMSBundle:Nav:footer.html.twig', array('pageList' => $pageList)
+            );
     }
 }

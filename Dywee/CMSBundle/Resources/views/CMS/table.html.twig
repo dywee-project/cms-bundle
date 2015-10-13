@@ -32,7 +32,7 @@
         <tbody>
         {%  for page in pageList %}
             <tr>
-                <td><small>{{ page.id }}</small></td>
+                <td><small>{{ loop.index }}</small></td>
                 <td>{% if page.parent is not null %}
                             {{ page.parent.name }} <span class="separator"> > </span>
                         {% endif %}
