@@ -404,7 +404,17 @@ class Page
      */
     public function getContent()
     {
-        return $this->content;
+        if($this->content != null)
+            return $this->content;
+
+        $content = '';
+
+        foreach($this->getPageElements() as $pageElement)
+        {
+            $content .= $pageElement->getHtml();
+        }
+
+        return $content;
     }
 
     /**
@@ -903,5 +913,28 @@ class Page
     public function getPageElements()
     {
         return $this->pageElements;
+    }
+
+    public function cheatingTrick()
+    {
+        return null;
+    }
+
+    public function hasForm()
+    {
+        foreach($this->getPageElements() as $pageElement)
+            if($pageElement->getType() == 'form')
+                return true;
+
+        return false;
+    }
+
+    public function getForms()
+    {
+        $return = array();
+        foreach($this->getPageElements() as $pageElement)
+            if($pageElement->getType() == 'form')
+                $return[] = $pageElement->getContent();
+        return $return;
     }
 }

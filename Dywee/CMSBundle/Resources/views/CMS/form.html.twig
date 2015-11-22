@@ -1,31 +1,13 @@
 {# Dywee\CMSBundle\Resources\View\CMS\form.html.twig #}
 
-{% set langDropDown %}
-<div class="input-group-btn">
-    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-        <img src="{{ asset('bundles/dyweecore/images/flags/48/fr.png') }}" width="18" />
-        <i class="fa fa-caret-down fa-caret-down-btn-correct"></i>
-    </button>
-    <ul class="dropdown-menu" role="menu">
-        <li><a href="javascript:void(0)" onclick="showLang(1)">
-                <img src="{{ asset('bundles/dyweecore/images/flags/48/fr.png') }}" width="18" /> Français
-            </a>
-        </li>
-        <li><a href="javascript:void(0)" onclick="showLang(2)">
-                <img src="{{ asset('bundles/dyweecore/images/flags/48/en.png') }}" width="18" /> Anglais
-            </a>
-        </li>
-        <li><a href="javascript:void(0)" onclick="showLang(3)">
-                <img src="{{ asset('bundles/dyweecore/images/flags/48/nl.png') }}" width="18" /> Néerlandais
-            </a>
-        </li>
-    </ul>
-</div>
-{% endset %}
+{% form_theme form 'DyweeCMSBundle:Form:collection_widget.html.twig' %}
 
 {{ form_start(form, {"attr": {"class": "form-horizontal"}}) }}
 
 {{ form_errors(form) }}
+<div class="hide">
+    {{ form_widget(form.cheatingTrick) }}
+</div>
 
 <div class="col-md-3 col-xs-5 pull-right">
     <div class="row">
@@ -58,10 +40,12 @@
         </div>
 
         <div class="form-group">
-                {{ form_errors(form.content) }}
-                <div class="col-md-11">
-                    {{ form_widget(form.content) }}
-                </div>
+            {{ form_errors(form.pageElements) }}
+
+            <div id="page_elements_container">
+                {{ form_widget(form.pageElements) }}
+            </div>
+
         </div>
         {% if page is defined and page.type == 12 %}
             <div class="col-md-11">
@@ -122,7 +106,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group hide">
             {{ form_label(form.childArguments, "Arguments") }}
             {{ form_errors(form.childArguments) }}
             <div class="col-md-9">
@@ -170,34 +154,42 @@
     </div>
 
     <div class="tab-pane fade in" id="help">
-        <h2>Aide sur les pages</h2>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">Aide sur les pages</h2>
+            </div>
+            <div class="panel-body">
+                <p>Avec Dywee, vous pouvez personnaliser vos pages selon plusieurs critères.</p>
+                <p>Dans l'onglet "paramètres" vous pourrez choisir le type de votre page:</p>
+                <h3>Index</h3>
+                <p>Ce type de page est réservé à la page d'accueil. Il n'y en a qu'une seule et unique par page.</p>
+                <h3>Page</h3>
+                <p>Ce type de page est le plus générique. C'est en fait une page normale, sans particularités spécifiques</p>
+                <h3>Contact</h3>
+                <p>Ce type de page est lui-aussi unique. Le fait de renseigné une page comme étant la page "contact" va générer automatiquement un formulaire de contact.</p>
+                <h3>News</h3>
+                <p>La page de news va faire apparaitre automatiquement les dernières news. Le nombre de news visible sur cette page est paramétrable via le champ "argument" situé juste en dessous du type de page</p>
+                <h3>Calendrier</h3>
+                <p>La page de type calendrier va faire apparaitre les évènements à venir</p>
+                <h3>Magasin</h3>
+                <p>Dans le cadre de site d'e-commerce, la page "magasin" fait office de page d'accueil pour vos produits</p>
+                <h4>Blog</h4>
+                <p>C'est typiquement la page d'entrée pour vos articles de blog</p>
+                <h4>Formulaire</h4>
+                <p>Cette page affichera le formulaire défini dans le champ "argument"</p>
+                <h4>FAQ</h4>
+                <p>Cette page spécifique servira de point d'entrée pour afficher toutes les questions/réponses définies dans le module FAQ</p>
+                <h4>Gallerie photo</h4>
+                <p>Cette page servira à afficher l'album photo paramétré dans le champ "argument"</p>
+                <h4>Gallerie vidéo</h4>
+                <p>Cette page servira à afficher la gallerie vidéo paramétrée dans le champ "argument"</p>
+                <h4>Gallerie musique</h4>
+                <p>Cette page servira à afficher la gallerie musicale définie dans le champs "argument"</p>
+            </div>
+        </div>
 
-        <p>Avec Dywee, vous pouvez personnaliser vos pages selon plusieurs critères.</p>
-        <p>Dans l'onglet "paramètres" vous pourrez choisir le type de votre page:</p>
-        <h3>Index</h3>
-        <p>Ce type de page est réservé à la page d'accueil. Il n'y en a qu'une seule et unique par page.</p>
-        <h3>Page</h3>
-        <p>Ce type de page est le plus générique. C'est en fait une page normale, sans particularités spécifiques</p>
-        <h3>Contact</h3>
-        <p>Ce type de page est lui-aussi unique. Le fait de renseigné une page comme étant la page "contact" va générer automatiquement un formulaire de contact.</p>
-        <h3>News</h3>
-        <p>La page de news va faire apparaitre automatiquement les dernières news. Le nombre de news visible sur cette page est paramétrable via le champ "argument" situé juste en dessous du type de page</p>
-        <h3>Calendrier</h3>
-        <p>La page de type calendrier va faire apparaitre les évènements à venir</p>
-        <h3>Magasin</h3>
-        <p>Dans le cadre de site d'e-commerce, la page "magasin" fait office de page d'accueil pour vos produits</p>
-        <h4>Blog</h4>
-        <p>C'est typiquement la page d'entrée pour vos articles de blog</p>
-        <h4>Formulaire</h4>
-        <p>Cette page affichera le formulaire défini dans le champ "argument"</p>
-        <h4>FAQ</h4>
-        <p>Cette page spécifique servira de point d'entrée pour afficher toutes les questions/réponses définies dans le module FAQ</p>
-        <h4>Gallerie photo</h4>
-        <p>Cette page servira à afficher l'album photo paramétré dans le champ "argument"</p>
-        <h4>Gallerie vidéo</h4>
-        <p>Cette page servira à afficher la gallerie vidéo paramétrée dans le champ "argument"</p>
-        <h4>Gallerie musique</h4>
-        <p>Cette page servira à afficher la gallerie musicale définie dans le champs "argument"</p>
+
+
     </div>
 </div>
 
@@ -205,94 +197,6 @@
 
 {{ form_end(form) }}
 
-
-
 <script>
-    $(document).ready(function()
-    {
-        function showLang(idLang){
-            console.log('changement langue');
-            $("[aria-translatable='true'][data-idLang != '"+idLang+"']").addClass("hide");
-            $("[data-idLang = '"+idLang+"']").removeClass('hide');
-        }
-
-        if(!$("#dywee_cmsbundle_page_inMenu").attr("checked"))
-            $("#menuSettings").attr('style', 'display: none');
-
-
-        $("#dywee_cmsbundle_page_inMenu").on('change', function()
-        {
-            $("#menuSettings").slideToggle('slow');
-        });
-
-    })
-
+    $("#dyweeModal").show(true);
 </script>
-
-{% block footerJavascript %}
-    {# Voici le script en question : #}
-    <script type="text/javascript">
-        $(document).ready(function() {
-            // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
-            var $container = $('div#dywee_cmsbundle_page_pageElements');
-
-            // On ajoute un lien pour ajouter une nouvelle catégorie
-            var $addLink = $('<a href="#" id="add_category" class="btn btn-default">Ajouter une catégorie</a>');
-            $container.append($addLink);
-
-            // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
-            $addLink.click(function(e) {
-                addCategory($container);
-                e.preventDefault(); // évite qu'un # apparaisse dans l'URL
-                return false;
-            });
-
-            // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
-            var index = $container.find(':input').length;
-
-            // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
-            if (index == 0) {
-                addCategory($container);
-            } else {
-                // Pour chaque catégorie déjà existante, on ajoute un lien de suppression
-                $container.children('div').each(function() {
-                    addDeleteLink($(this));
-                });
-            }
-
-            // La fonction qui ajoute un formulaire Categorie
-            function addCategory($container) {
-                // Dans le contenu de l'attribut « data-prototype », on remplace :
-                // - le texte "__name__label__" qu'il contient par le label du champ
-                // - le texte "__name__" qu'il contient par le numéro du champ
-                var $prototype = $($container.attr('data-prototype').replace(/__name__label__/g, 'Catégorie n°' + (index+1))
-                        .replace(/__name__/g, index));
-
-                // On ajoute au prototype un lien pour pouvoir supprimer la catégorie
-                addDeleteLink($prototype);
-
-                // On ajoute le prototype modifié à la fin de la balise <div>
-                $container.append($prototype);
-
-                // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
-                index++;
-            }
-
-            // La fonction qui ajoute un lien de suppression d'une catégorie
-            function addDeleteLink($prototype) {
-                // Création du lien
-                $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');
-
-                // Ajout du lien
-                $prototype.append($deleteLink);
-
-                // Ajout du listener sur le clic du lien
-                $deleteLink.click(function(e) {
-                    $prototype.remove();
-                    e.preventDefault(); // évite qu'un # apparaisse dans l'URL
-                    return false;
-                });
-            }
-        });
-    </script>
-{% endblock %}

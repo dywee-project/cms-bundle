@@ -24,7 +24,7 @@ class PageElement
     /**
      * @var integer
      *
-     * @ORM\Column(name="displayOrder", type="smallint")
+     * @ORM\Column(name="displayOrder", type="smallint", nullable=true)
      */
     private $displayOrder;
 
@@ -46,6 +46,24 @@ class PageElement
      * @ORM\ManyToOne(targetEntity="Dywee\CMSBundle\Entity\Page", inversedBy="pageElements")
      */
     private $page;
+
+    /**
+     * @ORM\Column(name="type", type="string", length=255)
+     */
+    private $type;
+
+    /**
+     * @ORM\Column(name="content", type="text", nullable=true)
+     */
+    private $content;
+
+
+
+
+    public function __construct(){
+        $this->addedAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
+    }
 
 
     /**
@@ -148,5 +166,70 @@ class PageElement
     public function getPage()
     {
         return $this->page;
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     * @return PageElement
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string 
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set content
+     *
+     * @param string $content
+     * @return PageElement
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * Get content
+     *
+     * @return string 
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    public function trick()
+    {
+        return null;
+    }
+
+    public function getHtml()
+    {
+        return $this->content;
+    }
+
+    public function getTemplate()
+    {
+        switch($this->type)
+        {
+            case 'text': return 'DyweeCMSBundle:Render:text.html.twig';
+            case 'form': return 'DyweeModuleBundle:Render:form.html.twig';
+        }
     }
 }

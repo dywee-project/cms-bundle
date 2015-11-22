@@ -17,7 +17,31 @@ class PageAdminController extends Controller
     public function dashboardTableAction()
     {
         $pr = $this->getDoctrine()->getManager()->getRepository('DyweeCMSBundle:Page');
-        $ps = $pr->findByLvl(0);
+        $ps = $pr->findBy(array('lvl' => 0, 'website' => $this->get('session')->get('activeWebsite')));
         return $this->render('DyweeCMSBundle:Admin:table.html.twig', array('pageList' => $ps));
+    }
+
+    public function viewAction(Page $page)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+
+        $pageStatRepository = $em->getRepository('DyweeCMSBundle:PageStat');
+
+        $vues = $pageStatRepository->findLastStatsForPage($page);
+
+        $date = new \DateTime("previous week");
+        $date->modify('-1 day');
+
+        for($i = 0; $i <= 7; $i++)
+        {
+            $key = $date->modify('+1 day');
+            $stats[$key->format('Y-m-d')] = array('createdAt' => $key->format('d M'), 'vues' => 0);
+        }
+
+        foreach($vues as $vue)
+            $stats[$vue['createdAt']]['vues'] = $vue['vues'];
+
+        return $this->render('DyweeCMSBundle:Admin:view.html.twig', array('page' => $page, 'stats' => $stats));
     }
 }

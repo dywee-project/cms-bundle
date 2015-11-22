@@ -8,7 +8,10 @@
 
     <div class="container">
         {% block bodySubContent %}
-            {{ page.content|raw }}
+            {% for pageElement in page.pageElements %}
+                {% set blockElement = pageElement.template %}
+                {% include blockElement %}
+            {% endfor %}
         {% endblock %}
     </div>
 

@@ -1,0 +1,62 @@
+{% block collection_widget %}
+    {% spaceless %}
+        {% if prototype is defined %}
+            {% set attr = attr|merge({'data-prototype': block('collection_item_widget') }) %}
+        {% endif %}
+        {{ form_errors(form) }}
+
+        <div {{ block('widget_container_attributes') }}>
+            {% for rows in form %}
+                <div class="col-xs-12">
+                    <div class="box" >
+                        <div class="box-header with-border">
+                            <h3 class="box-title"></h3>
+                            <div class="box-tools pull-right">
+                                <!-- Buttons, labels, and many other things can be placed here! -->
+                                <!-- Here is a label for example -->
+                                <span class="label label-primary">Label</span>
+                            </div><!-- /.box-tools -->
+                        </div><!-- /.box-header -->
+                        <div class="box-body">
+                            {{ form_widget(rows.type, { 'attr': { 'class': 'form-control' }}) }}
+                            <div class="hide">
+                                {{ form_widget(rows.content, { 'attr': { 'class': 'form-control' }}) }}
+                            </div>
+                        </div><!-- /.box-body -->
+                        <div class="box-footer">
+
+                        </div><!-- box-footer -->
+                    </div><!-- /.box -->
+                </div>
+            {% endfor %}
+        </div>
+
+    {{ form_rest(form) }}
+    {% endspaceless %}
+{% endblock collection_widget %}
+
+{% block collection_item_widget %}
+    {% spaceless %}
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title"></h3>
+                    <div class="box-tools pull-right">
+                        <!-- Buttons, labels, and many other things can be placed here! -->
+                        <!-- Here is a label for example -->
+                        <span class="label label-primary">Label</span>
+                    </div><!-- /.box-tools -->
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    {{ form_widget(prototype.type, { 'attr': { 'class': 'form-control' }}) }}
+                    <div class="hide">
+                        {{ form_widget(prototype.content, { 'attr': { 'class': 'form-control' }}) }}
+                    </div>
+                </div><!-- /.box-body -->
+                <div class="box-footer">
+
+                </div><!-- box-footer -->
+            </div><!-- /.box -->
+        </div>
+    {% endspaceless %}
+{% endblock collection_item_widget %}

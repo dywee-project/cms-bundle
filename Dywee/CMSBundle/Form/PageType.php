@@ -7,6 +7,7 @@ use Dywee\CMSBundle\Form\PageElementType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Dywee\CMSBundle\Entity\PageRepository;
 
 class PageType extends AbstractType
 {
@@ -16,6 +17,8 @@ class PageType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $website = $builder->getData()->getWebsite();
+
         $builder
             ->add('name',               'text')
             ->add('type',               'choice', array(
@@ -32,21 +35,30 @@ class PageType extends AbstractType
                     12 => 'Musique'
                 )
             ))
-            ->add('content',            'ckeditor')
             ->add('seo',                new SeoType(),      array(
                 'data_class' => 'Dywee\CMSBundle\Entity\Page'
             ))
             ->add('menuName',           'text',     array('required' => false))
             ->add('inMenu',             'checkbox', array('required' => false))
             ->add('menuOrder',          'integer',   array('required' => false))
-            ->add('parent',             'entity',   array(
-                'class'     => 'DyweeCMSBundle:Page',
-                'property'  => 'menuName',
-                'required'  => false
-            ))
             ->add('childArguments', 'text', array('required' => false))
             ->add('state',              'choice',       array('choices' => array(0 => 'Brouillon', 1 => 'Publiée')))
             ->add('sauvegarder',        'submit')
+            ->add('parent',             'entity',   array(
+                'class'     => 'DyweeCMSBundle:Page',
+                'property'  => 'menuName',
+                'required'  => false,
+                'query_builder' => function(PageRepository $er) use ($website){
+                    return $er->createQueryBuilder('p')->select('p')->where('p.inMenu = 1 and p.website = :id')->setParameter('id', $website);
+                },
+            ))
+            ->add('pageElements', 'collection', array(
+                'type' => new PageElementType(),
+                'allow_add'    => true,
+                'allow_delete' => true,
+                'by_reference' => false
+            ))
+            ->add('cheatingTrick',  'ckeditor')
         ;
     }
     
@@ -56,7 +68,7 @@ class PageType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Dywee\CMSBundle\Entity\Page'
+            'data_class' => 'Dywee\CMSBundle\Entity\Page',
         ));
     }
 

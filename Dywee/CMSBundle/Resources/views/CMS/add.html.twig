@@ -6,6 +6,11 @@
     Ajout d'une page {{ parent() }}
 {% endblock %}
 
+{% block breadcrumb %}
+    {{ parent() }}
+    <li><i class="fa fa-pencil"></i> Ajout d'une page</li>
+{% endblock %}
+
 {% block body %}
     <div class="row"><div class="col-md-12">
 
@@ -15,4 +20,8 @@
 
         </div></div>
 
+{% endblock %}
+
+{% block footerJavascript %}
+    <script src="{{ asset('bundles/dyweecms/js/form.js') }}"></script>
 {% endblock %}

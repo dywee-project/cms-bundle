@@ -1,0 +1,99 @@
+{# Dywee\CMSBundle\Resources\View\Admin\view.html.twig #}
+
+{%  extends "DyweeCMSBundle::admin.html.twig" %}
+
+{% block title %} Coup d'oeil sur une page - {{ parent() }} {% endblock %}
+
+{% block body %}
+
+    <!-- Default box -->
+    <div class="box">
+        <div class="box-header with-border">
+            <h1 class="box-title">Stats pour {{ page.name }}</h1>
+            <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
+                <button class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="page_stats"></div>
+                </div>
+                <div class="col-md-6">
+                    {#<div id="map"></div>#}
+                </div>
+            </div>
+            <div class="text-center">
+                <a class="btn btn-default disabled">Statistiques détaillées <i class="fa fa-angle-right"></i> </a>
+            </div>
+        </div><!-- /.box-body -->
+    </div><!-- /.box -->
+
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+        google.load("visualization", "1", {packages:["corechart", "geochart"]});
+        google.setOnLoadCallback(drawChart);
+
+        var months = {month1: null, month2: null, month3: null, month4: null, month5: null};
+        var currentDate = new Date();
+
+        var options = { month: 'long' };
+
+        months['month0'] = new Intl.DateTimeFormat('fr', options).format(currentDate);
+
+        for(var i=1; i<5; i++)
+            months['month'+i] = new Intl.DateTimeFormat('fr', options).format(currentDate.setMonth(currentDate.getMonth() - 1));
+
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Mois', 'Vues']
+                {% if stats|length > 0 %}
+                    {% for key, stat in stats %}
+                    , ['{{ stat.createdAt }}', {{ stat.vues }}]
+                    {% endfor %}
+                        {% else %}
+                        ['', 0, 0, 0]
+                {% endif %}
+                {#[months['month'+5],  1000,      400,        200],
+                [months['month'+4],  1170,      460,        50],
+                [months['month'+3],  660,       220,        1],
+                [months['month'+2],  1030,      540,        400],
+                [months['month'+1],  660,       110,        100],
+                [months['month'+0],  1030,      540,        200]#}
+            ]);
+
+            var options = {
+                title: 'En bref',
+                width: '100%',
+                height: 300,
+                curveType: 'function',
+                hAxis: {title: 'Year',  titleTextStyle: {color: '#333'}},
+                vAxis: {viewWindow: {min: 0}}
+            };
+
+            var chart = new google.visualization.AreaChart(document.getElementById('page_stats'));
+            chart.draw(data, options);
+        }
+
+
+        google.setOnLoadCallback(drawRegionsMap);
+
+        function drawRegionsMap() {
+
+            var data = google.visualization.arrayToDataTable([
+                ['Country', 'Popularity'],
+                ['BE',      5],
+                ['FR',      1]
+            ]);
+
+            var options = {};
+
+            var chart = new google.visualization.GeoChart(document.getElementById('map'));
+
+            chart.draw(data, options);
+        }
+
+    </script>
+
+{% endblock %}

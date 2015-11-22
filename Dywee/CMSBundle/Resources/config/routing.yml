@@ -29,8 +29,8 @@ dywee_cms_update:
         id: \d+
 
 dywee_cms_details:
-    path:     /admin6833/page/{id}
-    defaults: { _controller: DyweeCMSBundle:Page:adminView }
+    path:     /admin6833/page/{id}/details
+    defaults: { _controller: DyweeCMSBundle:PageAdmin:view }
     requirements:
         id: \d+
 
@@ -49,3 +49,9 @@ dywee_cms_inMenu_switch:
     defaults: { _controller: DyweeCMSBundle:Page:inMenuSwitch }
     requirements:
         id: \d+
+
+dywee_cms_getPageElementDashboard_byAjax:
+    path:     /admin6833/cms/pageElement/ajaxDashboard
+    defaults: { _controller: DyweeCMSBundle:PageElement:ajaxDashboard, _locale: 'fr'}
+    options:
+        expose: true

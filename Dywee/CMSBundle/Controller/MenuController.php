@@ -16,7 +16,7 @@ class MenuController extends Controller
             array('menuOrder' => 'asc')
         );*/
 
-        $pageList = $pr->getMenu();
+        $pageList = $pr->getMenu($this->container->getParameter('website.id'));
 
         if($position == 'top')
             return $this->render('DyweeCMSBundle:CMS:menu.html.twig', array('pageList' => $pageList)
