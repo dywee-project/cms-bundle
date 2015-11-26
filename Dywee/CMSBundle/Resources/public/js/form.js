@@ -3,22 +3,60 @@ $(document).ready(function() {
     var choices = [
         {
             key: 'text',
-            value: 'Zone de texte'
+            icon: 'pencil',
+            value: 'Zone de texte',
+            modalLabel: 'Choisissez une galerie à afficher sur la page',
+            routeName: false,
+            routeForAdding: false,
+            active: true,
         },
         {
             key: 'form',
-            value: 'Formulaire'
+            icon: 'check-square-o',
+            value: 'Formulaire',
+            modalLabel: 'Choisissez un formulaire à afficher sur la page',
+            routeName: 'dywee_customForm_json',
+            routeForAdding: 'dywee_customForm_add',
+            active: true
+        },
+        {
+            key: 'musicGallery',
+            icon: 'music',
+            value: 'Galerie musicale',
+            modalLabel: 'Choisissez une galerie musicale à afficher sur la page',
+            routeName: 'dywee_musicGallery_json',
+            routeForAdding: 'dywee_musicGallery_add',
+            active: true
+        },
+        {
+            key: 'caroussel',
+            icon: 'picture-o',
+            value: 'Diaporama photos',
+            modalLabel: 'Choisissez ds photos à ajouter à votre galerie photo',
+            routeName: false,
+            routeForAdding: 'dywee_customForm_add',
+            active: false
         }
     ];
 
     var currentIndex = null;
 
     //Créer un conflit entre l'éditeur de texte et le plugin sortable
-    $("#dywee_cmsbundle_page_pageElements").sortable({
-        placeholder: "dywee-pageElement-placeholder",
-        forcePlaceholderSize: true
-    });
-
+    function setBoxSortable()
+    {
+        console.log('sortable');
+        $("#page_elements_container").sortable({
+            placeholder: "dywee-pageElement-placeholder",
+            forcePlaceholderSize: true,
+            handle: ".box-header",
+            update: function( event, ui ) {
+                $.each($('.box'), function(index, box)
+                {
+                    $(box).find('input[id$="_displayOrder"]').val(index+1);
+                })
+            }
+        });
+    }
 
     /*******************************************************/
     /***                                               *****/
@@ -54,47 +92,9 @@ $(document).ready(function() {
     var urlForAjax = '';
     var createButtonRedirection = '';
 
-    $("#dywee_cmsbundle_page_type").change(function() {
-        var value = $(this).val();
-
-        ///*
-        //Formulaire
-        if(value == 8)
-        {
-            modalLabel = 'Choisissez un formulaire à afficher sur la page';
-            urlForAjax = Routing.generate('dywee_customForm_json');
-            createButtonRedirection = 'dywee_customForm_add';
-            ajaxify(callBackForType);
-        }
-
-        //Musique
-        else if(value == 12)
-        {
-            modalLabel = 'Choisissez une galerie à afficher sur la page';
-            urlForAjax = Routing.generate('dywee_musicGallery_json');
-            createButtonRedirection = 'dywee_musicGallery_add';
-            ajaxify(callBackForType);
-        }
-        //*/
-    })
-
-    function ajaxify(callback) {
-        $("#dyweeModalCloseButton").html('Fermer');
-        $("#dyweeModalContinueButton").html('Valider').addClass('disabled');
-        $("#dyweeModalLabel").html(modalLabel);
-        $("#dyweeModal .modal-body").html('<i class="fa fa-spinner fa-spin"></i> Chargement des données');
-        $("#dyweeModal").modal('show');
-
-        $.ajax({
-            url: urlForAjax,
-            dataType: 'json',
-            type: 'post',
-            success: callback
-        });
-    }
-
-    function ProcessAjaxForPageElement(type, prototype)
+    function ProcessAjaxForPageElement(type, $prototype)
     {
+        setBoxSortable();
         $.ajax({
             url: Routing.generate('dywee_cms_getPageElementDashboard_byAjax'),
             dataType: 'json',
@@ -103,24 +103,33 @@ $(document).ready(function() {
             success: function(data)
             {
                 if(type == 'form')
-                    showDashboardForForm(data, prototype);
+                {
+                    $prototype.find('.box-header .box-title').html('Formulaire');
+                    showDashboard(data, $prototype);
+                }
+
+                else if(type == 'musicGallery')
+                {
+                    $prototype.find('.box-header .box-title').html('Galerie musicale');
+                    showDashboard(data, $prototype);
+                }
+
             }
         });
     }
 
     //OLD Callback for PAGE TYPE
-    function callBackForType(data) {
+    /*function callBackForType(data) {
         handleData(data, setChildArgument);
-    }
+    }*/
 
     //New Callback for pageElement
-    function callBackForPageElement(data) {
+    /*function callBackForPageElement(data) {
         handleDataForPageElement(data);
-    }
+    }*/
 
-    function showDashboardForForm(data, $prototype)
+    function showDashboard(data, $prototype)
     {
-        $prototype.find('.box-header').html('<h2 class="box-title">Formulaire</h2>');
         $inputToFill = $prototype.find('[id$="_content"]');
 
         var value = $inputToFill.val();
@@ -150,9 +159,12 @@ $(document).ready(function() {
         $prototype.find('.box-body').append($div);
     }
 
+    /*
+    **      DEPRECATED
     function handleData(data, callback) {
         if(data.type == 'success')
         {
+            $("#dyweeModal .modal-title").html('Choisissez le module à ajouter');
             $("#dyweeModal .modal-body").html(setTable(data.data, callback));
             $("#dyweeModalContinueButton").html('Valider').removeClass('disabled');
         }
@@ -167,7 +179,7 @@ $(document).ready(function() {
 
         else
             $("#dyweeModal .modal-body").html('<p>Une erreur est survenue</p>');
-    }
+    }*/
 
     function handleDataForPageElement(data) {
         if(data.type == 'success')
@@ -187,82 +199,6 @@ $(document).ready(function() {
 
     function setPageElementValue($link, id) {
         var field_id = $link.parents('div.box-body').find('[id$="_content"]').val(id);
-    }
-
-    function setTable(data, callback) {
-
-        var $table = $('<table class="table table-bordered">');
-
-        $(data).each(function(){
-            $(this).each(function(){
-                var $row = $('<tr>');
-                var $cell  = $('<td>');
-                var $nameLink = $('<a href="#">');
-                var $selectBtn = $('<a href="#">Choisir</a>');
-
-                $nameLink.html(this.name);
-
-                $table.append(
-                    $row.append(
-                        $cell.clone().append(
-                            $nameLink
-                        )
-                    )
-                    .append(
-                        $cell.clone().append(
-                            $selectBtn
-                        )
-                    )
-                );
-
-                console.log($table);
-
-                var id = this.id;
-
-                $nameLink.click(function(e) {
-                    callback($(this), id);
-                    e.preventDefault(); // évite qu'un # apparaisse dans l'URL
-                    return false;
-                });
-
-                $selectBtn.click(function(e) {
-                    callback($(this), id);
-                    e.preventDefault(); // évite qu'un # apparaisse dans l'URL
-                    return false;
-                });
-            })
-        })
-
-        return $table;
-    }
-
-    function setRadioBoxes(data, callback) {
-
-        var $form = $('<div class="radio">');
-
-        $(data).each(function(){
-            $(this).each(function(){
-                var $input = $('<input type="radio" name="' + data.name + '" id="' + data.name + '_' + this.id + '" value="' + this.id + '">' + data.name);
-
-                $form.append(
-                    $('<label>').append(
-                        $input
-                    )
-                );
-
-                console.log($form);
-
-                var id = this.id;
-
-                $input.click(function(e) {
-                    callback($(this), id);
-                    e.preventDefault(); // évite qu'un # apparaisse dans l'URL
-                    return false;
-                });
-            })
-        })
-
-        return $table;
     }
 
 
@@ -300,24 +236,29 @@ $(document).ready(function() {
 
             console.log(type);
 
-            if(type == 'text')
+            switch(type)
             {
-                console.log('type texte detecté');
-                console.log('begin');
+                case 'text' : {
+                    $(this).find('.box-title').html(choices[0].value);
+                    console.log('type texte detecté');
 
-                $field.parent().removeClass('hide');
-                CKEDITOR.disableAutoInline = true;
-                CKEDITOR.inline( $field.attr('id') , trsteelConfig );
-
-                console.log('end');
-
+                    $field.parent().removeClass('hide');
+                    CKEDITOR.disableAutoInline = true;
+                    CKEDITOR.inline( $field.attr('id') , trsteelConfig );
+                    break;
+                }
+                case 'form' : {
+                    console.log('type form détecté');
+                    ProcessAjaxForPageElement('form', $(this));
+                    break;
+                }
+                case 'musicGallery' : {
+                    console.log('type musicGallery détecté');
+                    ProcessAjaxForPageElement('musicGallery', $(this));
+                    break;
+                }
             }
-            else if(type == 'form')
-            {
-                console.log('type form détecté');
-                ProcessAjaxForPageElement('form', $(this));
 
-            }
             addDeleteLink($(this));
             index++;
         });
@@ -347,6 +288,8 @@ $(document).ready(function() {
 
         // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
         index++;
+
+        setBoxSortable();
     }
 
 
@@ -362,7 +305,10 @@ $(document).ready(function() {
         //Mise en forme des choix pour la modal
         $.each(choices, function(i, data)
         {
-            var btn = $('<a href="#" class="btn btn-default">' + data.value + '</a>');
+            var btn = $('<a href="#" class="btn btn-default"><i class="fa fa-' + data.icon + '"></i> ' + data.value + '</a>');
+
+            if(data.active == false)
+                btn.addClass('disabled').append(' (en préparation)');
 
             html.append($('<p>').append(btn));
 
@@ -375,8 +321,8 @@ $(document).ready(function() {
 
         });
 
-        $("#dyweeModalCloseButton").hide();
-        $("#dyweeModalContinueButton").hide();
+        $("#dyweeModalCloseBtn").hide();
+        $("#dyweeModalContinueBtn").hide();
         $("#dyweeModalLabel").html('Choisissez un élément à ajouter');
         $("#dyweeModal .modal-body").html(html);
         $("#dyweeModal").modal('show');
@@ -385,11 +331,14 @@ $(document).ready(function() {
     function processPrototype($prototype, type, index) {
         currentIndex = index;
         $prototype.find("input[id$='_type']").val(type);
-        if(type == 'text')
-            addTextArea($prototype, index);
-        else if(type == 'form')
-            addForm($prototype, index);
 
+
+        switch(type)
+        {
+            case 'text': addTextArea($prototype, index); break;
+            case 'form': addForm($prototype, index); break;
+            case 'musicGallery': addMusicGallery($prototype, index); break;
+        }
     }
 
     function addTextArea($prototype, index) {
@@ -399,30 +348,31 @@ $(document).ready(function() {
     }
 
     function addForm($prototype, index) {
-        modalLabel = 'Choisissez un formulaire à afficher sur la page';
+        //modalLabel = 'Choisissez un formulaire à afficher sur la page';
         $prototype.find('.box-body').append('<div class="for-user"><i class="fa fa-spinner fa-spin"></i> Chargement de vos formulaires</div>');
-        urlForAjax = Routing.generate('dywee_customForm_json');
-        createButtonRedirection = 'dywee_customForm_add';
+        //urlForAjax = Routing.generate('dywee_customForm_json');
+        //createButtonRedirection = 'dywee_customForm_add';
         //ajaxify(callBackForPageElement);
 
         ProcessAjaxForPageElement('form', $prototype);
     }
 
+    function addMusicGallery($prototype, index)
+    {
+        $prototype.find('.box-body').append('<div class="for-user"><i class="fa fa-spinner fa-spin"></i> Chargement de vos galeries musicales</div>');
+
+        ProcessAjaxForPageElement('musicGallery', $prototype);
+    }
+
+    function addCaroussel($prototype, index)
+    {
+
+    }
+
 });
 
-function setChildArgument($link, data) {
-    $("#dyweeModal").modal('hide');
-    $("#dywee_cmsbundle_page_childArguments").val(data);
-}
-
 function processExistingElement($element) {
-
     addDeleteLink($element.parent());
-
-    var type = $element.find('input[id$="_value"]').val();
-
-    /*if(type == 'text')
-        CKEDITOR.replace($element.find('input[id$="_content"]').val());*/
 }
 
 // La fonction qui ajoute un lien de suppression d'une catégorie

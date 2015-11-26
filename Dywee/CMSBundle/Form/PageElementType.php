@@ -17,6 +17,7 @@ class PageElementType extends AbstractType
         $builder
             ->add('type',               'hidden')
             ->add('content',            'textarea')
+            ->add('displayOrder',       'hidden')
         ;
     }
     

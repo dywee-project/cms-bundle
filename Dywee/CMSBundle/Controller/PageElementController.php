@@ -28,6 +28,11 @@ class PageElementController extends Controller
                     $formList = $repository->findForJson($website);
                     return new Response(json_encode($formList));
                 }
+                case 'musicGallery': {
+                    $repository = $em->getRepository('DyweeModuleBundle:MusicGallery');
+                    $formList = $repository->findForJson($website);
+                    return new Response(json_encode($formList));
+                }
                 default: return new Response('object not found');
             }
         }

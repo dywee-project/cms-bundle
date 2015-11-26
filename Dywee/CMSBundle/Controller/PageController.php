@@ -94,12 +94,25 @@ class PageController extends Controller
          *
          * Pourquoi ne pas traiter les formulaires en ajax?
          */
-        
+
         $pageRepository = $this->getDoctrine()->getManager()->getRepository('DyweeCMSBundle:Page');
 
         if(is_numeric($data))
             $page = $pageRepository->findById($this->container->getParameter('website.id'), $data);
         else $page = $pageRepository->findBySeoUrl($this->container->getParameter('website.id'), $data);
+
+        switch($page->getType())
+        {
+            case 3: return $this->redirect($this->generateUrl('dywee_message_new'));
+            case 5: return $this->forward('DyweeModuleBundle:Event:page', array('page' => $page));
+            case 6: return $this->forward('DyweeEshopBundle:Eshop:pageHandler', array('page' => $page));
+            case 7: return $this->render('DyweeBlogBundle:Blog:page.html.twig', array('page' => $page));
+            case 8: return $this->forward('DyweeModuleBundle:Form:page', array('page' => $page));
+            case 9: return $this->forward('DyweeFaqBundle:Faq:page', array('page' => $page));
+            case 10: return $this->forward('DyweeFaqBundle:PictureGallery:page', array('page' => $page));
+            case 11: return $this->forward('DyweeFaqBundle:VideoGallery:page', array('page' => $page));
+            case 12: return $this->forward('DyweeModuleBundle:MusicGallery:page', array('page' => $page));
+        }
 
         $data = array('page' => $page);
 
@@ -116,6 +129,7 @@ class PageController extends Controller
             foreach($formsId as $formId)
             {
                 $customForm = $formRepository->findOneBy(array('id' => $formId, 'website' => $this->container->getParameter('website.id')));
+
                 if($customForm)
                 {
                     //Le form n'est pas un form à proprement parler mais un objet de type DyweeForm
