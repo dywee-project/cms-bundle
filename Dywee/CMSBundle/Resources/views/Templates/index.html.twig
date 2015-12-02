@@ -5,10 +5,8 @@
 {% block body %}
 
     {% for pageElement in page.pageElements %}
-        ici
-    {% endfor %}
-    {{ page.content|raw }}
 
-    {% render(controller('DyweeBlogBundle:Blog:list', {limit: 4})) %}
+        {% include pageElement.template %}
+    {% endfor %}
 
 {% endblock %}

@@ -29,13 +29,13 @@ $(document).ready(function() {
             active: true
         },
         {
-            key: 'caroussel',
+            key: 'carousel',
             icon: 'picture-o',
             value: 'Diaporama photos',
             modalLabel: 'Choisissez ds photos à ajouter à votre galerie photo',
             routeName: false,
             routeForAdding: 'dywee_customForm_add',
-            active: false
+            active: true
         }
     ];
 
@@ -45,7 +45,7 @@ $(document).ready(function() {
     function setBoxSortable()
     {
         console.log('sortable');
-        $("#page_elements_container").sortable({
+        $("#dywee_cmsbundle_page_pageElements").sortable({
             placeholder: "dywee-pageElement-placeholder",
             forcePlaceholderSize: true,
             handle: ".box-header",
@@ -102,31 +102,23 @@ $(document).ready(function() {
             data: {objectName: type},
             success: function(data)
             {
-                if(type == 'form')
-                {
-                    $prototype.find('.box-header .box-title').html('Formulaire');
-                    showDashboard(data, $prototype);
+                switch(type) {
+                    case 'form':
+                        $prototype.find('.box-header .box-title').html('Formulaire');
+                        showDashboard(data, $prototype);
+                        break;
+                    case 'musicGallery':
+                        $prototype.find('.box-header .box-title').html('Galerie musicale');
+                        showDashboard(data, $prototype);
+                        break;
+                    case 'carousel':
+                        $prototype.find('.box-header .box-title').html('Carousel');
+                        showDashboard(data, $prototype);
+                        break;
                 }
-
-                else if(type == 'musicGallery')
-                {
-                    $prototype.find('.box-header .box-title').html('Galerie musicale');
-                    showDashboard(data, $prototype);
-                }
-
             }
         });
     }
-
-    //OLD Callback for PAGE TYPE
-    /*function callBackForType(data) {
-        handleData(data, setChildArgument);
-    }*/
-
-    //New Callback for pageElement
-    /*function callBackForPageElement(data) {
-        handleDataForPageElement(data);
-    }*/
 
     function showDashboard(data, $prototype)
     {
@@ -141,9 +133,14 @@ $(document).ready(function() {
 
         $div.html('');
 
+        if(data.length == 0)
+            $div.html('<p>Vous n\'avez pas encore créé d\'élements</p>');
+
+        var uniqId = Math.random().toString(36).slice(-5);
+
         $.each(data, function(index, item)
         {
-            $radio = $('<input type="radio" name="test">');
+            $radio = $('<input type="radio" name="' + uniqId + '">');
             $toAdd = $('<div class="radio">').append($('<label>').html(item.name).prepend($radio))
 
             $div.append($toAdd);
@@ -234,29 +231,19 @@ $(document).ready(function() {
             var $field = $(this).find('[id$="_content"]');
             var type = $(this).find('[id$="_type"]').val();
 
-            console.log(type);
+            console.log('type ' + type + ' détecté');
 
             switch(type)
             {
-                case 'text' : {
+                case 'text' :
                     $(this).find('.box-title').html(choices[0].value);
-                    console.log('type texte detecté');
 
                     $field.parent().removeClass('hide');
                     CKEDITOR.disableAutoInline = true;
                     CKEDITOR.inline( $field.attr('id') , trsteelConfig );
                     break;
-                }
-                case 'form' : {
-                    console.log('type form détecté');
-                    ProcessAjaxForPageElement('form', $(this));
-                    break;
-                }
-                case 'musicGallery' : {
-                    console.log('type musicGallery détecté');
-                    ProcessAjaxForPageElement('musicGallery', $(this));
-                    break;
-                }
+
+                default: ProcessAjaxForPageElement(type, $(this));
             }
 
             addDeleteLink($(this));
@@ -267,30 +254,6 @@ $(document).ready(function() {
 
     //Correction de l'index qui prend en compte le bouton
     index--;
-
-    // La fonction qui ajoute un formulaire Categorie
-    function addElement($container, type) {
-        // Dans le contenu de l'attribut « data-prototype », on remplace :
-        // - le texte "__name__label__" qu'il contient par le label du champ
-        // - le texte "__name__" qu'il contient par le numéro du champ
-        var $prototype = $($container.find('div#dywee_cmsbundle_page_pageElements').attr('data-prototype').replace(/__name__label__/g, 'Catégorie n°' + (index+1))
-            .replace(/__name__/g, index));
-
-        $prototype.find('.box-title').html('type: '+type);
-
-        // On ajoute au prototype un lien pour pouvoir supprimer la catégorie
-        addDeleteLink($prototype);
-
-        // On ajoute le prototype modifié à la fin de la balise <div>
-        $container.append($prototype);
-
-        processPrototype($prototype, type, index);
-
-        // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
-        index++;
-
-        setBoxSortable();
-    }
 
 
     /*******************************************************/
@@ -328,52 +291,60 @@ $(document).ready(function() {
         $("#dyweeModal").modal('show');
     }
 
+    // La fonction qui ajoute un formulaire Categorie
+    function addElement($container, type) {
+        // Dans le contenu de l'attribut « data-prototype », on remplace :
+        // - le texte "__name__label__" qu'il contient par le label du champ
+        // - le texte "__name__" qu'il contient par le numéro du champ
+        var $prototype = $($container.find('div#dywee_cmsbundle_page_pageElements').attr('data-prototype').replace(/__name__label__/g, 'Catégorie n°' + (index+1))
+            .replace(/__name__/g, index));
+
+        $prototype.find('.box-title').html('type: '+type);
+
+        // On ajoute au prototype un lien pour pouvoir supprimer la catégorie
+        addDeleteLink($prototype);
+
+        // On ajoute le prototype modifié à la fin de la balise <div>
+        $container.append($prototype);
+
+        processPrototype($prototype, type, index);
+
+        // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
+        index++;
+
+        setBoxSortable();
+    }
+
     function processPrototype($prototype, type, index) {
         currentIndex = index;
         $prototype.find("input[id$='_type']").val(type);
 
-
+        console.log('processPrototype | type: '+type);
         switch(type)
         {
-            case 'text': addTextArea($prototype, index); break;
-            case 'form': addForm($prototype, index); break;
-            case 'musicGallery': addMusicGallery($prototype, index); break;
+            case 'text':
+                var $field = $prototype.find("[id$='_content']").val('<p>Tapez votre texte ici</p>');
+                $field.parent().removeClass('hide');
+                CKEDITOR.inline($field.attr('id'), trsteelConfig);
+                break;
+
+            case 'form':
+                $prototype.find('.box-body').append('<div class="for-user"><i class="fa fa-spinner fa-spin"></i> Chargement de vos formulaires</div>');
+                ProcessAjaxForPageElement('form', $prototype);
+                break;
+
+            case 'musicGallery':
+                $prototype.find('.box-body').append('<div class="for-user"><i class="fa fa-spinner fa-spin"></i> Chargement de vos galeries musicales</div>');
+                ProcessAjaxForPageElement('musicGallery', $prototype);
+                break;
+
+            case 'carousel':
+                $prototype.find('.box-body').append('<div class="for-user"><i class="fa fa-spinner fa-spin"></i> Chargement de vos carousels d\'images</div>');
+                ProcessAjaxForPageElement('carousel', $prototype);
+                break;
         }
     }
-
-    function addTextArea($prototype, index) {
-        var $field = $prototype.find("[id$='_content']").val('<p>Tapez votre texte ici</p>');
-        $field.parent().removeClass('hide');
-        CKEDITOR.inline($field.attr('id'), trsteelConfig);
-    }
-
-    function addForm($prototype, index) {
-        //modalLabel = 'Choisissez un formulaire à afficher sur la page';
-        $prototype.find('.box-body').append('<div class="for-user"><i class="fa fa-spinner fa-spin"></i> Chargement de vos formulaires</div>');
-        //urlForAjax = Routing.generate('dywee_customForm_json');
-        //createButtonRedirection = 'dywee_customForm_add';
-        //ajaxify(callBackForPageElement);
-
-        ProcessAjaxForPageElement('form', $prototype);
-    }
-
-    function addMusicGallery($prototype, index)
-    {
-        $prototype.find('.box-body').append('<div class="for-user"><i class="fa fa-spinner fa-spin"></i> Chargement de vos galeries musicales</div>');
-
-        ProcessAjaxForPageElement('musicGallery', $prototype);
-    }
-
-    function addCaroussel($prototype, index)
-    {
-
-    }
-
 });
-
-function processExistingElement($element) {
-    addDeleteLink($element.parent());
-}
 
 // La fonction qui ajoute un lien de suppression d'une catégorie
 function addDeleteLink($prototype) {

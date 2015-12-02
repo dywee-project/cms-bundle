@@ -903,6 +903,7 @@ class Page
     public function removePageElement(\Dywee\CMSBundle\Entity\PageElement $pageElement)
     {
         $this->pageElements->removeElement($pageElement);
+        $pageElement->setPage(null);
     }
 
     /**

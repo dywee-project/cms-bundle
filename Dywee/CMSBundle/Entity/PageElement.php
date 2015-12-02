@@ -230,6 +230,8 @@ class PageElement
         {
             case 'text': return 'DyweeCMSBundle:Render:text.html.twig';
             case 'form': return 'DyweeModuleBundle:Render:form.html.twig';
+            case 'musicGallery': return 'DyweeModuleBundle:Render:musicGallery.html.twig'; break;
+            case 'carousel': return 'DyweeModuleBundle:Render:carousel.html.twig'; break;
         }
     }
 }
