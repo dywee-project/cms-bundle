@@ -149,21 +149,17 @@ class PageController extends Controller
 
                         $notification = new Notification();
                         $notification->setContent('Une nouvelle réponse a été validée pour le formulaire');
-                        $notification->setArgument1($customForm->getId());
                         $notification->setBundle('module');
                         $notification->setType('form.response.new');
-                        $notification->setRoutingPath('dywee_customFormResponse_table');
-                        $notification->setRoutingArguments('{id: '.$customForm->getId().'}');
+                        $notification->setRoutingPath('dywee_customFormResponse_view');
                         $notification->setWebsite($website);
 
                         $em->persist($response);
-
                         $em->flush();
 
-                        $notification->setArgument2($response->getId());
+                        $notification->setRoutingArguments(json_encode(array('id' => $response->getId())));
 
                         $em->persist($notification);
-
                         $em->flush();
                     }
 

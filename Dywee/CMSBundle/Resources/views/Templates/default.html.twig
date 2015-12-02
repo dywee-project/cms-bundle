@@ -4,6 +4,25 @@
 
 {% block body %}
 
+    {% for flashMessage in app.session.flashbag.get('success') %}
+        <div class="col-md-12">
+            <div class="alert alert-success alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-check"></i> {{ flashMessage }}</h4>
+
+            </div>
+        </div>
+    {% endfor %}
+    {% for flashMessage in app.session.flashbag.get('warning') %}
+        <div class="col-md-12">
+            <div class="alert alert-warning alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-warning"></i>{{ flashMessage }}</h4>
+
+            </div>
+        </div>
+    {% endfor %}
+
     {% block title %}<h1>{{ page.name }}</h1>{% endblock %}
 
     <div class="container">
