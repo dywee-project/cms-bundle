@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+    trsteelConfig.extraPlugins = 'sourcedialog';
+
     var choices = [
         {
             key: 'text',
@@ -240,7 +242,9 @@ $(document).ready(function() {
 
                     $field.parent().removeClass('hide');
                     CKEDITOR.disableAutoInline = true;
-                    CKEDITOR.inline( $field.attr('id') , trsteelConfig );
+                    trsteelConfig.extraPlugins = 'sourcedialog'
+                    console.log(trsteelConfig);
+                    CKEDITOR.inline( $field.attr('id'), trsteelConfig );
                     break;
 
                 default: ProcessAjaxForPageElement(type, $(this));
@@ -325,7 +329,7 @@ $(document).ready(function() {
             case 'text':
                 var $field = $prototype.find("[id$='_content']").val('<p>Tapez votre texte ici</p>');
                 $field.parent().removeClass('hide');
-                CKEDITOR.inline($field.attr('id'), trsteelConfig);
+                CKEDITOR.inline($field.attr('id'));
                 break;
 
             case 'form':

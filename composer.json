@@ -14,7 +14,6 @@
   ],
   "require": {
     "php": ">=5.3.0",
-    "symfony/framework-bundle": "2.*,<2.8",
     "dywee/core-bundle": "dev-master"
   },
   "autoload": {
