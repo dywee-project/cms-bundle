@@ -80,14 +80,6 @@ class Page
      * @var string
      *
      * @Gedmo\Translatable
-     * @ORM\Column(name="content", type="text", nullable = true)
-     */
-    private $content;
-
-    /**
-     * @var string
-     *
-     * @Gedmo\Translatable
      * @ORM\Column(name="metaTitle", type="string", length=255, nullable = true)
      */
     private $metaTitle;

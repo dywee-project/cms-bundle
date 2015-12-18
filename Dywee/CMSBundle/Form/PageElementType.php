@@ -15,8 +15,8 @@ class PageElementType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('type',               'hidden')
-            ->add('content',            'textarea')
+            ->add('type',               'hidden', array('required' => false))
+            ->add('content',            'textarea', array('required' => false))
             ->add('displayOrder',       'hidden')
         ;
     }

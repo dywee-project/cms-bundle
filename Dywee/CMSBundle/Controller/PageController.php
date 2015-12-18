@@ -274,6 +274,12 @@ class PageController extends Controller
 
     public function updateAction(Page $page, Request $request)
     {
+        $langToUse = null;
+        if($request->get('lang'))
+        {
+            $pageRepository = $this->getDoctrine()->getManager()->getRepository('DyweeCMSBundle:Page');
+            $langToUse = $request->get('lang');
+        }
         if($page->getWebsite()->getId() != $this->get('session')->get('activeWebsite')->getId())
             throw $this->createAccessDeniedException('Vous ne pouvez pas accéder à cette page');
 

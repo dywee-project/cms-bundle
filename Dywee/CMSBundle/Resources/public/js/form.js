@@ -242,7 +242,7 @@ $(document).ready(function() {
 
                     $field.parent().removeClass('hide');
                     CKEDITOR.disableAutoInline = true;
-                    trsteelConfig.extraPlugins = 'sourcedialog'
+                    //trsteelConfig.extraPlugins = 'sourcedialog';
                     console.log(trsteelConfig);
                     CKEDITOR.inline( $field.attr('id'), trsteelConfig );
                     break;

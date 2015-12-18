@@ -3,6 +3,8 @@
 namespace Dywee\CMSBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Translatable\Translatable;
 
 /**
  * PageElement
@@ -10,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="page_elements")
  * @ORM\Entity(repositoryClass="DyweeCustomizer\CMSBundle\Entity\PageElementRepository")
  */
-class PageElement
+class PageElement implements Translatable
 {
     /**
      * @var integer
@@ -53,9 +55,17 @@ class PageElement
     private $type;
 
     /**
+     * @Gedmo\Translatable
      * @ORM\Column(name="content", type="text", nullable=true)
      */
     private $content;
+
+    /**
+     * @Gedmo\Locale
+     * Used locale to override Translation listener`s locale
+     * this is not a mapped field of entity metadata, just a simple property
+     */
+    private $locale;
 
 
 
@@ -233,5 +243,10 @@ class PageElement
             case 'musicGallery': return 'DyweeModuleBundle:Render:musicGallery.html.twig'; break;
             case 'carousel': return 'DyweeModuleBundle:Render:carousel.html.twig'; break;
         }
+    }
+
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
     }
 }
