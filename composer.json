@@ -17,8 +17,8 @@
     "dywee/core-bundle": "dev-master"
   },
   "autoload": {
-    "psr-0": {
-      "Dywee\\CMSBundle": ""
+    "psr-4": {
+      "Dywee\\CMSBundle\\": ""
     }
   }
 }
