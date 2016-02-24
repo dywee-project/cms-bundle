@@ -6,11 +6,6 @@
     Détails  sur une page {{ parent() }}
 {% endblock %}
 
-{% block breadcrumb %}
-    {{ parent() }}
-    <li><i class="fa fa-pencil"></i> Détails d'une page</li>
-{% endblock %}
-
 {% block body %}
     <div class="title-heading">
         <h1>Détails sur la page: <i>{{ page.name }}</i></h1>

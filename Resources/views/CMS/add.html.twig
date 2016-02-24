@@ -6,11 +6,6 @@
     Ajout d'une page {{ parent() }}
 {% endblock %}
 
-{% block breadcrumb %}
-    {{ parent() }}
-    <li><i class="fa fa-pencil"></i> Ajout d'une page</li>
-{% endblock %}
-
 {% block body %}
     <div class="row"><div class="col-md-12">
 
@@ -23,8 +18,6 @@
 {% endblock %}
 
 {% block footerJavascript %}
-    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
     <script src="{{ asset('bundles/dyweecms/js/form.js') }}"></script>
     <script src="{{ asset('bundles/dyweecore/js/jquery-ui.min.js') }}"></script>
 {% endblock %}
