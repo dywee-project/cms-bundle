@@ -10,7 +10,7 @@ use Gedmo\Translatable\Translatable;
  * Page
  *
  * @ORM\Table(name="pages")
- * @ORM\Entity(repositoryClass="Dywee\CMSBundle\Entity\PageRepository")
+ * @ORM\Entity(repositoryClass="Dywee\CMSBundle\Repository\PageRepository")
  * @ORM\HasLifecycleCallbacks()
  * @Gedmo\Tree(type="nested")
  */

@@ -9,7 +9,7 @@ use Dywee\CMSBundle\Entity\PageElement;
  * PageTextElement
  *
  * @ORM\Table(name="page_element_text")
- * @ORM\Entity(repositoryClass="DyweeCustomizer\CMSBundle\Entity\PageTextElementRepository")
+ * @ORM\Entity(repositoryClass="DyweeCustomizer\CMSBundle\Repository\PageTextElementRepository")
  */
 class PageTextElement extends PageElement
 {

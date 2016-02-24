@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * PageStat
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Dywee\CMSBundle\Entity\PageStatRepository")
+ * @ORM\Entity(repositoryClass="Dywee\CMSBundle\Repository\PageStatRepository")
  */
 class PageStat
 {

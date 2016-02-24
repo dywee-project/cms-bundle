@@ -1,6 +1,6 @@
 <?php
 
-namespace Dywee\CMSBundle\Entity;
+namespace Dywee\CMSBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Config\Definition\Exception\Exception;

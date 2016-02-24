@@ -10,7 +10,7 @@ use Gedmo\Translatable\Translatable;
  * PageElement
  *
  * @ORM\Table(name="page_elements")
- * @ORM\Entity(repositoryClass="DyweeCustomizer\CMSBundle\Entity\PageElementRepository")
+ * @ORM\Entity(repositoryClass="DyweeCustomizer\CMSBundle\Repository\PageElementRepository")
  */
 class PageElement implements Translatable
 {
