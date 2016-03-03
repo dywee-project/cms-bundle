@@ -40,11 +40,11 @@
         </div>
 
         <div class="form-group">
-            {{ form_errors(form.pageElements) }}
+            {#{{ form_errors(form.pageElements) }}
 
             <div id="page_elements_container">
                 {{ form_widget(form.pageElements) }}
-            </div>
+            </div>#}
 
         </div>
         {% if page is defined and page.type == 12 %}
@@ -55,7 +55,7 @@
                     </div>
                     <div class="panel-body">
                         {% if page.childArguments is not null %}
-                            {% render(controller('DyweeModuleBundle:MusicGallery:show', {id: page.childArguments})) %}
+                            {{ render(controller('DyweeModuleBundle:MusicGallery:show', {id: page.childArguments})) }}
                             <a href="{{ path('dywee_musicGallery_update', {id: page.childArguments}) }}" class="btn btn-default btn-lg">Gérer la galerie musicale associée</a>
                         {% else %}
                             <a href="#settings" data-toggle="tab"><i class="fa fa-cog"></i> Renseigner une galerie musicale associée (champs "paramètres")</a>
@@ -67,31 +67,31 @@
     </div>
     <div class="tab-pane fade in" id="seo">
         <div class="form-group">
-            {{ form_label(form.seo.metaTitle, "Meta Titre") }}
-            {{ form_errors(form.seo.metaTitle) }}
+            {{ form_label(form.metaTitle, "Meta Titre") }}
+            {{ form_errors(form.metaTitle) }}
             <div class="col-sm-9">
-                    {{ form_widget(form.seo.metaTitle) }}
+                    {{ form_widget(form.metaTitle) }}
             </div>
         </div>
         <div class="form-group">
-            {{ form_label(form.seo.metaDescription, "Meta Description") }}
-            {{ form_errors(form.seo.metaDescription) }}
+            {{ form_label(form.metaDescription, "Meta Description") }}
+            {{ form_errors(form.metaDescription) }}
             <div class="col-sm-9">
-                    {{ form_widget(form.seo.metaDescription) }}
+                    {{ form_widget(form.metaDescription) }}
             </div>
         </div>
         <div class="form-group">
-            {{ form_label(form.seo.metaKeywords, "Meta Keywords") }}
-            {{ form_errors(form.seo.metaKeywords) }}
+            {{ form_label(form.metaKeywords, "Meta Keywords") }}
+            {{ form_errors(form.metaKeywords) }}
             <div class="col-sm-9">
-                    {{ form_widget(form.seo.metaKeywords) }}
+                    {{ form_widget(form.metaKeywords) }}
             </div>
         </div>
         <div class="form-group">
-            {{ form_label(form.seo.seoUrl, "Url") }}
-            {{ form_errors(form.seo.seoUrl) }}
+            {{ form_label(form.seoUrl, "Url") }}
+            {{ form_errors(form.seoUrl) }}
             <div class="col-sm-9">
-                    {{ form_widget(form.seo.seoUrl) }}
+                    {{ form_widget(form.seoUrl) }}
             </div>
         </div>
 

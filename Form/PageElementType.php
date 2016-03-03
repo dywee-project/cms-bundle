@@ -3,6 +3,10 @@
 namespace Dywee\CMSBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -15,9 +19,9 @@ class PageElementType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('type',               'hidden', array('required' => false))
-            ->add('content',            'textarea', array('required' => false))
-            ->add('displayOrder',       'hidden')
+            ->add('type',               TextType::class, array('required' => false))
+            ->add('content',            TextareaType::class, array('required' => false))
+            ->add('displayOrder',       HiddenType::class)
         ;
     }
     
@@ -29,13 +33,5 @@ class PageElementType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'Dywee\CMSBundle\Entity\PageElement'
         ));
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return 'dywee_cmsbundle_pageelement';
     }
 }
