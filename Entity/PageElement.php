@@ -55,7 +55,6 @@ class PageElement implements Translatable
     private $type;
 
     /**
-     * @Gedmo\Translatable
      * @ORM\Column(name="content", type="text", nullable=true)
      */
     private $content;

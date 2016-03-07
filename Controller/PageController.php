@@ -282,7 +282,7 @@ class PageController extends Controller
         }
         if($page->getWebsite()->getId() != $this->get('session')->get('activeWebsite')->getId())
             throw $this->createAccessDeniedException('Vous ne pouvez pas accéder à cette page');
-
+        
         $form = $this->get('form.factory')->create(PageType::class, $page);
 
         if($form->handleRequest($request)->isValid())

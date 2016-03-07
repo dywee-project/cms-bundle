@@ -4,7 +4,7 @@ namespace Dywee\CMSBundle\Form;
 
 use Dywee\CoreBundle\Form\Type\SeoType;
 use Dywee\CMSBundle\Form\PageElementType;
-use Ivory\CKEditorBundle\Form\Type\CKEditorType;
+use Trsteel\CkeditorBundle\Form\Type\CkeditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -62,12 +62,12 @@ class PageType extends AbstractType
                     return $er->createQueryBuilder('p')->select('p')->where('p.inMenu = 1 and p.website = :id')->setParameter('id', $website);
                 },
             ))
-            /*->add('pageElements',         CollectionType::class,      array(
+            ->add('pageElements',         CollectionType::class,      array(
                 'entry_type' => PageElementType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false
-            ))*/
+            ))
             ->add('cheatingTrick',  CKEditorType::class)
         ;
     }

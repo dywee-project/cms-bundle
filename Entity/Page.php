@@ -191,7 +191,7 @@ class Page
     private $children;
 
     /**
-     * @ORM\OneToMany(targetEntity="Dywee\CMSBundle\Entity\PageElement", mappedBy="page", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="PageElement", mappedBy="page", cascade={"persist", "remove"})
      */
     private $pageElements;
 
@@ -876,10 +876,10 @@ class Page
     /**
      * Add pageElement
      *
-     * @param \Dywee\CMSBundle\Entity\PageElement $pageElement
+     * @param PageElement $pageElement
      * @return Page
      */
-    public function addPageElement(\Dywee\CMSBundle\Entity\PageElement $pageElement)
+    public function addPageElement(PageElement $pageElement)
     {
         $this->pageElements[] = $pageElement;
         $pageElement->setPage($this);
@@ -890,9 +890,9 @@ class Page
     /**
      * Remove pageElement
      *
-     * @param \Dywee\CMSBundle\Entity\PageElement $pageElement
+     * @param PageElement $pageElement
      */
-    public function removePageElement(\Dywee\CMSBundle\Entity\PageElement $pageElement)
+    public function removePageElement(PageElement $pageElement)
     {
         $this->pageElements->removeElement($pageElement);
         $pageElement->setPage(null);

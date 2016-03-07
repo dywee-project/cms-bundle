@@ -228,7 +228,7 @@ $(document).ready(function() {
         addElement($container, 'text');
     } else {
         // Pour chaque catégorie déjà existante, on traite les champs
-        $('div#dywee_cmsbundle_page_pageElements .box').each(function() {
+        $('div#page_pageElements .box').each(function() {
 
             var $field = $(this).find('[id$="_content"]');
             var type = $(this).find('[id$="_type"]').val();
@@ -300,7 +300,8 @@ $(document).ready(function() {
         // Dans le contenu de l'attribut « data-prototype », on remplace :
         // - le texte "__name__label__" qu'il contient par le label du champ
         // - le texte "__name__" qu'il contient par le numéro du champ
-        var $prototype = $($container.find('div#dywee_cmsbundle_page_pageElements').attr('data-prototype').replace(/__name__label__/g, 'Catégorie n°' + (index+1))
+        
+        var $prototype = $($container.find('div#page_pageElements').attr('data-prototype').replace(/__name__label__/g, 'Catégorie n°' + (index+1))
             .replace(/__name__/g, index));
 
         $prototype.find('.box-title').html('type: '+type);
