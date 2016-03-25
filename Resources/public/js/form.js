@@ -300,7 +300,7 @@ $(document).ready(function() {
         // Dans le contenu de l'attribut « data-prototype », on remplace :
         // - le texte "__name__label__" qu'il contient par le label du champ
         // - le texte "__name__" qu'il contient par le numéro du champ
-        
+
         var $prototype = $($container.find('div#page_pageElements').attr('data-prototype').replace(/__name__label__/g, 'Catégorie n°' + (index+1))
             .replace(/__name__/g, index));
 

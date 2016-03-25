@@ -55,3 +55,19 @@ dywee_cms_getPageElementDashboard_byAjax:
     defaults: { _controller: DyweeCMSBundle:PageElement:ajaxDashboard, _locale: 'fr'}
     options:
         expose: true
+
+dywee_notification_add:
+    path:     /cms/notification/add
+    defaults: { _controller: DyweeCMSBundle:Notification:add }
+
+dywee_notification_update:
+    path:     /cms/notification/{id}/update
+    defaults: { _controller: DyweeCMSBundle:Notification:update }
+
+dywee_notification_table:
+    path:     /cms/notification/table
+    defaults: { _controller: DyweeCMSBundle:Notification:table}
+
+dywee_notification_delete:
+    path:     /cms/notification/{id}/delete
+    defaults: { _controller: DyweeCMSBundle:Notification:remove }
