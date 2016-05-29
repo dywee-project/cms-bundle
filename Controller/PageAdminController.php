@@ -17,7 +17,7 @@ class PageAdminController extends Controller
     public function dashboardTableAction()
     {
         $pr = $this->getDoctrine()->getManager()->getRepository('DyweeCMSBundle:Page');
-        $ps = $pr->findBy(array('lvl' => 0, 'website' => $this->get('session')->get('activeWebsite')));
+        $ps = $pr->findBy(array('lvl' => 0));
         return $this->render('DyweeCMSBundle:Admin:table.html.twig', array('pageList' => $ps));
     }
 

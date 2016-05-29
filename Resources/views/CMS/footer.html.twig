@@ -3,9 +3,8 @@
         <div class="footer-main">
             <div class="row">
                 <div class="col-xs-12 col-center">
-                    {% render(controller('DyweeCMSBundle:Menu:navbar', {position: 'footer'})) %}
+                    {{ render(controller('DyweeCMSBundle:Menu:navbar', {position: 'footer'})) }}
                 </div>
-                {% render(controller('DyweeNewsletterBundle:Newsletter:form', {request: app.request})) %}
                 <div class="col-xs-12">
                     <div class="footer-bottom">
                         <ul class="ftr-socialicons">

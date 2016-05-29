@@ -18,16 +18,12 @@ class MenuController extends Controller
             array('menuOrder' => 'asc')
         );*/
 
-        $websiteId = $this->container->getParameter('website.id');
-        $pageList = $pageRepository->getMenu($websiteId);
+        $pageList = $pageRepository->findAll();
 
 
         if($position == 'top')
         {
-            $websiteRepository = $em->getRepository('DyweeWebsiteBundle:Website');
-            $website = $websiteRepository->findOneById($websiteId);
-
-            return $this->render('DyweeCMSBundle:CMS:menu.html.twig', array('pageList' => $pageList, 'websiteName' => $website->getPublicName())
+            return $this->render('DyweeCMSBundle:CMS:menu.html.twig', array('pageList' => $pageList)
             );
         }
 

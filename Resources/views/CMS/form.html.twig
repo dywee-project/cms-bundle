@@ -32,7 +32,7 @@
 <div class="tab-content">
     <div class="tab-pane fade in active" id="content">
         <div class="form-group">
-            {{ form_label(form.name, "Nom", {"label_attr": {"class": "control-label col-sm-2"}}) }}
+            {{ form_label(form.name, "Nom") }}
             {{ form_errors(form.name) }}
             <div class="col-md-9">
                 {{ form_widget(form.name) }}
@@ -56,7 +56,7 @@
                     <div class="panel-body">
                         {% if page.childArguments is not null %}
                             {{ render(controller('DyweeModuleBundle:MusicGallery:show', {id: page.childArguments})) }}
-                            <a href="{{ path('dywee_musicGallery_update', {id: page.childArguments}) }}" class="btn btn-default btn-lg">Gérer la galerie musicale associée</a>
+                            <a href="{{ path('musicGallery_update', {id: page.childArguments}) }}" class="btn btn-default btn-lg">Gérer la galerie musicale associée</a>
                         {% else %}
                             <a href="#settings" data-toggle="tab"><i class="fa fa-cog"></i> Renseigner une galerie musicale associée (champs "paramètres")</a>
                         {% endif %}

@@ -1,73 +1,77 @@
-dywee_cms_homepage:
+cms_homepage:
     path:     /
     defaults: { _controller: DyweeCMSBundle:Page:index }
 
-dywee_cms_list:
+page_list:
     path:     /cms/list
     defaults: { _controller: DyweeCMSBundle:Page:list }
 
-dywee_cms_table:
+page_table:
     path:     /admin6833/cms/table
     defaults: { _controller: DyweeCMSBundle:Page:table }
 
-dywee_cms_view:
+page_view:
     path:     /page/{data}
     defaults: { _controller: DyweeCMSBundle:Page:view }
 
-dywee_cms_view_content:
+page_view_content:
     path:     /page/{data}/onlyContent
     defaults: { _controller: DyweeCMSBundle:Page:viewContent }
 
-dywee_cms_add:
+page_add:
     path:     /admin6833/cms/add
     defaults: { _controller: DyweeCMSBundle:Page:add }
 
-dywee_cms_update:
+page_update:
     path:     /admin6833/page/update/{id}
     defaults: { _controller: DyweeCMSBundle:Page:update }
     requirements:
         id: \d+
 
-dywee_cms_details:
+page_details:
     path:     /admin6833/page/{id}/details
     defaults: { _controller: DyweeCMSBundle:PageAdmin:view }
     requirements:
         id: \d+
 
-dywee_cms_delete:
+page_delete:
     path:     /admin6833/page/delete/{id}
     defaults: { _controller: DyweeCMSBundle:Page:delete }
     requirements:
         id: \d+
 
-dywee_cms_view_contact_page:
+cms_view_contact_page:
     path:     /page/contact
     defaults: { _controller: DyweeCMSBundle:Page:viewContact }
 
-dywee_cms_inMenu_switch:
+cms_inMenu_switch:
     path:     /admin6833/page/{id}/inMenuSwitch
     defaults: { _controller: DyweeCMSBundle:Page:inMenuSwitch }
     requirements:
         id: \d+
 
-dywee_cms_getPageElementDashboard_byAjax:
+cms_getPageElementDashboard_byAjax:
     path:     /admin6833/cms/pageElement/ajaxDashboard
     defaults: { _controller: DyweeCMSBundle:PageElement:ajaxDashboard, _locale: 'fr'}
     options:
         expose: true
 
-dywee_notification_add:
+cms_install:
+    path:     /cms/install
+    defaults: {_controller: DyweeCMSBundle:Core:install}
+
+notification_add:
     path:     /cms/notification/add
     defaults: { _controller: DyweeCMSBundle:Notification:add }
 
-dywee_notification_update:
+notification_update:
     path:     /cms/notification/{id}/update
     defaults: { _controller: DyweeCMSBundle:Notification:update }
 
-dywee_notification_table:
+notification_table:
     path:     /cms/notification/table
     defaults: { _controller: DyweeCMSBundle:Notification:table}
 
-dywee_notification_delete:
+notification_delete:
     path:     /cms/notification/{id}/delete
     defaults: { _controller: DyweeCMSBundle:Notification:remove }

@@ -5,16 +5,16 @@
         {% for page in pageList %}
             {% if page.children is empty %}
                 {% if page.type == 1 %}
-                    <li><a href="{{ path('dywee_cms_homepage') }}">{{ page.menuName }}</a></li>
+                    <li><a href="{{ path('cms_homepage') }}">{{ page.menuName }}</a></li>
                 {% else %}
-                    <li><a href="{{ path('dywee_cms_view', {data: page.url}) }}">{{ page.menuName }}</a></li>
+                    <li><a href="{{ path('cms_view', {data: page.url}) }}">{{ page.menuName }}</a></li>
                 {% endif %}
             {% else %}
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ page.menuName }} <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         {% for subPage in page.children %}
-                            <li><a href="{{ path('dywee_cms_view', {data: subPage.url}) }}">{{ subPage.menuName }}</a></li>
+                            <li><a href="{{ path('cms_view', {data: subPage.url}) }}">{{ subPage.menuName }}</a></li>
                         {% endfor %}
                     </ul>
                 </li>

@@ -14,8 +14,12 @@ use Gedmo\Translatable\Translatable;
  * @ORM\HasLifecycleCallbacks()
  * @Gedmo\Tree(type="nested")
  */
-class Page
+class Page implements Translatable
 {
+
+    const TYPE_HOMEPAGE = 1;
+    const TYPE_NORMALPAGE = 2;
+
     /**
      * @var integer
      *
@@ -147,11 +151,6 @@ class Page
      * @ORM\OneToMany(targetEntity="Dywee\CMSBundle\Entity\PageStat", mappedBy="page", cascade={"persist", "remove"})
      */
     private $pageStat;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Dywee\WebsiteBundle\Entity\Website", inversedBy="pages")
-     */
-    private $website;
 
     /**
      * @Gedmo\TreeLeft

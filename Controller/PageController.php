@@ -18,34 +18,28 @@ class PageController extends Controller
     public function indexAction(Request $request)
     {
         $pr = $this->getDoctrine()->getManager()->getRepository('DyweeCMSBundle:Page');
-        $page = $pr->findHomePage($this->container->getParameter('website.id'));
+        $page = $pr->findHomePage();
 
         if($page == null)
-            return $this->redirect($this->generateUrl('dywee_install'));
+            return $this->redirect($this->generateUrl('cms_install'));
 
         return $this->viewAction($page->getId(), $request);
     }
 
     public function inMenuSwitchAction(Page $page)
     {
-        if($page->getWebsite()->getId() != $this->get('session')->get('activeWebsite')->getId())
-            throw $this->createAccessDeniedException('Vous ne pouvez pas accéder à cette page');
-
         $em = $this->getDoctrine()->getManager();
 
         $page->setInMenu(!$page->getInMenu());
         $em->persist($page);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('dywee_cms_table'));
+        return $this->redirect($this->generateUrl('cms_table'));
     }
 
     public function renderHomeAction($page)
     {
         $em = $this->getDoctrine()->getManager();
-        $pr = $em->getRepository('DyweeCMSBundle:Page');
-        $nr = $em->getRepository('DyweeNewsBundle:News');
-        $pror = $em->getRepository('DyweeProductBundle:Product');
 
         $pageStat = new PageStat();
         $pageStat->setPage($page);
@@ -60,9 +54,6 @@ class PageController extends Controller
 
     public function adminViewAction(Page $page)
     {
-        if($page->getWebsite()->getId() != $this->get('session')->get('activeWebsite')->getId())
-            throw $this->createAccessDeniedException('Vous ne pouvez pas accéder à cette page');
-
         $em = $this->getDoctrine()->getManager();
 
         $psr = $em->getRepository('DyweeCMSBundle:PageStat');
@@ -73,8 +64,7 @@ class PageController extends Controller
     public function tableAction()
     {
         $pr = $this->getDoctrine()->getManager()->getRepository('DyweeCMSBundle:Page');
-        $activeWebsite = $this->get('session')->get('activeWebsite');
-        $ps = $pr->findBy(array('website' => $activeWebsite));
+        $ps = $pr->findAll();
 
         return $this->render('DyweeCMSBundle:CMS:table.html.twig', array('pageList' => $ps));
     }
@@ -98,32 +88,32 @@ class PageController extends Controller
         $pageRepository = $this->getDoctrine()->getManager()->getRepository('DyweeCMSBundle:Page');
 
         if(is_numeric($data))
-            $page = $pageRepository->findById($this->container->getParameter('website.id'), $data);
-        else $page = $pageRepository->findBySeoUrl($this->container->getParameter('website.id'), $data);
+            $page = $pageRepository->findById($data);
+        else $page = $pageRepository->findBySeoUrl($data);
 
         switch($page->getType())
         {
-            case 3: return $this->redirect($this->generateUrl('dywee_message_new'));
-            case 5: return $this->forward('DyweeModuleBundle:Event:page', array('page' => $page));
+            case 3: return $this->redirect($this->generateUrl('message_new'));
+            /*case 5: return $this->forward('DyweeModuleBundle:Event:page', array('page' => $page));
             case 6: return $this->forward('DyweeEshopBundle:Eshop:pageHandler', array('page' => $page));
             case 7: return $this->render('DyweeBlogBundle:Blog:page.html.twig', array('page' => $page));
             case 8: return $this->forward('DyweeModuleBundle:Form:page', array('page' => $page));
             case 9: return $this->forward('DyweeFaqBundle:Faq:page', array('page' => $page));
             case 10: return $this->forward('DyweeFaqBundle:PictureGallery:page', array('page' => $page));
             case 11: return $this->forward('DyweeFaqBundle:VideoGallery:page', array('page' => $page));
-            case 12: return $this->forward('DyweeModuleBundle:MusicGallery:page', array('page' => $page));
+            case 12: return $this->forward('DyweeModuleBundle:MusicGallery:page', array('page' => $page));*/
         }
 
         $data = array('page' => $page);
 
-        if($page->hasForm())
+        /*if($page->hasForm())
         {
             $formsId = $page->getForms();
 
             $em = $this->getDoctrine()->getManager();
             $formRepository = $em->getRepository('DyweeModuleBundle:DyweeForm');
 
-            $formBuilderService = $this->get('dywee_form.builder');
+            $formBuilderService = $this->get('form.builder');
 
             $forms = array();
             foreach($formsId as $formId)
@@ -151,7 +141,7 @@ class PageController extends Controller
                         $notification->setContent('Une nouvelle réponse a été validée pour le formulaire');
                         $notification->setBundle('module');
                         $notification->setType('form.response.new');
-                        $notification->setRoutingPath('dywee_customFormResponse_view');
+                        $notification->setRoutingPath('customFormResponse_view');
                         $notification->setWebsite($website);
 
                         $em->persist($response);
@@ -170,91 +160,15 @@ class PageController extends Controller
 
             //On passe les formulaires à la vue
             $data['forms'] = $forms;
-        }
+        }*/
         return $this->render('DyweeCMSBundle:CMS:view.html.twig', $data);
     }
-
-    /*
-     * Deprecated
-     *
-    public function viewPageAction($page)
-    {
-        $type = $page->getType();
-
-        switch($type)
-        {
-            case 1: return $this->renderHomeAction($page);
-            case 3: return $this->redirect($this->generateUrl('dywee_message_new'));
-            case 4: return $this->render('DyweeNewsBundle:CMS:page.html.twig', array('page' => $page));
-            case 5: return $this->forward('DyweeModuleBundle:Event:page', array('page' => $page));
-            case 6: return $this->forward('DyweeEshopBundle:Eshop:pageHandler', array('page' => $page));
-            case 7: return $this->render('DyweeBlogBundle:Blog:page.html.twig', array('page' => $page));
-            case 8: return $this->forward('DyweeModuleBundle:Form:page', array('page' => $page));
-            case 9: return $this->forward('DyweeFaqBundle:Faq:page', array('page' => $page));
-            case 10: return $this->forward('DyweeFaqBundle:PictureGallery:page', array('page' => $page));
-            case 11: return $this->forward('DyweeFaqBundle:VideoGallery:page', array('page' => $page));
-            case 12: return $this->forward('DyweeModuleBundle:MusicGallery:page', array('page' => $page));
-            default: return $this->render('DyweeCMSBundle:CMS:view.html.twig', array('page' => $page));
-        }
-    }
-     */
-
-    /*
-     * Deprecated
-     */
-    /*public function viewAction($data)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $pr = $em->getRepository('DyweeCMSBundle:Page');
-        if(is_numeric($data))
-            $page = $pr->findById($this->container->getParameter('website.id'), $data);
-        else $page = $pr->findBySeoUrl($this->container->getParameter('website.id'), $data);
-
-        if($page)
-        {
-            $pageStat = new PageStat();
-            $pageStat->setPage($page);
-
-            $em->persist($pageStat);
-            $em->flush();
-
-            return $this->viewPageAction($page);
-        }
-        throw $this->createNotFoundException('Page introuvable');
-    }*/
-
-    /*
-     * Deprecated
-     */
-    /*
-    public function viewContentAction($data)
-    {
-        $activeWebsite = $this->container->getParameter('website.id');
-
-        $em = $this->getDoctrine()->getManager();
-        $pr = $em->getRepository('DyweeCMSBundle:Page');
-        $param = is_numeric($data)?array('id' => $data, 'website' => $activeWebsite):array('seoUrl' => $data, 'activeWebsite' => $activeWebsite);
-        $page = $pr->findOneBy($param);
-
-        $pageStat = new PageStat();
-        $pageStat->setPage($page);
-
-        $em->persist($pageStat);
-        $em->flush();
-
-        return $this->render('DyweeCMSBundle:CMS:viewContent.html.twig', array('page' => $page));
-    }*/
 
     public function addAction(Request $request)
     {
         $page = new Page();
 
         $em = $this->getDoctrine()->getManager();
-        $websiteRepository = $em->getRepository('DyweeWebsiteBundle:Website');
-
-        $website = $websiteRepository->findOneById($this->get('session')->get('activeWebsite')->getId());
-
-        $page->setWebsite($website);
 
         $form = $this->get('form.factory')->create(PageType::class, $page);
 
@@ -267,7 +181,7 @@ class PageController extends Controller
 
             $request->getSession()->getFlashBag()->add('success', 'Page bien créée');
 
-            return $this->redirect($this->generateUrl('dywee_cms_table'));
+            return $this->redirect($this->generateUrl('cms_table'));
         }
         return $this->render('DyweeCMSBundle:CMS:add.html.twig', array('form' => $form->createView()));
     }
@@ -280,9 +194,7 @@ class PageController extends Controller
             $pageRepository = $this->getDoctrine()->getManager()->getRepository('DyweeCMSBundle:Page');
             $langToUse = $request->get('lang');
         }
-        if($page->getWebsite()->getId() != $this->get('session')->get('activeWebsite')->getId())
-            throw $this->createAccessDeniedException('Vous ne pouvez pas accéder à cette page');
-        
+
         $form = $this->get('form.factory')->create(PageType::class, $page);
 
         if($form->handleRequest($request)->isValid())
@@ -294,22 +206,19 @@ class PageController extends Controller
 
             $request->getSession()->getFlashBag()->add('success', 'Page bien modifiée');
 
-            return $this->redirect($this->generateUrl('dywee_cms_table'));
+            return $this->redirect($this->generateUrl('cms_table'));
         }
         return $this->render('DyweeCMSBundle:CMS:edit.html.twig', array('page' => $page, 'form' => $form->createView()));
     }
 
     public function deleteAction(Page $page)
     {
-        if($page->getWebsite()->getId() != $this->get('session')->get('activeWebsite')->getId())
-            throw $this->createAccessDeniedException('Vous ne pouvez pas accéder à cette page');
-
         $em = $this->getDoctrine()->getManager();
         $em->remove($page);
         $em->flush();
 
         $this->get('session')->getFlashBag()->add('success', 'Page bien supprimée');
 
-        return $this->redirect($this->generateUrl('dywee_cms_table'));
+        return $this->redirect($this->generateUrl('cms_table'));
     }
 }

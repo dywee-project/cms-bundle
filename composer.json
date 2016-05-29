@@ -14,7 +14,8 @@
   ],
   "require": {
     "php": ">=5.3.0",
-    "dywee/core-bundle": "dev-master"
+    "dywee/core-bundle": "dev-master",
+    "stof/doctrine-extensions-bundle": "^1.2"
   },
   "autoload": {
     "psr-4": {
