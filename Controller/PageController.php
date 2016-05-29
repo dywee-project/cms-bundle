@@ -21,7 +21,7 @@ class PageController extends Controller
         $page = $pr->findHomePage();
 
         if($page == null)
-            return $this->redirect($this->generateUrl('cms_install'));
+            return $this->redirect($this->generateUrl('page_install'));
 
         return $this->viewAction($page->getId(), $request);
     }
@@ -34,7 +34,7 @@ class PageController extends Controller
         $em->persist($page);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('cms_table'));
+        return $this->redirect($this->generateUrl('page_table'));
     }
 
     public function renderHomeAction($page)
@@ -49,7 +49,7 @@ class PageController extends Controller
 
         $data = array('page' => $page);
 
-        return $this->render('DyweeCMSBundle:CMS:view.html.twig', $data);
+        return $this->render('DyweeCMSBundle:Page:view.html.twig', $data);
     }
 
     public function adminViewAction(Page $page)
@@ -66,7 +66,7 @@ class PageController extends Controller
         $pr = $this->getDoctrine()->getManager()->getRepository('DyweeCMSBundle:Page');
         $ps = $pr->findAll();
 
-        return $this->render('DyweeCMSBundle:CMS:table.html.twig', array('pageList' => $ps));
+        return $this->render('DyweeCMSBundle:Page:table.html.twig', array('pageList' => $ps));
     }
 
     public function viewAction($data, Request $request)
@@ -161,7 +161,7 @@ class PageController extends Controller
             //On passe les formulaires à la vue
             $data['forms'] = $forms;
         }*/
-        return $this->render('DyweeCMSBundle:CMS:view.html.twig', $data);
+        return $this->render('DyweeCMSBundle:Page:view.html.twig', $data);
     }
 
     public function addAction(Request $request)
@@ -181,9 +181,9 @@ class PageController extends Controller
 
             $request->getSession()->getFlashBag()->add('success', 'Page bien créée');
 
-            return $this->redirect($this->generateUrl('cms_table'));
+            return $this->redirect($this->generateUrl('page_table'));
         }
-        return $this->render('DyweeCMSBundle:CMS:add.html.twig', array('form' => $form->createView()));
+        return $this->render('DyweeCMSBundle:Page:add.html.twig', array('form' => $form->createView()));
     }
 
     public function updateAction(Page $page, Request $request)
@@ -206,9 +206,9 @@ class PageController extends Controller
 
             $request->getSession()->getFlashBag()->add('success', 'Page bien modifiée');
 
-            return $this->redirect($this->generateUrl('cms_table'));
+            return $this->redirect($this->generateUrl('page_table'));
         }
-        return $this->render('DyweeCMSBundle:CMS:edit.html.twig', array('page' => $page, 'form' => $form->createView()));
+        return $this->render('DyweeCMSBundle:Page:edit.html.twig', array('page' => $page, 'form' => $form->createView()));
     }
 
     public function deleteAction(Page $page)
@@ -219,6 +219,6 @@ class PageController extends Controller
 
         $this->get('session')->getFlashBag()->add('success', 'Page bien supprimée');
 
-        return $this->redirect($this->generateUrl('cms_table'));
+        return $this->redirect($this->generateUrl('page_table'));
     }
 }

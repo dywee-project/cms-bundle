@@ -7,7 +7,7 @@ page_list:
     defaults: { _controller: DyweeCMSBundle:Page:list }
 
 page_table:
-    path:     /admin6833/cms/table
+    path:     /admin/cms/table
     defaults: { _controller: DyweeCMSBundle:Page:table }
 
 page_view:
@@ -19,23 +19,23 @@ page_view_content:
     defaults: { _controller: DyweeCMSBundle:Page:viewContent }
 
 page_add:
-    path:     /admin6833/cms/add
+    path:     /admin/cms/add
     defaults: { _controller: DyweeCMSBundle:Page:add }
 
 page_update:
-    path:     /admin6833/page/update/{id}
+    path:     /admin/page/update/{id}
     defaults: { _controller: DyweeCMSBundle:Page:update }
     requirements:
         id: \d+
 
 page_details:
-    path:     /admin6833/page/{id}/details
+    path:     /admin/page/{id}/details
     defaults: { _controller: DyweeCMSBundle:PageAdmin:view }
     requirements:
         id: \d+
 
 page_delete:
-    path:     /admin6833/page/delete/{id}
+    path:     /admin/page/delete/{id}
     defaults: { _controller: DyweeCMSBundle:Page:delete }
     requirements:
         id: \d+
@@ -44,14 +44,14 @@ cms_view_contact_page:
     path:     /page/contact
     defaults: { _controller: DyweeCMSBundle:Page:viewContact }
 
-cms_inMenu_switch:
-    path:     /admin6833/page/{id}/inMenuSwitch
+page_inMenu_switch:
+    path:     /admin/page/{id}/inMenuSwitch
     defaults: { _controller: DyweeCMSBundle:Page:inMenuSwitch }
     requirements:
         id: \d+
 
 cms_getPageElementDashboard_byAjax:
-    path:     /admin6833/cms/pageElement/ajaxDashboard
+    path:     /admin/cms/pageElement/ajaxDashboard
     defaults: { _controller: DyweeCMSBundle:PageElement:ajaxDashboard, _locale: 'fr'}
     options:
         expose: true

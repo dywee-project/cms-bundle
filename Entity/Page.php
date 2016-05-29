@@ -758,29 +758,6 @@ class Page implements Translatable
     }
 
     /**
-     * Set website
-     *
-     * @param \Dywee\WebsiteBundle\Entity\Website $website
-     * @return Page
-     */
-    public function setWebsite(\Dywee\WebsiteBundle\Entity\Website $website = null)
-    {
-        $this->website = $website;
-
-        return $this;
-    }
-
-    /**
-     * Get website
-     *
-     * @return \Dywee\WebsiteBundle\Entity\Website 
-     */
-    public function getWebsite()
-    {
-        return $this->website;
-    }
-
-    /**
      * Set lft
      *
      * @param integer $lft

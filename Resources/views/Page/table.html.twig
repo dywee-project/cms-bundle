@@ -9,12 +9,12 @@
 {% block body %}
     <div class="row">
         <div class="col-md-12">
-            <a href="{{ path('cms_add') }}" class="btn btn-success pull-right action-right"><i class="fa fa-plus"></i> Ajouter</a>
+            <a href="{{ path('page_add') }}" class="btn btn-success pull-right action-right"><i class="fa fa-plus"></i> Ajouter</a>
 
             <div class="title-heading">
                 <h1 class="text-center">Liste des Pages</h1>
             </div>
-            {% include 'DyweeCMSBundle:Admin:table.html.twig' %}
+            {% include 'DyweeCMSBundle:Page:miniTable.html.twig' %}
         </div>
     </div>
 

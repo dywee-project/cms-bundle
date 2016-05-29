@@ -1,7 +1,5 @@
 $(document).ready(function() {
 
-    trsteelConfig.extraPlugins = 'sourcedialog';
-
     var choices = [
         {
             key: 'text',

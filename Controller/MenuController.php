@@ -23,7 +23,7 @@ class MenuController extends Controller
 
         if($position == 'top')
         {
-            return $this->render('DyweeCMSBundle:CMS:menu.html.twig', array('pageList' => $pageList)
+            return $this->render('DyweeCMSBundle:Nav:menu.html.twig', array('pageList' => $pageList)
             );
         }
 
