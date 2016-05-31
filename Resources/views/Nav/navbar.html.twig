@@ -9,7 +9,9 @@
                 <span class="icon-bar"></span>
             </button>
             {% if websiteName is defined and websiteName is not null %}
-                <a class="navbar-brand brand" href="{{ path('cms_homepage') }}">{{ websiteName }}</a>
+                <div class="logo">
+                    <a class="navbar-brand brand" href="{{ path('cms_homepage') }}">{{ websiteName }}</a>
+                </div>
             {% endif %}
         </div>
 

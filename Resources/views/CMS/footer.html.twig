@@ -2,6 +2,7 @@
 
 <nav class="nav-justified">
     <ul>
+        {% if pageList is defined %}
         {% for page in pageList %}
             {% if page.children is empty %}
                 {% if page.type == 1 %}
@@ -20,5 +21,6 @@
                 </li>
             {% endif %}
         {% endfor %}
+        {% endif %}
     </ul>
 </nav>
