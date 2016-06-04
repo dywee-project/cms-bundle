@@ -1,4 +1,10 @@
 services:
-#    dywee_cms.example:
-#        class: Dywee\CMSBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
+    dywee_cms.sidebar_handler:
+        class: Dywee\CMSBundle\Service\CMSAdminSidebarHandler
+        arguments: [ '@router' ]
+
+    dywee_cms.admin_sidebar_listener:
+        class: Dywee\CMSBundle\Listener\AdminSidebarBuilderListener
+        arguments: [ '@dywee_cms.sidebar_handler' ]
+        tags:
+            - { name: kernel.event_subscriber }
