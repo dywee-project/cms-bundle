@@ -17,12 +17,17 @@ class CMSAdminSidebarHandler{
     {
         $menu = array(
             'icon' => 'fa fa-files-o',
-            'label' => 'Pages',
+            'label' => 'Contenu',
             'children' => array(
                 array(
                     'icon' => 'fa fa-list-alt',
                     'label' => 'Gestion des pages',
                     'route' => $this->router->generate('page_table')
+                ),
+                array(
+                    'icon' => 'fa fa-list-alt',
+                    'label' => 'Gestion du menu',
+                    'route' => $this->router->generate('menu_handle')
                 ),
                 array(
                     'icon' => 'fa fa-plus',
@@ -31,6 +36,8 @@ class CMSAdminSidebarHandler{
                 ),
             )
         );
+
+
 
         return $menu;
     }

@@ -60,6 +60,13 @@ cms_install:
     path:     /cms/install
     defaults: {_controller: DyweeCMSBundle:Core:install}
 
+menu_handle:
+    path:     /cms/menu/handle
+    defaults: {_controller: DyweeCMSBundle:Menu:handle}
+
+
+####### TODO: QU'EST CE QUE CA FOU LA?? ########
+
 notification_add:
     path:     /cms/notification/add
     defaults: { _controller: DyweeCMSBundle:Notification:add }
@@ -75,3 +82,5 @@ notification_table:
 notification_delete:
     path:     /cms/notification/{id}/delete
     defaults: { _controller: DyweeCMSBundle:Notification:remove }
+
+

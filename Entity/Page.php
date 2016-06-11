@@ -34,7 +34,7 @@ class Page implements Translatable
      *
      * @ORM\Column(name="type", type="smallint")
      */
-    private $type = 2;
+    private $type = self::TYPE_NORMALPAGE;
 
     /**
      * @var boolean
