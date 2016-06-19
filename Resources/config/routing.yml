@@ -60,27 +60,68 @@ cms_install:
     path:     /cms/install
     defaults: {_controller: DyweeCMSBundle:Core:install}
 
-menu_handle:
-    path:     /cms/menu/handle
-    defaults: {_controller: DyweeCMSBundle:Menu:handle}
+
+#####################################
+#                                   #
+#     ROUTING DES FORMULAIRES       #
+#                                   #
+#####################################
 
 
-####### TODO: QU'EST CE QUE CA FOU LA?? ########
+cms_customForm_table:
+    path:     /admin6833/modules/customForm/table
+    defaults: { _controller: DyweeCMSBundle:DyweeForm:table }
 
-notification_add:
-    path:     /cms/notification/add
-    defaults: { _controller: DyweeCMSBundle:Notification:add }
+cms_customForm_add:
+    path:     /admin6833/modules/customForm/add
+    defaults: { _controller: DyweeCMSBundle:DyweeForm:add}
+    options:
+        expose: true
 
-notification_update:
-    path:     /cms/notification/{id}/update
-    defaults: { _controller: DyweeCMSBundle:Notification:update }
+cms_customForm_update:
+    path:     /admin6833/modules/customForm/{id}/update
+    defaults: { _controller: DyweeCMSBundle:DyweeForm:update }
+    requirements:
+        id: \d+
 
-notification_table:
-    path:     /cms/notification/table
-    defaults: { _controller: DyweeCMSBundle:Notification:table}
+cms_customForm_delete:
+    path:     /admin6833/modules/customForm/{id}/delete
+    defaults: { _controller: DyweeCMSBundle:DyweeForm:delete }
+    requirements:
+        id: \d+
 
-notification_delete:
-    path:     /cms/notification/{id}/delete
-    defaults: { _controller: DyweeCMSBundle:Notification:remove }
+cms_customForm_preview:
+    path:     /admin6833/modules/customForm/{id}/preview
+    defaults: { _controller: DyweeCMSBundle:DyweeForm:preview }
+    requirements:
+        id: \d+
 
+cms_customForm_display:
+    path:     /admin6833/modules/customForm/{id}/display
+    defaults: { _controller: DyweeCMSBundle:DyweeForm:displayForm }
+    requirements:
+        id: \d+
 
+cms_customFormResponse_table:
+    path:     /admin6833/modules/customFormResponse/{formId}/table
+    defaults: { _controller: DyweeCMSBundle:FormResponse:table }
+    requirements:
+        formId: \d+
+
+cms_customFormResponse_view:
+    path:     /admin6833/modules/customFormResponse/{id}/view
+    defaults: { _controller: DyweeCMSBundle:FormResponse:myView }
+    requirements:
+        id: \d+
+
+cms_customFormResponse_delete:
+    path:     /admin6833/modules/customFormResponse/{id}/delete
+    defaults: { _controller: DyweeCMSBundle:FormResponse:delete }
+    requirements:
+        id: \d+
+
+cms_customForm_json:
+    path:   /admin6833/customForm/json
+    defaults: { _controller: DyweeCMSBundle:DyweeForm:json}
+    options:
+        expose: true

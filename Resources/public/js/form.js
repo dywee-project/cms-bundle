@@ -15,11 +15,11 @@ $(document).ready(function() {
             icon: 'check-square-o',
             value: 'Formulaire',
             modalLabel: 'Choisissez un formulaire à afficher sur la page',
-            routeName: 'dywee_customForm_json',
-            routeForAdding: 'dywee_customForm_add',
+            routeName: 'cms_customForm_json',
+            routeForAdding: 'cms_customForm_add',
             active: true
         },
-        {
+        /*{
             key: 'musicGallery',
             icon: 'music',
             value: 'Galerie musicale',
@@ -27,7 +27,7 @@ $(document).ready(function() {
             routeName: 'dywee_musicGallery_json',
             routeForAdding: 'dywee_musicGallery_add',
             active: true
-        },
+        },*/
         {
             key: 'carousel',
             icon: 'picture-o',
@@ -96,7 +96,7 @@ $(document).ready(function() {
     {
         setBoxSortable();
         $.ajax({
-            url: Routing.generate('dywee_cms_getPageElementDashboard_byAjax'),
+            url: Routing.generate('cms_getPageElementDashboard_byAjax'),
             dataType: 'json',
             type: 'post',
             data: {objectName: type},
@@ -156,27 +156,6 @@ $(document).ready(function() {
         $prototype.find('.box-body').append($div);
     }
 
-    /*
-    **      DEPRECATED
-    function handleData(data, callback) {
-        if(data.type == 'success')
-        {
-            $("#dyweeModal .modal-title").html('Choisissez le module à ajouter');
-            $("#dyweeModal .modal-body").html(setTable(data.data, callback));
-            $("#dyweeModalContinueButton").html('Valider').removeClass('disabled');
-        }
-        else if(data.type == 'empty')
-        {
-            var toReturn = $('<p>Vous devez d\'abord configurer des éléments</p>');
-            var refreshButton = $("<button>").addClass('btn btn-default').html('<i class="fa fa-refresh"></i> Rafraichir').on('click', ajaxify);
-            var createButton = $("<a>").addClass('btn btn-success').html('<i class="fa fa-plus"></i> Créer un élément').attr('href', Routing.generate(createButtonRedirection)).attr('target', '_blanck');
-            toReturn.append($('<p>')).append(createButton, ' ', refreshButton);
-            $("#dyweeModal .modal-body").html(toReturn);
-        }
-
-        else
-            $("#dyweeModal .modal-body").html('<p>Une erreur est survenue</p>');
-    }*/
 
     function handleDataForPageElement(data) {
         if(data.type == 'success')

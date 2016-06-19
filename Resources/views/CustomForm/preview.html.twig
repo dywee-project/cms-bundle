@@ -1,0 +1,15 @@
+{# Dywee\ModuleBundle\Resources\View\LinkSection\preview.html.twig #}
+
+{% extends 'DyweeCMSBundle::admin.html.twig' %}
+
+{% block viewBody %}
+
+    <div class="title-heading">
+        <h1>Préview du formulaire {{ customForm.name }}</h1>
+    </div>
+
+    <div class="col-md-6">
+        {{ form(form) }}
+    </div>
+
+{% endblock %}

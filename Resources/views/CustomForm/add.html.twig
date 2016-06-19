@@ -1,0 +1,15 @@
+{# Dywee\ModuleBundle\Resources\View\CustomForm\add.html.twig #}
+
+{%  extends "DyweeCMSBundle::admin.html.twig" %}
+
+{% block title %}
+    Création d'un formulaire {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div class="title-heading">
+        <h1>Création d'un formulaire</h1>
+    </div>
+
+    {%  include "DyweeCMSBundle:CustomForm:form.html.twig" %}
+{% endblock %}

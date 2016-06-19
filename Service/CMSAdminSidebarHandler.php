@@ -17,7 +17,7 @@ class CMSAdminSidebarHandler{
     {
         $menu = array(
             'icon' => 'fa fa-files-o',
-            'label' => 'Contenu',
+            'label' => 'Pages',
             'children' => array(
                 array(
                     'icon' => 'fa fa-list-alt',
@@ -26,8 +26,8 @@ class CMSAdminSidebarHandler{
                 ),
                 array(
                     'icon' => 'fa fa-list-alt',
-                    'label' => 'Gestion du menu',
-                    'route' => $this->router->generate('menu_handle')
+                    'label' => 'Gestion des formulaires',
+                    'route' => $this->router->generate('cms_customForm_table')
                 ),
                 array(
                     'icon' => 'fa fa-plus',
@@ -36,8 +36,6 @@ class CMSAdminSidebarHandler{
                 ),
             )
         );
-
-
 
         return $menu;
     }

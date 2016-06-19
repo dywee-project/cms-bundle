@@ -1,0 +1,15 @@
+{# Dywee\ModuleBundle\Resources\View\CustomForm\edit.html.twig #}
+
+{%  extends "DyweeCMSBundle::admin.html.twig" %}
+
+{% block title %}
+    Modification d'un formulaire {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div class="title-heading">
+        <h1>Modification d'un formulaire {{ customForm.name }}</h1>
+    </div>
+
+    {%  include "DyweeCMSBundle:CustomForm:form.html.twig" %}
+{% endblock %}

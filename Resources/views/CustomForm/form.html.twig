@@ -1,0 +1,15 @@
+{# Dywee\ModuleBundle\Resources\View\LinkSection\form.html.twig #}
+
+{% form_theme form 'DyweeCMSBundle:CustomForm:collection_widget.html.twig' %}
+
+{{ form(form) }}
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        var config =
+        {
+            container_type: 'table'
+        };
+        dywee_handle_form_collection('dywee_form_formFields', config);
+    });
+</script>

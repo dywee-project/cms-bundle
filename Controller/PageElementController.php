@@ -6,29 +6,34 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class PageElementController extends Controller
 {
-    public function ajaxDashboardAction()
+    public function ajaxDashboardAction(Request $request)
     {
-        $request = $this->container->get('request');
-
         if($request->isXmlHttpRequest()) {
-            $objectName = $this->get('request')->get('objectName');
+            $objectName = $request->get('objectName');
             $em = $this->getDoctrine()->getManager();
 
-            $websiteId = $this->get('session')->get('activeWebsite');
-            $websiteRepository = $em->getRepository('DyweeWebsiteBundle:Website');
-            $website = $websiteRepository->findOneById($websiteId);
+            $serializer = $this->get('serializer');
+            $normalizer = new ObjectNormalizer();
 
             switch($objectName)
             {
                 case 'form':
-                    $repository = $em->getRepository('DyweeModuleBundle:DyweeForm');
-                    $formList = $repository->findForJson($website);
-                    return new Response(json_encode($formList));
+                    $repository = $em->getRepository('DyweeCMSBundle:DyweeForm');
+                    $formList = $repository->findAll();
+                    $response = array();
 
-                case 'musicGallery':
+                    foreach($formList as $form)
+                        $response[] = array('id' => $form->getId(), 'name' => $form->getName());
+
+                    return new Response(
+                        json_encode($response)
+                    );
+
+                /*case 'musicGallery':
                     $repository = $em->getRepository('DyweeModuleBundle:MusicGallery');
                     $list = $repository->findForJson($website);
                     return new Response(json_encode($list));
@@ -36,7 +41,7 @@ class PageElementController extends Controller
                 case 'carousel' :
                     $repository = $em->getRepository('DyweeModuleBundle:Carousel');
                     $list = $repository->findForJson($website);
-                    return new Response(json_encode($list));
+                    return new Response(json_encode($list));*/
                 default: return new Response('object not found');
             }
         }

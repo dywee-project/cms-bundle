@@ -1,0 +1,18 @@
+{# Dywee\ModuleBundle\Resources\View\CustomForm\page.html.twig #}
+
+{% extends 'DyweeCMSBundle:CMS:view.html.twig' %}
+
+{% block bodySubContent %}
+
+    {% if form.vars.submitted == true and form.vars.valid == true %}
+
+        <p>Le formulaire a bien été soumis.</p>
+
+    {% else %}
+
+        {{ page.content|raw }}
+        {{ form(form) }}
+
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,70 @@
+{# Dywee\customFormBundle\Resources\View\CustomForm\table.html.twig #}
+
+{%  extends "DyweeCMSBundle::admin.html.twig" %}
+
+{% block body %}
+<div class="row">
+
+    <div class="title-heading">
+        <a href="{{ path('cms_customForm_add') }}" class="btn btn-success pull-right"><i class="fa fa-plus"></i> Ajouter</a>
+        <h1 class="text-center">Liste des formulaires personnalisés</h1>
+    </div>
+    <div class="col-md-6">
+        <div class="box">
+            <div class="box-header with-border">
+                <h2 class="box-title">Liste de vos formulaires</h2>
+            </div>
+            {% if dyweeForms|length > 0 %}
+                <table class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nom</th>
+                        <th>Réponses</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {%  for customForm in dyweeForms %}
+                        <tr>
+                            <td>{{ customForm.id }}</td>
+                            <td>{{ customForm.name }}</td>
+                            <td><a href="{{ path('cms_customFormResponse_table', {formId: customForm.id}) }}">{{ customForm.countResponses }}</a></td>
+                            <td>
+                                <div class="btn-group btn-group-xs">
+                                    <a href="{{ path('cms_customForm_preview', {id: customForm.id}) }}" class="btn btn-default btn-xs"><i class="fa fa-eye"></i> </a>
+                                    <a href="{{ path('cms_customForm_update', {id: customForm.id}) }}" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i> </a>
+                                </div>
+                                <a href="{{ path('cms_customForm_delete', {id: customForm.id}) }}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>Vous n'avez pas encore créé de formulaire personnalisé.</p>
+                <p><a href="{{ path('cms_customForm_add') }}" class="btn btn-success"><i class="fa fa-plus"></i> Créer un formulaire</a></p>
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title"><i class="fa fa-question"></i> Qu'est-ce qu'un formulaire personnalisé?</h3>
+                <div class="box-tools pull-right">
+                    <!-- Buttons, labels, and many other things can be placed here! -->
+                    <!-- Here is a label for example -->
+                    <span class="label label-primary">Aide</span>
+                </div><!-- /.box-tools -->
+            </div><!-- /.box-header -->
+            <div class="box-body">
+                <p>Avec Dywee, vous pouvez créer facilement vos propres formulaires personnalisés.</p>
+                <p>Ajoutez des champs à votre formulaire via notre outil de création de formulaire et ajoutez les à vos pages.</p>
+            </div><!-- /.box-body -->
+            <div class="box-footer">
+                <a href="{{ path('cms_customForm_add') }}">Créer un formulaire personnalisé</a>
+            </div><!-- box-footer -->
+        </div><!-- /.box -->
+    </div>
+</div>
+{% endblock %}

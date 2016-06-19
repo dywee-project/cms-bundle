@@ -3,6 +3,8 @@
 namespace Dywee\CMSBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Dywee\CoreBundle\Traits\Seo;
+use FOS\UserBundle\Model\User;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Translatable\Translatable;
 
@@ -16,6 +18,7 @@ use Gedmo\Translatable\Translatable;
  */
 class Page implements Translatable
 {
+    use Seo;
 
     const TYPE_HOMEPAGE = 1;
     const TYPE_NORMALPAGE = 2;
@@ -32,42 +35,42 @@ class Page implements Translatable
     /**
      * @var integer
      *
-     * @ORM\Column(name="type", type="smallint")
+     * @ORM\Column(type="smallint")
      */
     private $type = self::TYPE_NORMALPAGE;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="inMenu", type="boolean")
+     * @ORM\Column(type="boolean")
      */
     private $inMenu;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="menuOrder", type="smallint", nullable=true)
+     * @ORM\Column(type="smallint", nullable=true)
      */
     private $menuOrder;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="creationDate", type="datetime")
+     * @ORM\Column(type="datetime")
      */
-    private $creationDate;
+    private $createdAt;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="active", type="boolean")
+     * @ORM\Column(type="boolean")
      */
-    private $active = 1;
+    private $active = true;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="state", type="smallint")
+     * @ORM\Column(type="smallint")
      */
     private $state;
 
@@ -75,7 +78,7 @@ class Page implements Translatable
      * @var string
      *
      * @Gedmo\Translatable
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(type="string", length=255)
      *
      */
     private $name;
@@ -84,46 +87,9 @@ class Page implements Translatable
      * @var string
      *
      * @Gedmo\Translatable
-     * @ORM\Column(name="metaTitle", type="string", length=255, nullable = true)
-     */
-    private $metaTitle;
-
-    /**
-     * @var string
-     *
-     * @Gedmo\Translatable
-     * @ORM\Column(name="metaDescription", type="text", nullable = true)
-     */
-    private $metaDescription;
-
-    /**
-     * @var string
-     *
-     * @Gedmo\Translatable
-     * @ORM\Column(name="metaKeywords", type="text", nullable = true)
-     */
-    private $metaKeywords;
-
-    /**
-     * @var string
-     *
-     * @Gedmo\Translatable
-     * @ORM\Column(name="seoUrl", type="string", length=255, nullable = true)
-     */
-    private $seoUrl;
-
-    /**
-     * @var string
-     *
-     * @Gedmo\Translatable
-     * @ORM\Column(name="menuName", type="string", length=255, nullable = true)
+     * @ORM\Column(type="string", length=255, nullable = true)
      */
     private $menuName;
-
-    /**
-     * @ORM\Column(name="createdAt", type="datetime")
-     */
-    private $createdAt;
 
     /**
      * @var \DateTime
@@ -274,28 +240,6 @@ class Page implements Translatable
         return $this->menuOrder;
     }
 
-    /**
-     * Set creationDate
-     *
-     * @param \DateTime $creationDate
-     * @return Page
-     */
-    public function setCreationDate($creationDate)
-    {
-        $this->creationDate = $creationDate;
-
-        return $this;
-    }
-
-    /**
-     * Get creationDate
-     *
-     * @return \DateTime 
-     */
-    public function getCreationDate()
-    {
-        return $this->creationDate;
-    }
 
     /**
      * Set active
@@ -409,98 +353,6 @@ class Page implements Translatable
     }
 
     /**
-     * Set metaTitle
-     *
-     * @param string $metaTitle
-     * @return Page
-     */
-    public function setMetaTitle($metaTitle)
-    {
-        $this->metaTitle = $metaTitle;
-
-        return $this;
-    }
-
-    /**
-     * Get metaTitle
-     *
-     * @return string 
-     */
-    public function getMetaTitle()
-    {
-        return $this->metaTitle;
-    }
-
-    /**
-     * Set metaDescription
-     *
-     * @param string $metaDescription
-     * @return Page
-     */
-    public function setMetaDescription($metaDescription)
-    {
-        $this->metaDescription = $metaDescription;
-
-        return $this;
-    }
-
-    /**
-     * Get metaDescription
-     *
-     * @return string 
-     */
-    public function getMetaDescription()
-    {
-        return $this->metaDescription;
-    }
-
-    /**
-     * Set metaKeywords
-     *
-     * @param string $metaKeywords
-     * @return Page
-     */
-    public function setMetaKeywords($metaKeywords)
-    {
-        $this->metaKeywords = $metaKeywords;
-
-        return $this;
-    }
-
-    /**
-     * Get metaKeywords
-     *
-     * @return string 
-     */
-    public function getMetaKeywords()
-    {
-        return $this->metaKeywords;
-    }
-
-    /**
-     * Set seoUrl
-     *
-     * @param string $seoUrl
-     * @return Page
-     */
-    public function setSeoUrl($seoUrl)
-    {
-        $this->seoUrl = $seoUrl;
-
-        return $this;
-    }
-
-    /**
-     * Get seoUrl
-     *
-     * @return string 
-     */
-    public function getSeoUrl()
-    {
-        return $this->seoUrl;
-    }
-
-    /**
      * Set menuName
      *
      * @param string $menuName
@@ -576,10 +428,10 @@ class Page implements Translatable
     /**
      * Set parent
      *
-     * @param \Dywee\CMSBundle\Entity\Page $parent
+     * @param Page $parent
      * @return Page
      */
-    public function setParent(\Dywee\CMSBundle\Entity\Page $parent = null)
+    public function setParent(Page $parent = null)
     {
         $this->parent = $parent;
 
@@ -589,7 +441,7 @@ class Page implements Translatable
     /**
      * Get parent
      *
-     * @return \Dywee\CMSBundle\Entity\Page
+     * @return Page
      */
     public function getParent()
     {
@@ -599,10 +451,10 @@ class Page implements Translatable
     /**
      * Add childs
      *
-     * @param \Dywee\CMSBundle\Entity\Page $childs
+     * @param Page $child
      * @return Page
      */
-    public function addChild(\Dywee\CMSBundle\Entity\Page $child)
+    public function addChild(Page $child)
     {
         $this->children[] = $child;
         $child->setParent($this);
@@ -611,13 +463,13 @@ class Page implements Translatable
     }
 
     /**
-     * Remove childs
+     * Remove child
      *
-     * @param \Dywee\CMSBundle\Entity\Page $childs
+     * @param Page $child
      */
-    public function removeChild(\Dywee\CMSBundle\Entity\Page $child)
+    public function removeChild(Page $child)
     {
-        $this->childs->removeElement($child);
+        $this->children->removeElement($child);
     }
 
     /**
@@ -704,10 +556,10 @@ class Page implements Translatable
     /**
      * Set updatedBy
      *
-     * @param \Dywee\UserBundle\Entity\User $updatedBy
+     * @param User $updatedBy
      * @return Page
      */
-    public function setUpdatedBy(\Dywee\UserBundle\Entity\User $updatedBy)
+    public function setUpdatedBy(User $updatedBy)
     {
         $this->updatedBy = $updatedBy;
 
@@ -717,7 +569,7 @@ class Page implements Translatable
     /**
      * Get updatedBy
      *
-     * @return \Dywee\UserBundle\Entity\User 
+     * @return User
      */
     public function getUpdatedBy()
     {
@@ -727,10 +579,10 @@ class Page implements Translatable
     /**
      * Add pageStat
      *
-     * @param \Dywee\CMSBundle\Entity\PageStat $pageStat
+     * @param PageStat $pageStat
      * @return Page
      */
-    public function addPageStat(\Dywee\CMSBundle\Entity\PageStat $pageStat)
+    public function addPageStat(PageStat $pageStat)
     {
         $this->pageStat[] = $pageStat;
 
@@ -740,9 +592,9 @@ class Page implements Translatable
     /**
      * Remove pageStat
      *
-     * @param \Dywee\CMSBundle\Entity\PageStat $pageStat
+     * @param PageStat $pageStat
      */
-    public function removePageStat(\Dywee\CMSBundle\Entity\PageStat $pageStat)
+    public function removePageStat(PageStat $pageStat)
     {
         $this->pageStat->removeElement($pageStat);
     }

@@ -1,0 +1,7 @@
+{% set form = forms['form_' ~ pageElement.content] %}
+
+{% if form.vars.submitted == true and form.vars.valid == true %}
+    formulaire envoyé
+{% else %}
+    {{ form(form) }}
+{% endif %}
