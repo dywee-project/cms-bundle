@@ -66,11 +66,13 @@ $(document).ready(function() {
 
     {
     //Affichage ou non des champs liés au menu
-    if(!$("#dywee_cmsbundle_page_inMenu").attr("checked"))
-        $("#menuSettings").attr('style', 'display: none');
+    if(!$("#page_inMenu").attr("checked"))
+    {
+        $("#menuSettings").css('display', 'none');
+    }
 
 
-    $("#dywee_cmsbundle_page_inMenu").on('change', function()
+    $("#page_inMenu").on('change', function()
     {
         $("#menuSettings").slideToggle('slow');
     });
@@ -220,8 +222,9 @@ $(document).ready(function() {
                     $field.parent().removeClass('hide');
                     CKEDITOR.disableAutoInline = true;
                     //trsteelConfig.extraPlugins = 'sourcedialog';
-                    console.log(trsteelConfig);
-                    CKEDITOR.inline( $field.attr('id'), trsteelConfig );
+                    //console.log(trsteelConfig);
+                    //CKEDITOR.inline( $field.attr('id'), trsteelConfig );
+                    CKEDITOR.inline( $field.attr('id') );
                     break;
 
                 default: ProcessAjaxForPageElement(type, $(this));

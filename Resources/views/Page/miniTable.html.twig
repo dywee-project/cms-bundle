@@ -35,16 +35,8 @@
                         par {{ page.updatedBy.firstName }}
                     {% endif %}
                 </td>
-            <td>{% if page.state == 0 %}
-                        <span class="label label-warning">Brouillon</span>
-                    {% elseif page.state == 1 %}
-                        <span class="label label-success">Publiée</span>
-                    {%  endif %}
-                
-            </td>
-            <td>
-                    {% include 'DyweeCMSBundle:Page:page_type.html.twig' %}
-                </td>
+            <td>{{ page.state }}</td>
+            <td>{{ page.type }}</td>
             <td>
                 <div class="btn-group btn-group-xs">
                     <a href="{{ path('page_details', {id: page.id}) }}" class="btn btn-default" target="_blank"><i class="fa fa-eye"></i> </a>

@@ -2,6 +2,8 @@
 
 namespace Dywee\CMSBundle\Form;
 
+use Dywee\CMSBundle\Entity\Page;
+use Dywee\CoreBundle\Form\Type\SeoType;
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -23,31 +25,28 @@ class PageType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $stateChoices = array();
+        $typeChoices = array();
+
+        foreach(Page::getConstantList() as $constant)
+            if(strstr($constant, 'state.'))
+                $stateChoices[$constant] = strtolower($constant);
+            elseif(strstr($constant, 'type.'))
+                $typeChoices[$constant] = strtolower($constant);
+
         $builder
             ->add('name')
             ->add('type',               ChoiceType::class, array(
-                'choices' => array(
-                    1 => 'Index',
-                    2 => 'Page',
-                    3 => 'Contact',
-                    4 => 'News',
-                    5 => 'Calendrier',
-                    6 => 'Magasin',
-                    7 => 'Blog',
-                    8 => 'Formulaire',
-                    9 => 'FAQ',
-                    12 => 'Musique'
-                )
+                'choices' => $typeChoices
             ))
-            ->add('metaTitle',          null,     array('required' => false))
-            ->add('metaDescription',    TextareaType::class, array('required' => false))
-            ->add('metaKeywords',       TextareaType::class, array('required' => false))
-            ->add('seoUrl',             null,     array('required' => false))
+            ->add('seo',                SeoType::class,         array(
+                'data_class' => 'Dywee\ProductBundle\Entity\BaseProduct'
+            ))
             ->add('menuName',           null,     array('required' => false))
             ->add('inMenu',             CheckboxType::class, array('required' => false))
             ->add('menuOrder',          IntegerType::class,   array('required' => false))
             ->add('childArguments',     TextType::class, array('required' => false))
-            ->add('state',              ChoiceType::class,       array('choices' => array(0 => 'Brouillon', 1 => 'Publiée')))
+            ->add('state',              ChoiceType::class,       array('choices' => $stateChoices))
             ->add('sauvegarder',        SubmitType::class)
             ->add('parent',             EntityType::class,   array(
                 'class'     => 'DyweeCMSBundle:Page',
@@ -60,7 +59,7 @@ class PageType extends AbstractType
                 'allow_delete' => true,
                 'by_reference' => false
             ))
-            ->add('cheatingTrick',  CKEditorType::class)
+            ->add('cheatingTrick',  CKEditorType::class, array('required' => false))
         ;
     }
     

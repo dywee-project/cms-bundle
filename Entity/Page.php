@@ -20,8 +20,11 @@ class Page implements Translatable
 {
     use Seo;
 
-    const TYPE_HOMEPAGE = 1;
-    const TYPE_NORMALPAGE = 2;
+    const TYPE_HOMEPAGE = 'type.homepage';
+    const TYPE_NORMALPAGE = 'type.normal';
+
+    const STATE_PUBLISHED = 'state.published';
+    const STATE_DRAFT = 'state.draft';
 
     /**
      * @var integer
@@ -35,7 +38,7 @@ class Page implements Translatable
     /**
      * @var integer
      *
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="string", length=50)
      */
     private $type = self::TYPE_NORMALPAGE;
 
@@ -70,9 +73,9 @@ class Page implements Translatable
     /**
      * @var integer
      *
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="string", length=50)
      */
-    private $state;
+    private $state = self::STATE_DRAFT;
 
     /**
      * @var string
@@ -757,5 +760,11 @@ class Page implements Translatable
             if($pageElement->getType() == 'form')
                 $return[] = $pageElement->getContent();
         return $return;
+    }
+
+    static function getConstantList()
+    {
+        $oClass = new \ReflectionClass(__CLASS__);
+        return $oClass->getConstants();
     }
 }
