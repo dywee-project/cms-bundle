@@ -14,6 +14,10 @@ page_view:
     path:     /page/{data}
     defaults: { _controller: DyweeCMSBundle:Page:view }
 
+cms_view:
+    path:     /page/{data}
+    defaults: { _controller: DyweeCMSBundle:Page:view }
+
 page_view_content:
     path:     /page/{data}/onlyContent
     defaults: { _controller: DyweeCMSBundle:Page:viewContent }
