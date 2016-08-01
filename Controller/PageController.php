@@ -2,10 +2,13 @@
 
 namespace Dywee\CMSBundle\Controller;
 
+use Dywee\CMSBundle\DyweeCMSEvent;
 use Dywee\CMSBundle\Entity\Page;
 use Dywee\CMSBundle\Entity\PageElement;
 use Dywee\CMSBundle\Entity\PageStat;
 use Dywee\CMSBundle\Entity\PageTextElement;
+use Dywee\CMSBundle\Event\HomepageBuilderEvent;
+use Dywee\CMSBundle\Event\PageBuilderEvent;
 use Dywee\CMSBundle\Form\PageType;
 use Dywee\ModuleBundle\Entity\FormResponseContainer;
 use Dywee\NotificationBundle\Entity\Notification;
@@ -106,6 +109,20 @@ class PageController extends Controller
 
         $data = array('page' => $page);
 
+        if($page->getType() == Page::TYPE_HOMEPAGE)
+        {
+            $event = new HomepageBuilderEvent($data);
+
+            $this->get('event_dispatcher')->dispatch(DyweeCMSEvent::BUILD_HOMEPAGE, $event);
+        }
+        else{
+            $event = new PageBuilderEvent($data);
+
+            $this->get('event_dispatcher')->dispatch(DyweeCMSEvent::BUILD_PAGE, $event);
+        }
+
+        $data = array_merge($data, $event->getData());
+
         /*if($page->hasForm())
         {
             $formsId = $page->getForms();
@@ -160,7 +177,9 @@ class PageController extends Controller
 
             //On passe les formulaires à la vue
             $data['forms'] = $forms;
+
         }*/
+
         return $this->render('DyweeCMSBundle:Page:view.html.twig', $data);
     }
 
