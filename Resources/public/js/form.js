@@ -1,44 +1,5 @@
 $(document).ready(function() {
 
-    var choices = [
-        {
-            key: 'text',
-            icon: 'pencil',
-            value: 'Zone de texte',
-            modalLabel: 'Choisissez une galerie à afficher sur la page',
-            routeName: false,
-            routeForAdding: false,
-            active: true,
-        },
-        {
-            key: 'form',
-            icon: 'check-square-o',
-            value: 'Formulaire',
-            modalLabel: 'Choisissez un formulaire à afficher sur la page',
-            routeName: 'cms_customForm_json',
-            routeForAdding: 'cms_customForm_add',
-            active: true
-        },
-        /*{
-            key: 'musicGallery',
-            icon: 'music',
-            value: 'Galerie musicale',
-            modalLabel: 'Choisissez une galerie musicale à afficher sur la page',
-            routeName: 'dywee_musicGallery_json',
-            routeForAdding: 'dywee_musicGallery_add',
-            active: true
-        },*/
-        {
-            key: 'carousel',
-            icon: 'picture-o',
-            value: 'Diaporama photos',
-            modalLabel: 'Choisissez ds photos à ajouter à votre galerie photo',
-            routeName: false,
-            routeForAdding: 'dywee_customForm_add',
-            active: true
-        }
-    ];
-
     var currentIndex = null;
 
     //Créer un conflit entre l'éditeur de texte et le plugin sortable
@@ -217,7 +178,7 @@ $(document).ready(function() {
             switch(type)
             {
                 case 'text' :
-                    $(this).find('.box-title').html(choices[0].value);
+                    $(this).find('.box-title').html(plugins[0].value);
 
                     $field.parent().removeClass('hide');
                     CKEDITOR.disableAutoInline = true;
@@ -250,21 +211,25 @@ $(document).ready(function() {
         var html = $('<p>');
 
         //Mise en forme des choix pour la modal
-        $.each(choices, function(i, data)
+        $.each(plugins, function(i, data)
         {
-            var btn = $('<a href="#" class="btn btn-default"><i class="fa fa-' + data.icon + '"></i> ' + data.value + '</a>');
+            if(data.key)
+            {
+                var btn = $('<a href="#" class="btn btn-default"><i class="fa fa-' + data.icon + '"></i> ' + data.value + '</a>');
 
-            if(data.active == false)
-                btn.addClass('disabled').append(' (en préparation)');
+                if(data.active == false)
+                    btn.addClass('disabled').append(' (en préparation)');
 
-            html.append($('<p>').append(btn));
+                html.append($('<p>').append(btn));
 
-            btn.click(function(e) {
-                addElement($container, data.key);
-                $("#dyweeModal").modal('hide');
-                e.preventDefault(); // évite qu'un # apparaisse dans l'URL
-                return false;
-            });
+                btn.click(function(e) {
+                    addElement($container, data.key);
+                    $("#dyweeModal").modal('hide');
+                    e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+                    return false;
+                });
+            }
+
 
         });
 

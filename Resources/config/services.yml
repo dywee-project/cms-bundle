@@ -8,3 +8,16 @@ services:
         arguments: [ '@dywee_cms.sidebar_handler' ]
         tags:
             - { name: kernel.event_subscriber }
+
+
+    ######   PLUGINS BOX  #########
+
+    dywee_cms.plugin_box_handler:
+        class: Dywee\CMSBundle\Service\PageElementModalHandler
+        arguments: [  ]
+
+    dywee_cms.plugin_box_listener:
+        class: Dywee\CMSBundle\Listener\PageElementModalListener
+        arguments: [ '@dywee_cms.plugin_box_handler' ]
+        tags:
+            - { name: kernel.event_subscriber }

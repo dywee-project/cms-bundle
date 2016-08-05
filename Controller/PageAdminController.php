@@ -11,16 +11,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 class PageAdminController extends Controller
 {
-    public function dashboardTableAction()
-    {
-        $pr = $this->getDoctrine()->getManager()->getRepository('DyweeCMSBundle:Page');
-        $ps = $pr->findBy(array('lvl' => 0));
-        return $this->render('DyweeCMSBundle:Admin:table.html.twig', array('pageList' => $ps));
-    }
-
+    /**
+     * @param Page $page
+     * @return Response
+     * @Route(name="admin_page_view", path="admin/page/{id}", requirements={"id": "\d+"})
+     */
     public function viewAction(Page $page)
     {
         $em = $this->getDoctrine()->getManager();

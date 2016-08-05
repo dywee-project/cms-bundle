@@ -1,6 +1,6 @@
 <div class="cart box_1">
     <a href="checkout.html">
-        <h3> <span class="simpleCart_total"> {{ order.price }} </span> (<span id="simpleCart_quantity" class="simpleCart_quantity"> 0</span>)<img src="{{ asset('bundles/dyweecms/images/bag.png') }}" alt=""></h3>
+        <h3> <span class="simpleCart_total"> {{ order.price|number_format(2) }}€ </span> (<span id="simpleCart_quantity" class="simpleCart_quantity"> 0</span>)<img src="{{ asset('bundles/dyweecms/images/bag.png') }}" alt=""></h3>
     </a>
     <p><a href="javascript:;" class="simpleCart_empty">Empty cart A surcharger dans app/Resources</a></p>
     <div class="clearfix"> </div>
