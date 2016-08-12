@@ -1,7 +1,21 @@
-state:
-    draft: Brouillon
-    published: Publiée
+cms:
+    sidebar:
+        label: Gestion des pages
+        table: Liste des pages
+        form: Gestion des formulaires
 
-type:
-    homepage: Page d'accueil
-    normal: Page normale
+    state:
+        draft: Brouillon
+        published: Publiée
+
+    type:
+        homepage: Page d'accueil
+        normal: Page normale
+
+    plugin:
+        text:
+            label: Zone de texte
+            description: Ajouter une zone de texte
+        form:
+            label: Formulaire
+            description: Ajouter un formulaire

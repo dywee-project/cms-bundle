@@ -20,11 +20,11 @@ class Page implements Translatable
 {
     use Seo;
 
-    const TYPE_HOMEPAGE = 'type.homepage';
-    const TYPE_NORMALPAGE = 'type.normal';
+    const TYPE_HOMEPAGE = 'cms.type.homepage';
+    const TYPE_NORMALPAGE = 'cms.type.normal';
 
-    const STATE_PUBLISHED = 'state.published';
-    const STATE_DRAFT = 'state.draft';
+    const STATE_PUBLISHED = 'cms.state.published';
+    const STATE_DRAFT = 'cms.state.draft';
 
     /**
      * @var integer

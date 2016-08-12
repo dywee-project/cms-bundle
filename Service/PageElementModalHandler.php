@@ -11,8 +11,8 @@ class PageElementModalHandler{
             array(
                 'key' => 'text',
                 'icon' => 'pencil',
-                'value' => 'Zone de texte',
-                'modalLabel' => 'Choisissez une galerie à afficher sur la page',
+                'value' => 'cms.plugin.text.label',
+                'modalLabel' => 'cms.plugin.text.description',
                 'routeName' => false,
                 'routeForAdding' => false,
                 'active' => true
@@ -20,8 +20,8 @@ class PageElementModalHandler{
             array(
                 'key' => 'form',
                 'icon' => 'check-square-o',
-                'value' => 'Formulaire',
-                'modalLabel' => 'Choisissez un formulaire à afficher sur la page',
+                'value' => 'cms.plugin.form.label',
+                'modalLabel' => 'cms.plugin.form.description',
                 'routeName' => 'cms_customForm_json',
                 'routeForAdding' => 'cms_customForm_add',
                 'active' => true
@@ -36,15 +36,16 @@ class PageElementModalHandler{
             'routeForAdding' => 'dywee_musicGallery_add',
             'active' => true
         },*/
-            array(
+            /*array(
             'key' => 'carousel',
             'icon' => 'picture-o',
-            'value' => 'Diaporama photos',
-            'modalLabel' => 'Choisissez ds photos à ajouter à votre galerie photo',
+            'value' => 'cms.plugin.carousel.label',
+            'modalLabel' => 'cms.plugin.carousel.description',
             'routeName' => false,
             'routeForAdding' => 'dywee_customForm_add',
             'active' => true
             )
+            */
         );
     }
 }

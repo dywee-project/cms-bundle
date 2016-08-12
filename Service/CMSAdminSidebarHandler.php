@@ -16,22 +16,23 @@ class CMSAdminSidebarHandler{
     public function getSideBarMenuElement()
     {
         $menu = array(
+            'key' => 'cms',
             'icon' => 'fa fa-files-o',
-            'label' => 'Pages',
+            'label' => 'cms.sidebar.label',
             'children' => array(
                 array(
                     'icon' => 'fa fa-list-alt',
-                    'label' => 'Gestion des pages',
+                    'label' => 'cms.sidebar.table',
                     'route' => $this->router->generate('page_table')
                 ),
                 array(
                     'icon' => 'fa fa-list-alt',
-                    'label' => 'Gestion des formulaires',
+                    'label' => 'cms.sidebar.form',
                     'route' => $this->router->generate('cms_customForm_table')
                 ),
                 array(
                     'icon' => 'fa fa-plus',
-                    'label' => 'Nouvelle page',
+                    'label' => 'cms.add_page',
                     'route' => $this->router->generate('page_add')
                 ),
             )
