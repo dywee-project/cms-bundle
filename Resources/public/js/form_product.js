@@ -1,5 +1,55 @@
-/*$(document).ready(function() {
+$(document).ready(function() {
 
+    var currentIndex = null;
+
+    //Créer un conflit entre l'éditeur de texte et le plugin sortable
+    function setBoxSortable()
+    {
+        console.log('sortable');
+        $("#dywee_cmsbundle_page_pageElements").sortable({
+            placeholder: "dywee-pageElement-placeholder",
+            forcePlaceholderSize: true,
+            handle: ".box-header",
+            update: function( event, ui ) {
+                $.each($('.box'), function(index, box)
+                {
+                    $(box).find('input[id$="_displayOrder"]').val(index+1);
+                })
+            }
+        });
+    }
+
+    /*******************************************************/
+    /***                                               *****/
+    /***      1. GESTION DES MODAL ET CHILDARGUMENTS   *****/
+    /***                                               *****/
+    /*******************************************************/
+
+    {
+    //Affichage ou non des champs liés au menu
+    if(!$("#page_inMenu").attr("checked"))
+    {
+        $("#menuSettings").css('display', 'none');
+    }
+
+
+    $("#page_inMenu").on('change', function()
+    {
+        $("#menuSettings").slideToggle('slow');
+    });
+
+    //Remplissage automatique du menuName si vide
+    if($("#dywee_cmsbundle_page_menuName").val() == '')
+    {
+        $("#dywee_cmsbundle_page_name").change(function()
+        {
+            $("#dywee_cmsbundle_page_menuName").val($("#dywee_cmsbundle_page_name").val());
+        })
+    }
+    }
+
+
+    //Gestion du childArgument des pages
 
     var modalLabel = '';
     var urlForAjax = '';
@@ -97,7 +147,7 @@
     /***                                               *****/
     /*******************************************************/
 
-    /*var $container = $('div#page_elements_container');
+    var $container = $('div#page_elements_container');
 
     // On ajoute un lien pour ajouter une nouvelle catégorie
     var $addLink = $('<a href="#" id="add_element" class="btn btn-default btn-lg btn-block"><i class="fa fa-plus"></i> Ajouter un élement</a>');
@@ -157,7 +207,7 @@
     /***                                               *****/
     /*******************************************************/
 
-    /*function handleModal() {
+    function handleModal() {
         var html = $('<p>');
 
         //Mise en forme des choix pour la modal
@@ -244,4 +294,20 @@
                 break;
         }
     }
-});*/
+});
+
+// La fonction qui ajoute un lien de suppression d'une catégorie
+function addDeleteLink($prototype) {
+    // Création du lien
+    $deleteLink = $('<a href="#" class="btn btn-danger"><i class="fa fa-trash-o"></i> Supprimer</a>');
+
+    // Ajout du lien
+    $prototype.find(".box-footer").html($deleteLink);
+
+    // Ajout du listener sur le clic du lien
+    $deleteLink.click(function (e) {
+        $prototype.remove();
+        e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+        return false;
+    });
+}

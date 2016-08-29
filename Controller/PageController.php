@@ -20,7 +20,7 @@ class PageController extends Controller
     /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     * @Route(name="cms_homepage")
+     * @Route(name="cms_homepage", path="/")
      */
     public function indexAction(Request $request)
     {
@@ -217,7 +217,13 @@ class PageController extends Controller
 
             return $this->redirect($this->generateUrl('page_table'));
         }
-        return $this->render('DyweeCMSBundle:Page:add.html.twig', array('form' => $form->createView()));
+        $event = new PageElementModalBuilderEvent(array('page' => $page, 'form' => $form->createView(), 'plugins' => array()));
+
+        $eventToDispatch = $page->getType() == Page::TYPE_HOMEPAGE ? DyweeCMSEvent::BUILD_HOMEPAGE_ADMIN_PLUGIN_BOX : DyweeCMSEvent::BUILD_ADMIN_PLUGIN_BOX;
+
+        $this->get('event_dispatcher')->dispatch($eventToDispatch, $event);
+
+        return $this->render('DyweeCMSBundle:Page:add.html.twig', $event->getJSData());
     }
 
     /**

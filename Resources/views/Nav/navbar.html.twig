@@ -20,7 +20,7 @@
             <ul class="nav navbar-nav navbar-right">
                 {% for page in pageList %}
                     {% if page.children is empty %}
-                        {% if page.type == 1 %}
+                        {% if page.type == 'cms.type.homepage' %}
                             <li><a href="{{ path('cms_homepage') }}">{{ page.menuName }}</a></li>
                         {% else %}
                             <li><a href="{{ path('page_view', {data: page.url}) }}">{{ page.menuName }}</a></li>

@@ -1,4 +1,4 @@
-/*$(document).ready(function() {
+$(document).ready(function() {
 
 
     var modalLabel = '';
@@ -97,7 +97,7 @@
     /***                                               *****/
     /*******************************************************/
 
-    /*var $container = $('div#page_elements_container');
+    var $container = $('div#page_elements_container');
 
     // On ajoute un lien pour ajouter une nouvelle catégorie
     var $addLink = $('<a href="#" id="add_element" class="btn btn-default btn-lg btn-block"><i class="fa fa-plus"></i> Ajouter un élement</a>');
@@ -157,7 +157,7 @@
     /***                                               *****/
     /*******************************************************/
 
-    /*function handleModal() {
+    function handleModal() {
         var html = $('<p>');
 
         //Mise en forme des choix pour la modal
@@ -244,4 +244,4 @@
                 break;
         }
     }
-});*/
+});
