@@ -26,7 +26,7 @@ class CMSAdminSidebarHandler{
                     'route' => $this->router->generate('page_table')
                 ),
                 array(
-                    'icon' => 'fa fa-list-alt',
+                    'icon' => 'fa fa-wp-forms',
                     'label' => 'cms.sidebar.form',
                     'route' => $this->router->generate('cms_customForm_table')
                 ),

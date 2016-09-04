@@ -3,6 +3,7 @@ cms:
         label: Gestion des pages
         table: Liste des pages
         form: Gestion des formulaires
+        add_page: Ajouter une page
 
     state:
         draft: Brouillon
