@@ -13,27 +13,22 @@ use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
  */
     class PageRepository extends NestedTreeRepository
 {
-    public function getForParent($website)
+    public function getForParent()
     {
         $queryBuilder = $this->createQueryBuilder('p')
             ->select('p')
-            ->where('p.inMenu = 1 and p.website = :website')
-            ->setParameters(array('website' => $website))
+            ->where('p.inMenu = 1')
         ;
 
         return $queryBuilder;
     }
 
-    public function findHomePage($website = null)
+    public function findHomePage()
     {
         $queryBuilder = $this->createQueryBuilder('p')
             ->select('p')
             ->where('p.type = :type')
             ->setParameter('type', Page::TYPE_HOMEPAGE);
-        if($website)
-            $queryBuilder
-                ->andWhere('p.website = :website')
-                ->setParameter('website', is_object($website) ? $website->getId() : $website);
 
         $query = $queryBuilder->getQuery();
 
@@ -46,13 +41,12 @@ use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
         return $return;
     }
 
-    public function getMenu($website)
+    public function getMenu()
     {
         $queryBuilder = $this->createQueryBuilder('p')
             ->select('p')
             ->leftJoin('DyweeCMSBundle:Page', 'pc', 'with', 'pc.parent = p.id')
-            ->where('p.inMenu = 1 and p.website = :website and p.parent is null')
-            ->setParameters(array('website' => $website))
+            ->where('p.inMenu = 1 and p.parent is null')
             ->orderBy('p.menuOrder', 'asc');
 
         $query = $queryBuilder->getQuery();
@@ -65,55 +59,14 @@ use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
         return $query->getResult();
     }
 
-    public function findBySeoUrl($url, $website = null)
-    {
-        $qb = $this->createQueryBuilder('p')
-            ->select('p')
-            ->where('p.seoUrl = :seoUrl')
-            ->setParameter('seoUrl', $url);
-        if($website)
-            $qb->andWhere('p.website = :website')->setParameter('website', $website);
-
-        $query = $qb->getQuery();
-
-        /*$query->setHint(
-            \Doctrine\ORM\Query::HINT_CUSTOM_OUTPUT_WALKER,
-            'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker'
-        );*/
-
-        $result = $query->getSingleResult();
-
-        return $result;
-    }
-
-    public function findById($id, $website = null)
-    {
-        $qb = $this->createQueryBuilder('p')
-            ->select('p')
-            ->where('p.id = :id')
-            ->setParameter('id', $id);
-        if($website)
-            $qb->andWhere('p.website = :website')->setParameter('website', is_object($website) ? $website->getId() : $website);
-
-        $query = $qb->getQuery();
-
-        /*$query->setHint(
-            \Doctrine\ORM\Query::HINT_CUSTOM_OUTPUT_WALKER,
-            'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker'
-        );*/
-
-        $result = $query->getSingleResult();
-
-        return $result;
-    }
-
-    public function countPage($website, $state = null)
+    public function countPage($state = null)
     {
         $qb = $this->createQueryBuilder('p')
             ->select('count(p)')
-            ->where('p.website = :website')
-            ->setParameter('website', $website)
             ;
+
+        if($state)
+            $qb->andWhere('p.state = :state')->setParameter('state', $state);
 
         return $qb->getQuery()->getSingleScalarResult();
     }

@@ -8,13 +8,18 @@
 
 {% block body %}
     <div class="row">
-        <div class="col-md-12">
-            <a href="{{ path('page_add') }}" class="btn btn-success pull-right action-right"><i class="fa fa-plus"></i> Ajouter</a>
+        <div class="col-lg-12">
 
-            <div class="title-heading">
-                <h1 class="text-center">Liste des Pages</h1>
+            <div class="box box-defaut">
+                <div class="box-header with-border">
+                    <div class="box-tools">
+                        <a href="{{ path('page_add') }}" class="btn btn-success btn-box-tool"><i class="fa fa-plus"></i> Ajouter</a>
+                    </div>
+                    <h1 class="box-title">Liste des Pages</h1>
+                </div>
+                {% include 'DyweeCMSBundle:Page:miniTable.html.twig' %}
             </div>
-            {% include 'DyweeCMSBundle:Page:miniTable.html.twig' %}
+
         </div>
     </div>
 

@@ -1,7 +1,9 @@
 services:
-    dywee_cms.sidebar_handler:
-        class: Dywee\CMSBundle\Service\CMSAdminSidebarHandler
-        arguments: [ '@router' ]
+    ###########################
+    #                         #
+    #         SIDEBAR         #
+    #                         #
+    ###########################
 
     dywee_cms.admin_sidebar_listener:
         class: Dywee\CMSBundle\Listener\AdminSidebarBuilderListener
@@ -9,8 +11,31 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
+    dywee_cms.sidebar_handler:
+        class: Dywee\CMSBundle\Service\AdminSidebarHandler
+        arguments: [ '@router' ]
 
-    ######   PLUGINS BOX  #########
+    ###########################
+    #                         #
+    #        DASHBOARD        #
+    #                         #
+    ###########################
+
+    dywee_cms.admin_dashboard_listener:
+        class: Dywee\CMSBundle\Listener\AdminDashboardBuilderListener
+        arguments: [ '@dywee_cms.dashboard_handler' ]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    dywee_cms.dashboard_handler:
+        class: Dywee\CMSBundle\Service\AdminDashboardHandler
+        arguments: [ '@router' ]
+        
+    ###########################
+    #                         #
+    #        PAGE ADMIN       #
+    #                         #
+    ###########################
 
     dywee_cms.plugin_box_handler:
         class: Dywee\CMSBundle\Service\PageElementModalHandler

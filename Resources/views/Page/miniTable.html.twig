@@ -13,37 +13,40 @@
     </tr>
     </thead>
     <tbody>
-    {%  for page in pageList %}
+    {% for page in pageList %}
         <tr>
             <td>{{ loop.index }}</td>
             <td>{% if page.parent is not null %}
-                        {{ page.parent.name }} <span class="separator"> > </span>
-                    {% endif %}
-                    <a href="{{ path('page_update', {id: page.id}) }}">{{ page.name }}</a></td>
+                    {{ page.parent.name }} <span class="separator"> > </span>
+                {% endif %}
+                <a href="{{ path('page_update', {id: page.id}) }}">{{ page.name }}</a></td>
             <td>
-                    <a href="{{ path('page_inMenu_switch', {id: page.id}) }}" class="link-unstyled">
-                        {% if page.inMenu == 1 %}
-                            <i class="fa fa-check"></i>
-                        {% else %}
-                            <i class="fa fa-remove"></i>
-                        {% endif %}
-                    </a>
-            {% if page.inMenu == 1 %} (position:  {{ page.menuOrder }}){% endif %}
+                <a href="{{ path('page_inMenu_switch', {id: page.id}) }}" class="link-unstyled">
+                    {% if page.inMenu == 1 %}
+                        <i class="fa fa-check"></i>
+                    {% else %}
+                        <i class="fa fa-remove"></i>
+                    {% endif %}
+                </a>
+                {% if page.inMenu == 1 %} (position:  {{ page.menuOrder }}){% endif %}
             </td>
             <td>{{ page.updateDate|date('d/m/Y à H\\hi') }}
-                    {% if page.updatedBy is not null %}
-                        par {{ page.updatedBy.firstName }}
-                    {% endif %}
-                </td>
+                {% if page.updatedBy is not null %}
+                    par {{ page.updatedBy.firstName }}
+                {% endif %}
+            </td>
             <td>{{ page.state|trans }}</td>
             <td>{{ page.type|trans }}</td>
             <td>
                 <div class="btn-group btn-group-xs">
-                    <a href="{{ path('page_details', {id: page.id}) }}" class="btn btn-default" target="_blank"><i class="fa fa-eye"></i> </a>
-                    <a href="{{ path('page_update', {id: page.id}) }}" class="btn btn-default"><i class="fa fa-pencil"></i> </a>
+                    <a href="{{ path('page_details', {id: page.id}) }}" class="btn btn-default" target="_blank"><i
+                                class="fa fa-eye"></i> </a>
+                    <a href="{{ path('page_update', {id: page.id}) }}" class="btn btn-default"><i
+                                class="fa fa-pencil"></i> </a>
                 </div>
 
-                <a href="{{ path('page_delete', {id: page.id}) }}" class="btn btn-xs btn-danger"><i class="fa fa-trash-o"></i> </a>
+                <a href="{{ path('page_delete', {id: page.id}) }}" class="btn btn-xs btn-danger"><i
+                            class="fa fa-trash-o"></i> </a>
             </td>
         </tr>
     {% endfor %}

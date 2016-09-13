@@ -2,7 +2,7 @@
 
 namespace Dywee\CMSBundle\Listener;
 
-use Dywee\CMSBundle\Service\CMSAdminSidebarHandler;
+use Dywee\CMSBundle\Service\AdminSidebarHandler;
 use Dywee\CoreBundle\DyweeCoreEvent;
 use Dywee\CoreBundle\Event\AdminSidebarBuilderEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -11,7 +11,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class AdminSidebarBuilderListener implements EventSubscriberInterface{
     private $CMSAdminSidebarHandler;
 
-    public function __construct(CMSAdminSidebarHandler $CMSAdminSidebarHandler)
+    public function __construct(AdminSidebarHandler $CMSAdminSidebarHandler)
     {
         $this->CMSAdminSidebarHandler = $CMSAdminSidebarHandler;
     }

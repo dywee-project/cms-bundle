@@ -4,7 +4,7 @@ namespace Dywee\CMSBundle\Service;
 
 use Symfony\Component\Routing\Router;
 
-class CMSAdminSidebarHandler{
+class AdminSidebarHandler{
 
     private $router;
 
