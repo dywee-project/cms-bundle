@@ -104,10 +104,10 @@ class PageController extends Controller
         $pageRepository = $this->getDoctrine()->getManager()->getRepository('DyweeCMSBundle:Page');
 
         if (is_numeric($data))
-            $page = $pageRepository->findById($data);
-        else $page = $pageRepository->findBySeoUrl($data);
+            $page = $pageRepository->findOneById($data);
+        else $page = $pageRepository->findOneBySeoUrl($data);
 
-        switch ($page->getType()) {
+        /*switch ($page->getType()) {
             case 3:
                 return $this->redirect($this->generateUrl('message_new'));
             /*case 5: return $this->forward('DyweeModuleBundle:Event:page', array('page' => $page));
@@ -118,7 +118,7 @@ class PageController extends Controller
             case 10: return $this->forward('DyweeFaqBundle:PictureGallery:page', array('page' => $page));
             case 11: return $this->forward('DyweeFaqBundle:VideoGallery:page', array('page' => $page));
             case 12: return $this->forward('DyweeModuleBundle:MusicGallery:page', array('page' => $page));*/
-        }
+        //}
 
         $data = array('page' => $page);
 

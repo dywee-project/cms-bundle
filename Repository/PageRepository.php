@@ -37,8 +37,7 @@ use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
             'Gedmo\\Translatable\\Query\\TreeWalker\\TranslationWalker'
         );*/
 
-        $return = $query->getSingleResult();
-        return $return;
+        return $query->getSingleResult();
     }
 
     public function getMenu()

@@ -47,7 +47,6 @@ class PageType extends AbstractType
             ->add('menuOrder',          IntegerType::class,   array('required' => false))
             ->add('childArguments',     TextType::class, array('required' => false))
             ->add('state',              ChoiceType::class,       array('choices' => $stateChoices))
-            ->add('sauvegarder',        SubmitType::class)
             ->add('parent',             EntityType::class,   array(
                 'class'     => 'DyweeCMSBundle:Page',
                 'choice_label'  => 'menuName',

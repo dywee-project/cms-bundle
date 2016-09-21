@@ -12,43 +12,130 @@
 <div class="spacer"></div>
 
 <div class="nav-tabs">
-    <div class="col-md-3 col-xs-5 pull-right">
-        <div class="row">
-            <div class="col-md-8 col-xs-6">
-                {{ form_widget(form.state) }}
-            </div>
-            <div class="col-md-3 col-xs-6">
-                {{ form_widget(form.sauvegarder, {"attr": {"class": "btn-success"}}) }}
+    <div class="row">
+
+        <div class="col-md-9">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h1 class="box-title">Content</h1>
+                </div>
+                <div class="box-body">
+                    {{ form_row(form.name) }}
+
+                    <div class="form-group">
+                        {{ form_errors(form.pageElements) }}
+
+                        <div id="page_elements_container">
+                            {{ form_widget(form.pageElements) }}
+                        </div>
+
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <ul id="descriptions" class="nav nav-tabs">
-        <li class="active"><a href="#content" data-toggle="tab"><i class="fa fa-font"></i> Contenu</a></li>
-        <li><a href="#seo" data-toggle="tab"><i class="fa fa-bar-chart-o"></i> Référencement</a></li>
-        <li><a href="#settings" data-toggle="tab"><i class="fa fa-cog"></i> Paramètres</a></li>
-        <li><a href="#help" data-toggle="tab"><i class="fa fa-question"></i> Aide</a></li>
-    </ul>
 
-    <div class="spacer"></div>
+
+        <div class="col-md-3">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h1 class="box-title">State</h1>
+                </div>
+                <div class="box-body">
+                    {{ form_widget(form.state) }}
+                    <br>
+                    <p><button type="submit" class="btn btn-success btn-block"><i class="fa fa-save"></i> {{ 'save'|trans }}</button></p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h2 class="box-title">Seo</h2>
+                </div>
+                <div class="box-body">
+                    {{ form_widget(form.seo) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h2 class="box-title">Settings</h2>
+                </div>
+                <div class="box-body">
+                    <div class="form-group">
+                        {{ form_label(form.type, "Type de page") }}
+                        {{ form_errors(form.type) }}
+                        <div class="col-md-9">
+                            {{ form_widget(form.type) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group hide">
+                        {{ form_label(form.childArguments, "Arguments") }}
+                        {{ form_errors(form.childArguments) }}
+                        <div class="col-md-9">
+                            {{ form_widget(form.childArguments) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <div class="checkbox">
+                                <label>
+                                    {{ form_widget(form.inMenu, {label: "Affichée dans le menu"}) }}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="menuSettings">
+
+                        <div class="form-group">
+                            {{ form_label(form.menuName, "Nom dans le menu") }}
+                            {{ form_errors(form.menuName) }}
+                            <div class="col-md-9">
+                                {{ form_widget(form.menuName) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_label(form.menuOrder, "Ordre dans le menu") }}
+                            {{ form_errors(form.menuOrder) }}
+                            <div class="col-md-9">
+                                {{ form_widget(form.menuOrder) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(form.parent, "Page parente") }}
+                        {{ form_errors(form.parent) }}
+                        <div class="col-md-9">
+                            {{ form_widget(form.parent) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+
 
     <div class="tab-content">
         <div class="tab-pane fade in active" id="content">
-            <div class="form-group">
-                {{ form_label(form.name, "Nom") }}
-                {{ form_errors(form.name) }}
-                <div class="col-md-9">
-                    {{ form_widget(form.name) }}
-                </div>
-            </div>
 
-            <div class="form-group">
-                {{ form_errors(form.pageElements) }}
 
-                <div id="page_elements_container">
-                    {{ form_widget(form.pageElements) }}
-                </div>
 
-            </div>
             {% if page is defined and page.type == 12 %}
                 <div class="col-md-11">
                     <div class="panel panel-default">
@@ -66,93 +153,6 @@
                     </div>
                 </div>
             {% endif %}
-        </div>
-        <div class="tab-pane fade in" id="seo">
-            <div class="form-group">
-                {{ form_label(form.seo.metaTitle, "Meta Titre") }}
-                {{ form_errors(form.seo.metaTitle) }}
-                <div class="col-sm-9">
-                        {{ form_widget(form.seo.metaTitle) }}
-                </div>
-            </div>
-            <div class="form-group">
-                {{ form_label(form.seo.metaDescription, "Meta Description") }}
-                {{ form_errors(form.seo.metaDescription) }}
-                <div class="col-sm-9">
-                        {{ form_widget(form.seo.metaDescription) }}
-                </div>
-            </div>
-            <div class="form-group">
-                {{ form_label(form.seo.metaKeywords, "Meta Keywords") }}
-                {{ form_errors(form.seo.metaKeywords) }}
-                <div class="col-sm-9">
-                        {{ form_widget(form.seo.metaKeywords) }}
-                </div>
-            </div>
-            <div class="form-group">
-                {{ form_label(form.seo.seoUrl, "Url") }}
-                {{ form_errors(form.seo.seoUrl) }}
-                <div class="col-sm-9">
-                        {{ form_widget(form.seo.seoUrl) }}
-                </div>
-            </div>
-
-        </div>
-        <div class="tab-pane fade in" id="settings">
-
-            <div class="form-group">
-                {{ form_label(form.type, "Type de page") }}
-                {{ form_errors(form.type) }}
-                <div class="col-md-9">
-                    {{ form_widget(form.type) }}
-                </div>
-            </div>
-
-            <div class="form-group hide">
-                {{ form_label(form.childArguments, "Arguments") }}
-                {{ form_errors(form.childArguments) }}
-                <div class="col-md-9">
-                    {{ form_widget(form.childArguments) }}
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <div class="checkbox">
-                        <label>
-                            {{ form_widget(form.inMenu, {label: "Affichée dans le menu"}) }}
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-            <div id="menuSettings">
-
-                <div class="form-group">
-                    {{ form_label(form.menuName, "Nom dans le menu") }}
-                    {{ form_errors(form.menuName) }}
-                    <div class="col-md-9">
-                        {{ form_widget(form.menuName) }}
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    {{ form_label(form.menuOrder, "Ordre dans le menu") }}
-                    {{ form_errors(form.menuOrder) }}
-                    <div class="col-md-9">
-                        {{ form_widget(form.menuOrder) }}
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                {{ form_label(form.parent, "Page parente") }}
-                {{ form_errors(form.parent) }}
-                <div class="col-md-9">
-                    {{ form_widget(form.parent) }}
-                </div>
-            </div>
-
         </div>
 
         <div class="tab-pane fade in" id="help">
