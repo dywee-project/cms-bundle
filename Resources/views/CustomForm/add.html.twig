@@ -1,5 +1,3 @@
-{# Dywee\ModuleBundle\Resources\View\CustomForm\add.html.twig #}
-
 {%  extends "DyweeCMSBundle::admin.html.twig" %}
 
 {% block metaTitle %}
@@ -7,9 +5,19 @@
 {% endblock %}
 
 {% block body %}
-    <div class="title-heading">
-        <h1>Création d'un formulaire</h1>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h1 class="box-title">Création d'un formulaire</h1>
+                </div>
+                <div class="box-body">
+                    {% include "DyweeCMSBundle:CustomForm:form.html.twig" %}
+                </div>
+            </div>
+        </div>
     </div>
 
-    {%  include "DyweeCMSBundle:CustomForm:form.html.twig" %}
+
 {% endblock %}

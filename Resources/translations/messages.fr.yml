@@ -4,6 +4,7 @@ cms:
         table: Liste des pages
         form: Gestion des formulaires
         add_page: Ajouter une page
+        alert: Gestion des alertes
 
     state:
         draft: Brouillon
@@ -20,3 +21,12 @@ cms:
         form:
             label: Formulaire
             description: Ajouter un formulaire
+
+    alert:
+        state: Statut
+        enabled: En ligne
+        disbaled: Désactivée
+
+        list: Liste des alertes
+        title: Titre
+        add_button: Ajouter une alerte

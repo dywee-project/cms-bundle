@@ -1,19 +1,19 @@
 {%  extends "DyweeCMSBundle::admin.html.twig" %}
 
 {% block metaTitle %}
-    Modification d'un formulaire {{ parent() }}
+    Création d'une alerte {{ parent() }}
 {% endblock %}
 
 {% block body %}
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <div class="box box-default">
                 <div class="box-header with-border">
-                    <h1 class="box-title">Modification d'un formulaire</h1>
+                    <h1 class="box-title">Création d'une alerte</h1>
                 </div>
                 <div class="box-body">
-                    {% include "DyweeCMSBundle:CustomForm:form.html.twig" %}
+                    {% include "DyweeCMSBundle:CMSAlert:form.html.twig" %}
                 </div>
             </div>
         </div>

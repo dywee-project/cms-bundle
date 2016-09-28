@@ -1,0 +1,6 @@
+{% for alert in alerts %}
+    <div class="alert alert-warning" role="alert">
+        <p><b>{{ alert.title }}</b></p>
+        {{ alert.message }}
+    </div>
+{% endfor %}

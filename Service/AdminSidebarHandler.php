@@ -32,8 +32,13 @@ class AdminSidebarHandler{
                 ),
                 array(
                     'icon' => 'fa fa-plus',
-                    'label' => 'cms.add_page',
+                    'label' => 'cms.sidebar.add_page',
                     'route' => $this->router->generate('page_add')
+                ),
+                array(
+                    'icon' => 'fa fa-warning',
+                    'label' => 'cms.sidebar.alert',
+                    'route' => $this->router->generate('cms_alert_table')
                 ),
             )
         );

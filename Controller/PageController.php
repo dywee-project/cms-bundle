@@ -18,8 +18,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class PageController extends Controller
 {
     /**
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @Route(name="cms_homepage", path="/")
      */
     public function indexAction(Request $request)

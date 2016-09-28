@@ -1,0 +1,68 @@
+{% extends "DyweeCMSBundle::admin.html.twig" %}
+
+{% block metaTitle %}
+    Liste des alertes {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+    <div class="col-md-6">
+        <div class="box box-default">
+            <div class="box-header with-border">
+                <div class="box-tools">
+                    <a href="{{ path('cms_alert_add') }}" class="btn btn-success btn-box-tool"><i
+                                class="fa fa-plus"></i> Ajouter</a>
+                </div>
+                <h1 class="box-title">{{ 'cms.alert.list'|trans }}</h1>
+            </div>
+
+            {% if alerts|length > 0 %}
+                <table class="table table-striped table-hover table-condensed">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>{{ 'cms.alert.title'|trans|capitalize }}</th>
+                        <th>{{ 'cms.alert.state'|trans|capitalize }}</th>
+                        <th>{{ 'actions'|trans|capitalize }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for alert in alerts %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ alert.title }}</td>
+                            <td>
+                                {% if alert.active == true %}
+                                    <span class="label label-success">{{ 'cms.alert.enabled'|trans }}</span>
+                                {% else %}
+                                    <span class="label label-default">{{ 'cms.alert.disabled'|trans }}</span>
+                                {% endif %}
+
+                            </td>
+                            <td>
+                                <div class="btn-group btn-group-xs">
+                                    <a href="{{ path('cms_alert_update', {id: alert.id}) }}" class="btn btn-default"><i
+                                                class="fa fa-pencil"></i> </a>
+
+                                </div>
+
+                                <a href="{{ path('cms_alert_delete', {id: alert.id}) }}" class="btn btn-danger btn-xs"><i
+                                            class="fa fa-trash-o"></i> </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="box-body">
+                    <p>Vous n'avez pas encore configuré aucune alerte</p>
+                    <p><a href="{{ path('cms_alert_add') }}" class="btn btn-success"><i class="fa fa-plus"></i> {{ 'cms.alert.add_button'|trans }}</a></p>
+                </div>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
