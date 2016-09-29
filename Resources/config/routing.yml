@@ -40,40 +40,6 @@ cms_install:
 #####################################
 
 
-cms_customForm_table:
-    path:     /admin6833/modules/customForm/table
-    defaults: { _controller: DyweeCMSBundle:DyweeForm:table }
-
-cms_customForm_add:
-    path:     /admin6833/modules/customForm/add
-    defaults: { _controller: DyweeCMSBundle:DyweeForm:add}
-    options:
-        expose: true
-
-cms_customForm_update:
-    path:     /admin6833/modules/customForm/{id}/update
-    defaults: { _controller: DyweeCMSBundle:DyweeForm:update }
-    requirements:
-        id: \d+
-
-cms_customForm_delete:
-    path:     /admin6833/modules/customForm/{id}/delete
-    defaults: { _controller: DyweeCMSBundle:DyweeForm:delete }
-    requirements:
-        id: \d+
-
-cms_customForm_preview:
-    path:     /admin6833/modules/customForm/{id}/preview
-    defaults: { _controller: DyweeCMSBundle:DyweeForm:preview }
-    requirements:
-        id: \d+
-
-cms_customForm_display:
-    path:     /admin6833/modules/customForm/{id}/display
-    defaults: { _controller: DyweeCMSBundle:DyweeForm:displayForm }
-    requirements:
-        id: \d+
-
 cms_customFormResponse_table:
     path:     /admin6833/modules/customFormResponse/{formId}/table
     defaults: { _controller: DyweeCMSBundle:FormResponse:table }
@@ -91,9 +57,3 @@ cms_customFormResponse_delete:
     defaults: { _controller: DyweeCMSBundle:FormResponse:delete }
     requirements:
         id: \d+
-
-cms_customForm_json:
-    path:   /admin6833/customForm/json
-    defaults: { _controller: DyweeCMSBundle:DyweeForm:json}
-    options:
-        expose: true

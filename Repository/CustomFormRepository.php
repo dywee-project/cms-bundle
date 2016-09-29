@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityRepository;
 
 
 
-class DyweeFormRepository extends EntityRepository
+class CustomFormRepository extends EntityRepository
 {
     public function findForJson()
     {

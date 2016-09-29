@@ -3,42 +3,59 @@
 {%  extends "DyweeCMSBundle::admin.html.twig" %}
 
 {% block viewBody %}
-    <div class="title-heading">
-        <h1 class="text-center">Liste des réponses au formulaire "{{ customForm.name }}"</h1>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-default">
+                <div class="box-header">
+                    <h1 class="box-title">
+                        Liste des réponses au formulaire "{{ customForm.name }}"
+                    </h1>
+                </div>
+
+                {% if formResponseList|length > 0 %}
+                    <table class="table table-striped table-hover table-condensed">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Lu</th>
+                            <th>Répondu le</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {%  for formResponse in formResponseList %}
+                            <tr>
+                                <td>{{ formResponse.id }}</td>
+                                <td>
+                                    {% if formResponse.isReaded == true %}
+                                        lu
+                                    {% else %}
+                                        non lu
+                                    {% endif %}
+                                </td>
+                                <td>{{ formResponse.createdAt|date('d/m/Y à H\\hm') }}</td>
+                                <td class="actions">
+                                    <a href="{{ path('formResponse_view', {id: formResponse.id}) }}" class="link-unstyled"><i class="fa fa-eye"></i> </a>
+                                    <a href="{{ path('formResponse_delete', {id: formResponse.id}) }}" class="link-unstyled"><i class="fa fa-trash-o"></i> </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                {% else %}
+
+                    <div class="box-body">
+                        <p>Il n'y a encore aucune réponse à ce formulaire.</p>
+                    </div>
+
+                {% endif %}
+
+            </div>
+        </div>
     </div>
 
-    {% if formResponseList|length > 0 %}
-        <table class="table table-striped table-hover table-condensed">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>Lu</th>
-                <th>Répondu le</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            {%  for formResponse in formResponseList %}
-                <tr>
-                    <td>{{ formResponse.id }}</td>
-                    <td>
-                        {% if formResponse.isReaded == true %}
-                            lu
-                        {% else %}
-                            non lu
-                        {% endif %}
-                    </td>
-                    <td>{{ formResponse.createdAt|date('d/m/Y à H\\hm') }}</td>
-                    <td class="actions">
-                        <a href="{{ path('dywee_customFormResponse_view', {id: formResponse.id}) }}" class="link-unstyled"><i class="fa fa-eye"></i> </a>
-                        <a href="{{ path('dywee_customFormResponse_delete', {id: formResponse.id}) }}" class="link-unstyled"><i class="fa fa-trash-o"></i> </a>
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <p>Il n'y a encore aucune réponse à ce formulaire.</p>
-    {% endif %}
+
 
 {% endblock %}

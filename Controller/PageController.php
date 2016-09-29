@@ -120,7 +120,7 @@ class PageController extends Controller
 
         $data = array('page' => $page);
 
-        if ($page->getType() == Page::TYPE_HOMEPAGE) {
+        if ($page->getType() === Page::TYPE_HOMEPAGE) {
             $event = new HomepageBuilderEvent($data);
 
             $this->get('event_dispatcher')->dispatch(DyweeCMSEvent::BUILD_HOMEPAGE, $event);
@@ -137,7 +137,7 @@ class PageController extends Controller
             $formsId = $page->getForms();
 
             $em = $this->getDoctrine()->getManager();
-            $formRepository = $em->getRepository('DyweeModuleBundle:DyweeForm');
+            $formRepository = $em->getRepository('DyweeModuleBundle:CustomForm');
 
             $formBuilderService = $this->get('form.builder');
 
@@ -148,7 +148,7 @@ class PageController extends Controller
 
                 if($customForm)
                 {
-                    //Le form n'est pas un form à proprement parler mais un objet de type DyweeForm
+                    //Le form n'est pas un form à proprement parler mais un objet de type CustomForm
                     $formBuilder = $formBuilderService->buildFormBuilder($customForm);
 
                     //Génération du formulaire

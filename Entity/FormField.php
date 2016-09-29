@@ -2,8 +2,9 @@
 
 namespace Dywee\CMSBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Dywee\ModuleBundle\Entity\FormFieldPossibleValue;
+use Dywee\CMSBundle\Entity\FormFieldPossibleValue;
 
 /**
  * FormField
@@ -75,7 +76,7 @@ class FormField
     private $required = false;
 
     /**
-     * @ORM\ManyToOne(targetEntity="DyweeForm", inversedBy="formFields")
+     * @ORM\ManyToOne(targetEntity="CustomForm", inversedBy="formFields")
      */
     private $form;
 
@@ -288,10 +289,10 @@ class FormField
     /**
      * Set form
      *
-     * @param DyweeForm $form
+     * @param CustomForm $form
      * @return FormField
      */
-    public function setForm(DyweeForm $form = null)
+    public function setForm(CustomForm $form = null)
     {
         $this->form = $form;
 
@@ -301,7 +302,7 @@ class FormField
     /**
      * Get form
      *
-     * @return DyweeForm
+     * @return CustomForm
      */
     public function getForm()
     {
@@ -312,7 +313,7 @@ class FormField
      */
     public function __construct()
     {
-        $this->possibleValues = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->possibleValues = new ArrayCollection();
     }
 
     /**
@@ -354,7 +355,7 @@ class FormField
         foreach($this->getPossibleValues() as $pv)
             $this->removePossibleValue($pv);
 
-        if($possibleValues != '')
+        if($possibleValues !== '')
         {
             $possibleValues = explode(', ', $possibleValues);
             foreach($possibleValues as $pv)

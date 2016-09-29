@@ -2,12 +2,12 @@
 
 namespace Dywee\CMSBundle\Controller;
 
-use Dywee\CMSBundle\Entity\DyweeForm;
+use Dywee\CMSBundle\Entity\CustomForm;
 use Dywee\CMSBundle\Entity\FormResponseContainer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class DyweeFormController extends ParentController
+class CustomFormController extends ParentController
 {
     public function buildForm($customForm)
     {
@@ -19,27 +19,29 @@ class DyweeFormController extends ParentController
             $options = array();
 
             $type = $field->getType();
-            if($type == 'select')
+
+            switch($type)
             {
-                $type = 'choice';
-            }
-            else if($type == 'checkbox')
-            {
-                $type = 'choice';
-                $options['expanded'] = true;
-                $options['multiple'] = true;
-            }
-            else if($type == 'radio')
-            {
-                $type = 'choice';
-                $options['expanded'] = true;
+                case 'select':
+                    $type = 'choice';
+                    break;
+
+                case 'checkbox':
+                    $type = 'choice';
+                    $options['expanded'] = true;
+                    $options['multiple'] = true;
+                    break;
+
+                case 'radio':
+                    $type = 'choice';
+                    $options['expanded'] = true;
+                    break;
             }
 
-            if($type == 'choice')
+            if($type === 'choice')
             {
                 $options['choices'] = $field->getPossibleValuesArray();
             }
-
 
             $options['required'] = $field->isRequired();
             $options['label'] = $field->getLabel().($field->isRequired()?' *':'');
@@ -55,7 +57,7 @@ class DyweeFormController extends ParentController
         return $fb;
     }
 
-    public function previewAction(DyweeForm $customForm)
+    public function previewAction(CustomForm $customForm)
     {
         $form = $this->buildForm($customForm)
             ->add('Envoyer', 'button')
@@ -67,7 +69,7 @@ class DyweeFormController extends ParentController
     /*public function pageAction(Page $page, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $fr = $em->getRepository('DyweeCMSBundle:DyweeForm');
+        $fr = $em->getRepository('DyweeCMSBundle:CustomForm');
 
         $customForm = $fr->findOneById($page->getChildArguments());
 
@@ -97,11 +99,11 @@ class DyweeFormController extends ParentController
         return $this->render('DyweeCMSBundle:CustomForm:page.html.twig', array('page' => $page, 'customForm' => $customForm, 'form' => $form->createView()));
     }*/
 
-    public function renderAction(DyweeForm $customForm, Request $request)
+    public function renderAction(CustomForm $customForm, Request $request)
     {
 
         $fb = $this->buildForm($customForm);
-        $fb->add('Envoyer', 'submit');
+        //$fb->add('Envoyer', 'submit');
         $form = $fb->getForm();
 
         $form->handleRequest($request);
@@ -134,14 +136,16 @@ class DyweeFormController extends ParentController
     public function jsonAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $customFormRepository = $em->getRepository('DyweeCMSBundle:DyweeForm');
+        $customFormRepository = $em->getRepository('DyweeCMSBundle:CustomForm');
 
         $customFormList = $customFormRepository->findForJson();
 
-        if(count($customFormList) > 0)
+        if(count($customFormList) > 0){
             $response = array('type' => 'success', 'data' => $customFormList);
-        else
+        }
+        else{
             $response = array('type' => 'empty');
+        }
 
         return new Response(json_encode($response));
     }

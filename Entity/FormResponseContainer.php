@@ -2,6 +2,7 @@
 
 namespace Dywee\CMSBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,7 +23,7 @@ class FormResponseContainer
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="DyweeForm", inversedBy="responses")
+     * @ORM\ManyToOne(targetEntity="CustomForm", inversedBy="responses")
      */
     private $form;
 
@@ -56,17 +57,17 @@ class FormResponseContainer
      */
     public function __construct()
     {
-        $this->fieldResponses = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->fieldResponses = new ArrayCollection();
         $this->createdAt = new \DateTime();
     }
 
     /**
      * Set form
      *
-     * @param DyweeForm $form
+     * @param CustomForm $form
      * @return FormResponseContainer
      */
-    public function setForm(DyweeForm $form = null)
+    public function setForm(CustomForm $form = null)
     {
         $this->form = $form;
         $form->addResponse($this);
@@ -77,7 +78,7 @@ class FormResponseContainer
     /**
      * Get form
      *
-     * @return DyweeForm
+     * @return CustomForm
      */
     public function getForm()
     {
@@ -118,7 +119,7 @@ class FormResponseContainer
         return $this->fieldResponses;
     }
 
-    public function setFromForm(DyweeForm $form, $response)
+    public function setFromForm(CustomForm $form, $response)
     {
         $this->setForm($form);
 
@@ -128,12 +129,12 @@ class FormResponseContainer
             $fieldResponse->setField($field);
 
             //Dans le cas où le type est un choice
-            if($field->getType() == 'select')
+            if($field->getType() === 'select')
             {
                 $fieldPossibleResponses = $field->getPossibleValuesArray();
                 $responseFragment = $fieldPossibleResponses[$response[$field->getId()]];
             }
-            else if($field->getType() == 'checkbox' || $field->getType() == 'radio')
+            else if($field->getType() === 'checkbox' || $field->getType() === 'radio')
             {
                 $responses = array();
                 //On récupère les différents choix paramétrés dans l'admin

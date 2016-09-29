@@ -22,7 +22,7 @@ class PageElementController extends Controller
             switch($objectName)
             {
                 case 'form':
-                    $repository = $em->getRepository('DyweeCMSBundle:DyweeForm');
+                    $repository = $em->getRepository('DyweeCMSBundle:CustomForm');
                     $formList = $repository->findAll();
                     $response = array();
 

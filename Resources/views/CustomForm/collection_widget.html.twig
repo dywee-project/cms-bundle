@@ -16,13 +16,13 @@
             <tbody id="formElementsContainer">
                 {% for rows in form %}
                     <tr>
-                        <td>{{ form_widget(rows.label, { 'attr': { 'class': 'form-control' }}) }}</td>
+                        <td>{{ form_widget(rows.label) }}</td>
                         {% if rows.type.vars.value == 'select' or rows.type.vars.value == 'checkbox' or rows.type.vars.value == 'radio' %}
-                            {% set class = 'form-control' %}
+                            {% set class = '' %}
                         {% else %}
-                            {% set class = 'hidden form-control' %}
+                            {% set class = 'hidden' %}
                         {% endif %}
-                        <td>{{ form_widget(rows.type, { 'attr': { 'class': 'form-control' }}) }} {{ form_widget(rows.possibleValuesText, { 'attr': { 'class': class }}) }}</td>
+                        <td>{{ form_widget(rows.type) }} {{ form_widget(rows.possibleValuesText, { 'attr': { 'class': class }}) }}</td>
                         <td>{{ form_widget(rows.required) }}</td>
                     </tr>
                 {% endfor %}
@@ -35,8 +35,8 @@
 {% block collection_item_widget %}
     {% spaceless %}
         <tr>
-            <td>{{ form_widget(prototype.label, { 'attr': { 'class': 'form-control' }}) }}</td>
-            <td>{{ form_widget(prototype.type, { 'attr': { 'class': 'form-control' }}) }} {{ form_widget(prototype.possibleValuesText, { 'attr': { 'class': 'hidden form-control' }}) }}</td>
+            <td>{{ form_widget(prototype.label) }}</td>
+            <td>{{ form_widget(prototype.type) }} {{ form_widget(prototype.possibleValuesText) }}</td>
             <td>{{ form_widget(prototype.required) }}</td>
         </tr>
     {% endspaceless %}

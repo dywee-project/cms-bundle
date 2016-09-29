@@ -6,13 +6,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * DyweeForm
+ * CustomForm
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Dywee\CMSBundle\Repository\DyweeFormRepository")
+ * @ORM\Entity(repositoryClass="Dywee\CMSBundle\Repository\CustomFormRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class DyweeForm
+class CustomForm
 {
     /**
      * @var integer
@@ -100,7 +100,7 @@ class DyweeForm
      * Add formField
      *
      * @param FormField $formField
-     * @return DyweeForm
+     * @return CustomForm
      */
     public function addFormField(FormField $formField)
     {
@@ -148,7 +148,7 @@ class DyweeForm
      * Set createdAt
      *
      * @param \DateTime $createdAt
-     * @return DyweeForm
+     * @return CustomForm
      */
     public function setCreatedAt($createdAt)
     {
@@ -171,7 +171,7 @@ class DyweeForm
      * Set updatedAt
      *
      * @param \DateTime $updatedAt
-     * @return DyweeForm
+     * @return CustomForm
      */
     public function setUpdatedAt($updatedAt)
     {
@@ -194,7 +194,7 @@ class DyweeForm
      * Add responses
      *
      * @param FormResponseContainer $responses
-     * @return DyweeForm
+     * @return CustomForm
      */
     public function addResponse(FormResponseContainer $responses)
     {

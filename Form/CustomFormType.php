@@ -9,7 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DyweeFormType extends AbstractType
+class CustomFormType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -40,7 +40,7 @@ class DyweeFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Dywee\CMSBundle\Entity\DyweeForm'
+            'data_class' => 'Dywee\CMSBundle\Entity\CustomForm'
         ));
     }
 }
