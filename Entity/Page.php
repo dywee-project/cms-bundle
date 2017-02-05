@@ -4,6 +4,7 @@ namespace Dywee\CMSBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Dywee\CoreBundle\Traits\Seo;
+use Dywee\UserBundle\Entity\UserInterface;
 use FOS\UserBundle\Model\User;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Translatable\Translatable;
@@ -112,7 +113,7 @@ class Page implements Translatable
     private $template = 'default';
 
     /**
-     * @ORM\ManyToOne(targetEntity="Dywee\UserBundle\Entity\User")
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      */
     private $updatedBy;
 
@@ -559,10 +560,10 @@ class Page implements Translatable
     /**
      * Set updatedBy
      *
-     * @param User $updatedBy
+     * @param UserInterface $updatedBy
      * @return Page
      */
-    public function setUpdatedBy(User $updatedBy)
+    public function setUpdatedBy(UserInterface $updatedBy)
     {
         $this->updatedBy = $updatedBy;
 
@@ -572,7 +573,7 @@ class Page implements Translatable
     /**
      * Get updatedBy
      *
-     * @return User
+     * @return UserInterface
      */
     public function getUpdatedBy()
     {

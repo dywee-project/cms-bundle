@@ -57,7 +57,7 @@ class CMSAlert
      * Set title
      *
      * @param string $title
-     * @return Alert
+     * @return CMSAlert
      */
     public function setTitle($title)
     {
@@ -80,7 +80,7 @@ class CMSAlert
      * Set message
      *
      * @param string $message
-     * @return Alert
+     * @return CMSAlert
      */
     public function setMessage($message)
     {
@@ -103,7 +103,7 @@ class CMSAlert
      * Set active
      *
      * @param boolean $active
-     * @return Alert
+     * @return CMSAlert
      */
     public function setActive($active)
     {
