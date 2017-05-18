@@ -1,0 +1,45 @@
+# Project language
+language: php
+
+# Allows use container-based infrastructure
+sudo: false
+
+# Start mysql service
+services:
+  - mysql
+
+# Cache composer packages so "composer install" is faster
+cache:
+  directories:
+    - $HOME/.composer/cache/files
+
+language: php
+
+php:
+    - '7.1'
+
+# Define an environment variable
+env:
+  - SYMFONY_VERSION="3.2.*" DB=mysql
+
+# Update composer
+before-install:
+  - composer self-update
+  - if [ "$SYMFONY_VERSION" != "" ]; then composer require "symfony/symfony:${SYMFONY_VERSION}" --no-update; fi;
+
+# Install composer dependencies,
+# Create database, schema and fixtures
+install:
+  - composer update --prefer-dist --no-interaction
+
+#before-script:
+#  - phpcs --version
+
+# Run script
+script:
+  #- phpunit
+  - ./vendor/bin/php-cs-fixer fix --verbose
+
+# After a build, send email notification with the build results
+notifications:
+  email: olivier.delbruyere@hotmail.com

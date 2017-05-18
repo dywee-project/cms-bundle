@@ -1,5 +1,5 @@
 {
-  "name": "olix21/cms-bundle",
+  "name": "dywee/cms-bundle",
   "type": "symfony-bundle",
   "description": "Symfony2 bundle, the Dywee CMS bundle",
   "keywords": ["cms"],
@@ -14,13 +14,22 @@
   ],
   "require": {
     "php": ">=7.1.0",
-    "olix21/core-bundle": "dev-master",
+    "dywee/core-bundle": "dev-master",
     "stof/doctrine-extensions-bundle": "^1.2",
     "egeloen/ckeditor-bundle": "^4.0"
   },
+  "require-dev": {
+    "doctrine/doctrine-bundle": "^1.3",
+    "friendsofphp/php-cs-fixer": "^1.11",
+    "swiftmailer/swiftmailer": "^4.3 || ^5.0",
+    "symfony/phpunit-bridge": "^2.7 || ^3.0",
+    "symfony/validator": "^2.7 || ^3.0",
+    "symfony/yaml": "^2.7 || ^3.0",
+    "phpunit/phpunit": "~4.8|~5.0"
+  },
   "autoload": {
     "psr-4": {
-      "Olix21\\CMSBundle\\": ""
+      "Dywee\\CMSBundle\\": ""
     }
   }
 }
