@@ -3,8 +3,9 @@
 namespace Dywee\CMSBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Dywee\CoreBundle\Model\UserInterface;
 use Dywee\CoreBundle\Traits\Seo;
+use Dywee\UserBundle\Entity\UserInterface;
+use FOS\UserBundle\Model\User;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Translatable\Translatable;
 
@@ -112,7 +113,7 @@ class Page implements Translatable
     private $template = 'default';
 
     /**
-     * @ORM\ManyToOne(targetEntity="Dywee\CoreBundle\Model\UserInterface")
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      */
     private $updatedBy;
 
