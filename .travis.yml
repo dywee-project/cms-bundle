@@ -38,7 +38,7 @@ install:
 # Run script
 script:
   #- phpunit
-  - ./vendor/bin/php-cs-fixer fix --verbose
+  #- ./vendor/bin/php-cs-fixer fix --verbose
 
 # After a build, send email notification with the build results
 notifications:
