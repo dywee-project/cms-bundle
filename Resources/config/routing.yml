@@ -1,24 +1,6 @@
-page_list:
-    path:     /cms/list
-    defaults: { _controller: DyweeCMSBundle:Page:list }
-
-page_view_content:
-    path:     /page/{data}/onlyContent
-    defaults: { _controller: DyweeCMSBundle:Page:viewContent }
-
 page_details:
     path:     /admin/page/{id}/details
     defaults: { _controller: DyweeCMSBundle:PageAdmin:view }
-    requirements:
-        id: \d+
-
-cms_view_contact_page:
-    path:     /page/contact
-    defaults: { _controller: DyweeCMSBundle:Page:viewContact }
-
-page_inMenu_switch:
-    path:     /admin/page/{id}/inMenuSwitch
-    defaults: { _controller: DyweeCMSBundle:Page:inMenuSwitch }
     requirements:
         id: \d+
 

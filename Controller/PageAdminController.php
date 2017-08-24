@@ -19,6 +19,7 @@ class PageAdminController extends Controller
      * @param Page $page
      * @return Response
      * @Route(name="admin_page_view", path="admin/page/{id}", requirements={"id": "\d+"})
+     * @Route(name="page_details", path="admin/page/{id}", requirements={"id": "\d+"}) @deprecated
      */
     public function viewAction(Page $page)
     {

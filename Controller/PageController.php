@@ -32,6 +32,8 @@ class PageController extends Controller
     }
 
     /**
+     * @Route(name="page_inMenu_switch", path="admin/page/{id}/inMenuSwitch", requirements={"id": "\d+"})
+     *
      * @param Page $page
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */

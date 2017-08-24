@@ -18,18 +18,16 @@ class MenuController extends Controller
 
         $pageList = $pageRepository->findAll();
 
-
-        if($position == 'top')
-        {
-            $event = new NavbarBuilderEvent(array('pageList' => $pageList));
+        if ($position === 'top') {
+            $event = new NavbarBuilderEvent(['pageList' => $pageList]);
 
             $this->get('event_dispatcher')->dispatch(DyweeCMSEvent::BUILD_NAVBAR, $event);
 
             return $this->render('DyweeCMSBundle:Nav:menu.html.twig', $event->getData());
         }
 
-        else if($position == 'footer'){
-            $event = new FooterBuilderEvent(array('pageList' => $pageList));
+        if ($position === 'footer') {
+            $event = new FooterBuilderEvent(['pageList' => $pageList]);
 
             $this->get('event_dispatcher')->dispatch(DyweeCMSEvent::BUILD_NAVBAR, $event);
 
