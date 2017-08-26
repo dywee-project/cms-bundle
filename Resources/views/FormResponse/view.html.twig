@@ -7,9 +7,13 @@
 {% endblock %}
 
 {% block body %}
-    <div class="title-heading">
-        <h1>Coup d'oeil sur une réponse du formulaire "{{ customForm.name }}"</h1>
+    <div class="box box-default">
+        <div class="box-header">
+            <h1 class="box-title">Réponse à "{{ customForm.name }}"</h1>
+        </div>
+        <div class="box-body">
+            {{ form(response) }}
+        </div>
     </div>
 
-    {{ form(response) }}
 {% endblock %}

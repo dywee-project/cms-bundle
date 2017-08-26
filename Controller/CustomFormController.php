@@ -6,14 +6,17 @@ use Dywee\CMSBundle\Entity\CustomForm;
 use Dywee\CMSBundle\Entity\FormResponseContainer;
 use Dywee\CoreBundle\Controller\ParentController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 
 class CustomFormController extends ParentController
 {
+    protected $tableViewName = 'custom_form_table';
+
     /**
-     * @Route(name="cms_customForm_table", path="admin/cms/customForm")
+     * @Route(name="custom_form_table", path="admin/cms/customForm")
      */
     public function myTableAction()
     {
@@ -21,7 +24,7 @@ class CustomFormController extends ParentController
     }
 
     /**
-     * @Route(name="cms_customForm_add", path="admin/cms/customForm/add")
+     * @Route(name="custom_form_add", path="admin/cms/customForm/add")
      */
     public function myAddAction(Request $request)
     {
@@ -29,7 +32,7 @@ class CustomFormController extends ParentController
     }
 
     /**
-     * @Route(name="cms_customFormupdate", path="admin/cms/customForm/{id}/update")
+     * @Route(name="custom_form_update", path="admin/cms/customForm/{id}/update")
      */
     public function myUpdateAction(CustomForm $customForm, Request $request)
     {
@@ -37,79 +40,44 @@ class CustomFormController extends ParentController
     }
 
     /**
-     * @Route(name="cms_customForm_delete", path="admin/cms/customForm/{id}/delete")
+     * @Route(name="custom_form_delete", path="admin/cms/customForm/{id}/delete")
      */
-    public function myDeleteAction(CustomForm $customForm)
+    public function myDeleteAction(CustomForm $customForm, Request $request)
     {
-        return parent::deleteAction($customForm);
-    }
-
-    public function buildForm($customForm)
-    {
-        $fb = $this->createFormBuilder(array());
-
-        $index = 1;
-        foreach ($customForm->getFields() as $field) {
-            $options = array();
-
-            $type = $field->getType();
-
-            switch ($type) {
-                case 'select':
-                    $type = 'choice';
-                    break;
-
-                case 'checkbox':
-                    $type = 'choice';
-                    $options['expanded'] = true;
-                    $options['multiple'] = true;
-                    break;
-
-                case 'radio':
-                    $type = 'choice';
-                    $options['expanded'] = true;
-                    break;
-            }
-
-            if ($type === 'choice') {
-                $options['choices'] = $field->getPossibleValuesArray();
-            }
-
-            $options['required'] = $field->isRequired();
-            $options['label'] = $field->getLabel() . ($field->isRequired() ? ' *' : '');
-            $options['attr'] = array(
-                'placeholder' => $field->getPlaceholder()
-            );
-
-            $fb->add($field->getId(), $type, $options);
-
-            $index++;
-        }
-
-        return $fb;
+        return parent::deleteAction($customForm, $request);
     }
 
     /**
-     * @Route(name="cms_customForm_preview", path="admin/cms/customForm/{id}/preview")
+     * @param $customForm
+     *
+     * @return \Symfony\Component\Form\FormBuilder
+     *
+     * @deprecated call the service directely
+     */
+    public function buildForm(CustomForm $customForm)
+    {
+        return $this->get('dywee_cms.custom_form_builder')->buildForm($customForm);
+    }
+
+    /**
+     * @Route(name="custom_form_preview", path="admin/cms/customForm/{id}/preview")
      */
     public function previewAction(CustomForm $customForm)
     {
-        $fb = $this->buildForm($customForm);
-        $fb->add('Envoyer', 'button');
-        $form = $fb->getForm();
+        $form = $this->buildForm($customForm);
 
-        return $this->render('DyweeCMSBundle:CustomForm:preview.html.twig', array('customForm' => $customForm, 'form' => $form->createView()));
+        return $this->render(
+            'DyweeCMSBundle:CustomForm:preview.html.twig',
+            ['customForm' => $customForm, 'form' => $form->createView()]
+        );
     }
 
     /**
-     * @Route(name="cms_customForm_display", path="cms/customForm/{id}")
+     * @Route(name="custom_form_render", path="cms/customForm/{id}")
      */
     public function renderAction(CustomForm $customForm, Request $request)
     {
-
-        $fb = $this->buildForm($customForm);
-        $fb->add('Envoyer', 'submit');
-        $form = $fb->getForm();
+        $form = $this->buildForm($customForm);
 
         $form->handleRequest($request);
 
@@ -121,7 +89,7 @@ class CustomFormController extends ParentController
             $notification->setContent('Une nouvelle réponse a été validée pour le formulaire');
             $notification->setBundle('module');
             $notification->setType('form.response.new');
-            $notification->setRoutingPath('cms_customFormResponse_view');*/
+            $notification->setRoutingPath('custom_formResponse_view');*/
 
             $em = $this->getDoctrine()->getManager();
 
@@ -134,11 +102,15 @@ class CustomFormController extends ParentController
 
             return $this->render('DyweeCMSBundle:Render:validated_form.html.twig');
         }
-        return $this->render('DyweeCMSBundle:Render:render_form.html.twig', array('customForm' => $customForm, 'form' => $form->createView()));
+
+        return $this->render(
+            'DyweeCMSBundle:Render:render_form.html.twig',
+            ['customForm' => $customForm, 'form' => $form->createView()]
+        );
     }
 
     /**
-     * @Route(name="cms_customForm_json", path="admin/cms/customForm/json")
+     * @Route(name="custom_form_json", path="admin/cms/customForm/json")
      * TODO expose true
      */
     public function jsonAction()
@@ -149,9 +121,9 @@ class CustomFormController extends ParentController
 
         if (count($customFormList) > 0) {
             $serializer = $this->get('serializer');
-            $response = array('type' => 'success', 'data' => $serializer->normalize($customFormList));
+            $response = ['type' => 'success', 'data' => $serializer->normalize($customFormList)];
         } else {
-            $response = array('type' => 'empty');
+            $response = ['type' => 'empty'];
         }
 
         return $this->json($response);

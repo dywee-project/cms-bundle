@@ -2,32 +2,35 @@
 
 namespace Dywee\CMSBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class PageElementController extends Controller
 {
+    /**
+     * @Route(name="cms_getPageElementDashboard_byAjax", path="admin/cms/pageElement/ajaxDashboard", options={"expose": true})
+     *
+     * @param Request $request
+     *
+     * @return Response
+     */
     public function ajaxDashboardAction(Request $request)
     {
-        if($request->isXmlHttpRequest()) {
+        if ($request->isXmlHttpRequest()) {
             $objectName = $request->get('objectName');
             $em = $this->getDoctrine()->getManager();
 
-            $serializer = $this->get('serializer');
-            $normalizer = new ObjectNormalizer();
-
-            switch($objectName)
-            {
+            switch ($objectName) {
                 case 'form':
                     $repository = $em->getRepository('DyweeCMSBundle:CustomForm');
                     $formList = $repository->findAll();
-                    $response = array();
+                    $response = [];
 
-                    foreach($formList as $form)
-                        $response[] = array('id' => $form->getId(), 'name' => $form->getName());
+                    foreach ($formList as $form) {
+                        $response[] = ['id' => $form->getId(), 'name' => $form->getName()];
+                    }
 
                     return new Response(
                         json_encode($response)
@@ -42,7 +45,8 @@ class PageElementController extends Controller
                     $repository = $em->getRepository('DyweeModuleBundle:Carousel');
                     $list = $repository->findForJson($website);
                     return new Response(json_encode($list));*/
-                default: return new Response('object not found');
+                default:
+                    return new Response('object not found');
             }
         }
     }

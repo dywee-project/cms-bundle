@@ -23,7 +23,7 @@ class PageElementModalHandler{
                 'value' => 'cms.plugin.form.label',
                 'modalLabel' => 'cms.plugin.form.description',
                 'routeName' => 'cms_customForm_json',
-                'routeForAdding' => 'cms_customForm_add',
+                'routeForAdding' => 'custom_form_add',
                 'active' => true
             ),
 

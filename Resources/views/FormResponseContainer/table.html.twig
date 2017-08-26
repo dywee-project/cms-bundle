@@ -1,0 +1,64 @@
+{# Dywee\customFormBundle\Resources\View\FormResponse\table.html.twig #}
+
+{% extends "DyweeCMSBundle::admin.html.twig" %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-default">
+                <div class="box-header">
+                    <h1 class="box-title">
+                        Liste des réponses au formulaire "{{ customForm.name }}"
+                    </h1>
+                </div>
+
+                {% if customForm.responses|length > 0 %}
+                    <table class="table table-stripped table-hover table-condensed">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Lu</th>
+                            <th>Répondu le</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for formResponse in customForm.responses %}
+                            <tr>
+                                <td>{{ formResponse.id }}</td>
+                                <td>
+                                    {% if formResponse.isReaded == true %}
+                                        lu
+                                    {% else %}
+                                        non lu
+                                    {% endif %}
+                                </td>
+                                <td>{{ formResponse.createdAt|date('d/m/Y à H\\hm') }}</td>
+                                <td class="actions">
+                                    <div class="btn-group btn-group-xs">
+                                        <a href="{{ path('form_response_view', {id: formResponse.id}) }}"
+                                           class="btn btn-default"><i class="fa fa-eye"></i> </a>
+
+                                    </div>
+                                    <a href="{{ path('form_response_delete', {id: formResponse.id}) }}"
+                                       class="btn btn-xs btn-danger"><i class="fa fa-trash-o"></i> </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                {% else %}
+
+                    <div class="box-body">
+                        <p>Il n'y a encore aucune réponse à ce formulaire.</p>
+                    </div>
+
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

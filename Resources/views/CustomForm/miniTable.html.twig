@@ -1,4 +1,4 @@
-{% if dyweeForms|length > 0 %}
+{% if customForms|length > 0 %}
     <table class="table table-striped table-hover">
         <thead>
         <tr>
@@ -9,17 +9,17 @@
         </tr>
         </thead>
         <tbody>
-        {%  for customForm in dyweeForms %}
+        {%  for customForm in customForms %}
             <tr>
                 <td>{{ customForm.id }}</td>
                 <td>{{ customForm.name }}</td>
-                <td><a href="{{ path('cms_customFormResponse_table', {formId: customForm.id}) }}">{{ customForm.countResponses }}</a></td>
+                <td><a href="{{ path('form_response_table', {id: customForm.id}) }}">{{ customForm.countResponses }}</a></td>
                 <td>
                     <div class="btn-group btn-group-xs">
-                        <a href="{{ path('cms_customForm_preview', {id: customForm.id}) }}" class="btn btn-default btn-xs"><i class="fa fa-eye"></i> </a>
-                        <a href="{{ path('cms_customForm_update', {id: customForm.id}) }}" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i> </a>
+                        <a href="{{ path('custom_form_preview', {id: customForm.id}) }}" class="btn btn-default btn-xs"><i class="fa fa-eye"></i> </a>
+                        <a href="{{ path('custom_form_update', {id: customForm.id}) }}" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i> </a>
                     </div>
-                    <a href="{{ path('cms_customForm_delete', {id: customForm.id}) }}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> </a>
+                    <a href="{{ path('custom_form_delete', {id: customForm.id}) }}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> </a>
                 </td>
             </tr>
         {% endfor %}
@@ -28,6 +28,6 @@
 {% else %}
     <div class="box-body">
         <p>Vous n'avez pas encore créé de formulaire personnalisé.</p>
-        <p><a href="{{ path('cms_customForm_add') }}" class="btn btn-success"><i class="fa fa-plus"></i> Créer un formulaire</a></p>
+        <p><a href="{{ path('custom_form_add') }}" class="btn btn-success"><i class="fa fa-plus"></i> Créer un formulaire</a></p>
     </div>
 {% endif %}

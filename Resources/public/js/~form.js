@@ -1,6 +1,5 @@
 $(document).ready(function() {
 
-
     var modalLabel = '';
     var urlForAjax = '';
     var createButtonRedirection = '';

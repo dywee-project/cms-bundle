@@ -50,7 +50,7 @@ class CustomForm
     private $sumbitButtonValue = 'Valider';
 
     /**
-     * @ORM\OneToMany(targetEntity="FormResponseContainer", mappedBy="form", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="FormResponseContainer", mappedBy="customForm", cascade={"remove"})
      */
     private $responses;
 

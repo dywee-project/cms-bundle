@@ -3,6 +3,9 @@
 namespace Dywee\CMSBundle\Controller;
 
 use Dywee\CMSBundle\DyweeCMSEvent;
+use Dywee\CMSBundle\Entity\CustomForm;
+use Dywee\CMSBundle\Entity\FormResponseContainer;
+use Dywee\CMSBundle\Entity\Notification;
 use Dywee\CMSBundle\Entity\Page;
 use Dywee\CMSBundle\Entity\PageStat;
 use Dywee\CMSBundle\Event\HomepageBuilderEvent;
@@ -25,8 +28,9 @@ class PageController extends Controller
         $pr = $this->getDoctrine()->getManager()->getRepository('DyweeCMSBundle:Page');
         $page = $pr->findHomePage();
 
-        if ($page == null)
+        if ($page == null) {
             return $this->redirect($this->generateUrl('page_install'));
+        }
 
         return $this->viewAction($page->getId(), $request);
     }
@@ -35,6 +39,7 @@ class PageController extends Controller
      * @Route(name="page_inMenu_switch", path="admin/page/{id}/inMenuSwitch", requirements={"id": "\d+"})
      *
      * @param Page $page
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function inMenuSwitchAction(Page $page)
@@ -50,6 +55,7 @@ class PageController extends Controller
 
     /**
      * @param $page
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function renderHomeAction($page)
@@ -62,7 +68,7 @@ class PageController extends Controller
         $em->persist($pageStat);
         $em->flush();
 
-        $data = array('page' => $page);
+        $data = ['page' => $page];
 
         return $this->render('DyweeCMSBundle:Page:view.html.twig', $data);
     }
@@ -76,12 +82,13 @@ class PageController extends Controller
         $pr = $this->getDoctrine()->getManager()->getRepository('DyweeCMSBundle:Page');
         $ps = $pr->findAll();
 
-        return $this->render('DyweeCMSBundle:Page:table.html.twig', array('pageList' => $ps));
+        return $this->render('DyweeCMSBundle:Page:table.html.twig', ['pageList' => $ps]);
     }
 
     /**
-     * @param $data
+     * @param         $data
      * @param Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @Route(name="page_view", path="page/{data}")
      */
@@ -91,6 +98,7 @@ class PageController extends Controller
          * Le problème a étudier est celui des pages comprenant un ou plusieurs formulaire(s)
          * Un render depuis une vue twig rend correctement le formulaire mais ne permet pas de le valider
          * Le formulaire soumis est considéré comme vide
+         * TODO surement parce que c'est une subrequest...
          *
          * Sur les forums on ne trouve pas grand chose vu que c'est pas un use case habituel
          *
@@ -103,9 +111,11 @@ class PageController extends Controller
 
         $pageRepository = $this->getDoctrine()->getManager()->getRepository('DyweeCMSBundle:Page');
 
-        if (is_numeric($data))
-            $page = $pageRepository->findOneById($data);
-        else $page = $pageRepository->findOneBySeoUrl($data);
+        if (is_numeric($data)) {
+            $page = $pageRepository->find($data);
+        } else {
+            $page = $pageRepository->findOneBySeoUrl($data);
+        }
 
         /*switch ($page->getType()) {
             case 3:
@@ -120,7 +130,7 @@ class PageController extends Controller
             case 12: return $this->forward('DyweeModuleBundle:MusicGallery:page', array('page' => $page));*/
         //}
 
-        $data = array('page' => $page);
+        $data = ['page' => $page];
 
         if ($page->getType() === Page::TYPE_HOMEPAGE) {
             $event = new HomepageBuilderEvent($data);
@@ -134,68 +144,61 @@ class PageController extends Controller
 
         $data = array_merge($data, $event->getData());
 
-        /*if($page->hasForm())
-        {
+        if ($page->hasForm()) {
             $formsId = $page->getForms();
 
             $em = $this->getDoctrine()->getManager();
-            $formRepository = $em->getRepository('DyweeModuleBundle:CustomForm');
+            $formRepository = $em->getRepository(CustomForm::class);
 
-            $formBuilderService = $this->get('form.builder');
+            $formBuilderService = $this->get('dywee_cms.custom_form_builder');
 
-            $forms = array();
-            foreach($formsId as $formId)
-            {
-                $customForm = $formRepository->findOneBy(array('id' => $formId, 'website' => $this->container->getParameter('website.id')));
+            $forms = [];
+            foreach ($formsId as $formId) {
+                $customForm = $formRepository->find((int)$formId);
 
-                if($customForm)
-                {
+                if ($customForm) {
                     //Le form n'est pas un form à proprement parler mais un objet de type CustomForm
-                    $formBuilder = $formBuilderService->buildFormBuilder($customForm);
-
-                    //Génération du formulaire
-                    $form = $formBuilder->getForm();
+                    $form = $formBuilderService->buildForm($customForm);
 
                     //Traitement des formulaires
-                    if($form->handleRequest($request)->isValid())
-                    {
-                        $websiteRepository = $em->getRepository('DyweeWebsiteBundle:Website');
-                        $website = $websiteRepository->findOneById($this->container->getParameter('website.id'));
+                    if ($form->handleRequest($request)->isValid()) {
 
                         $response = new FormResponseContainer();
                         $response->setFromForm($customForm, $form->getData());
 
+                        /*
                         $notification = new Notification();
                         $notification->setContent('Une nouvelle réponse a été validée pour le formulaire');
-                        $notification->setBundle('module');
+                        $notification->setBundle('cms');
                         $notification->setType('form.response.new');
                         $notification->setRoutingPath('customFormResponse_view');
-                        $notification->setWebsite($website);
+                        $notification->setWebsite(null);
+                        */
 
                         $em->persist($response);
-                        $em->flush();
 
-                        $notification->setRoutingArguments(json_encode(array('id' => $response->getId())));
+                        //$notification->setRoutingArguments(json_encode(['id' => $response->getId()]));
 
-                        $em->persist($notification);
+                        //$em->persist($notification);
                         $em->flush();
                     }
 
                     //Rendu des formulaires
-                    $forms['form_' . $formId] = $form->createView();
+                    $forms['form_'.$formId] = $form->createView();
                 }
             }
 
             //On passe les formulaires à la vue
             $data['forms'] = $forms;
 
-        }*/
+        }
 
         return $this->render('DyweeCMSBundle:Page:view.html.twig', $data);
     }
 
     /**
      * @param Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @Route(name="page_add", path="admin/page/add")
      */
@@ -217,9 +220,10 @@ class PageController extends Controller
 
             return $this->redirect($this->generateUrl('page_table'));
         }
-        $event = new PageElementModalBuilderEvent(array('page' => $page, 'form' => $form->createView(), 'plugins' => array()));
+        $event = new PageElementModalBuilderEvent(['page' => $page, 'form' => $form->createView(), 'plugins' => []]);
 
-        $eventToDispatch = $page->getType() == Page::TYPE_HOMEPAGE ? DyweeCMSEvent::BUILD_HOMEPAGE_ADMIN_PLUGIN_BOX : DyweeCMSEvent::BUILD_ADMIN_PLUGIN_BOX;
+        $eventToDispatch = $page->getType(
+        ) == Page::TYPE_HOMEPAGE ? DyweeCMSEvent::BUILD_HOMEPAGE_ADMIN_PLUGIN_BOX : DyweeCMSEvent::BUILD_ADMIN_PLUGIN_BOX;
 
         $this->get('event_dispatcher')->dispatch($eventToDispatch, $event);
 
@@ -227,19 +231,20 @@ class PageController extends Controller
     }
 
     /**
-     * @param Page $page
+     * @param Page    $page
      * @param Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @Route(name="page_update", path="admin/page/{id}/update")
      */
     public function updateAction(Page $page, Request $request)
     {
         $form = $this->get('form.factory')->create(PageType::class, $page);
+        $form->handleRequest($request);
 
-        if ($form->handleRequest($request)->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $page->setUpdatedBy($this->get('security.token_storage')->getToken()->getUser());
             $em = $this->getDoctrine()->getManager();
-            $em->persist($page);
             $em->flush();
 
             $request->getSession()->getFlashBag()->add('success', 'Page bien modifiée');
@@ -247,9 +252,10 @@ class PageController extends Controller
             return $this->redirect($this->generateUrl('page_table'));
         }
 
-        $event = new PageElementModalBuilderEvent(array('page' => $page, 'form' => $form->createView(), 'plugins' => array()));
+        $event = new PageElementModalBuilderEvent(['page' => $page, 'form' => $form->createView(), 'plugins' => []]);
 
-        $eventToDispatch = $page->getType() == Page::TYPE_HOMEPAGE ? DyweeCMSEvent::BUILD_HOMEPAGE_ADMIN_PLUGIN_BOX : DyweeCMSEvent::BUILD_ADMIN_PLUGIN_BOX;
+        $eventToDispatch = $page->getType(
+        ) === Page::TYPE_HOMEPAGE ? DyweeCMSEvent::BUILD_HOMEPAGE_ADMIN_PLUGIN_BOX : DyweeCMSEvent::BUILD_ADMIN_PLUGIN_BOX;
 
         $this->get('event_dispatcher')->dispatch($eventToDispatch, $event);
 
@@ -257,8 +263,9 @@ class PageController extends Controller
     }
 
     /**
-     * @param Page $page
+     * @param Page      $page
      * @param Page|null $pageToPromote
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @Route(name="page_delete", path="admin/page/{id}/delete")
      * TODO route pour delete homepage a définir
@@ -266,11 +273,10 @@ class PageController extends Controller
     public function deleteAction(Page $page, Page $pageToPromote = null)
     {
         $em = $this->getDoctrine()->getManager();
-        if($page->getType() == Page::TYPE_HOMEPAGE) {
+        if ($page->getType() == Page::TYPE_HOMEPAGE) {
             if (!$pageToPromote) {
                 throw new Exception('Impossible de supprimer la page d\'accueil sans promouvoir une autre page');
-            } else
-            {
+            } else {
                 $pageToPromote->setType(Page::TYPE_HOMEPAGE);
                 $em->persist($page);
             }

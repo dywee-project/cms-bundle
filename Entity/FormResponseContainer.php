@@ -25,7 +25,7 @@ class FormResponseContainer
     /**
      * @ORM\ManyToOne(targetEntity="CustomForm", inversedBy="responses")
      */
-    private $form;
+    private $customForm;
 
     /**
      * @ORM\OneToMany(targetEntity="FormResponse", mappedBy="responseContainer", cascade={"persist", "remove"})
@@ -69,10 +69,22 @@ class FormResponseContainer
      */
     public function setForm(CustomForm $form = null)
     {
-        $this->form = $form;
+        $this->customForm = $form;
         $form->addResponse($this);
 
         return $this;
+    }
+
+    /**
+     * Alias of setForm(CustomForm $form)
+     * 
+     * @param CustomForm|null $form
+     *
+     * @return FormResponseContainer
+     */
+    public function setCustomForm(CustomForm $form = null)
+    {
+       return $this->setForm($form);
     }
 
     /**
@@ -82,7 +94,17 @@ class FormResponseContainer
      */
     public function getForm()
     {
-        return $this->form;
+        return $this->customForm;
+    }
+
+    /**
+     * Alias of getForm()
+     * 
+     * @return CustomForm
+     */
+    public function getCustomForm()
+    {
+        return $this->getForm();
     }
 
     /**
@@ -112,13 +134,19 @@ class FormResponseContainer
     /**
      * Get fieldResponses
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection|FormResponse[]
      */
     public function getFieldResponses()
     {
         return $this->fieldResponses;
     }
 
+    /**
+     * @param CustomForm $form
+     * @param            $response
+     *
+     * @return $this
+     */
     public function setFromForm(CustomForm $form, $response)
     {
         $this->setForm($form);
@@ -129,26 +157,31 @@ class FormResponseContainer
             $fieldResponse->setField($field);
 
             //Dans le cas où le type est un choice
-            if($field->getType() === 'select')
-            {
-                $fieldPossibleResponses = $field->getPossibleValuesArray();
-                $responseFragment = $fieldPossibleResponses[$response[$field->getId()]];
-            }
-            else if($field->getType() === 'checkbox' || $field->getType() === 'radio')
-            {
-                $responses = array();
-                //On récupère les différents choix paramétrés dans l'admin
-                $fieldPossibleResponses = $field->getPossibleValuesArray();
+            switch($field->getType()) {
+                case 'select':
+                    $fieldPossibleResponses = $field->getPossibleValuesArray();
+                    $responseFragment = $fieldPossibleResponses[$response[$field->getId()]];
+                    break;
 
-                //On ajoute ceux sélectionnés par l'user
-                foreach($response[$field->getId()] as $responseFragment)
-                    $responses[] = $fieldPossibleResponses[$responseFragment];
+                case 'checkbox':
+                case 'radio':
+                    $responses = [];
+                    //On récupère les différents choix paramétrés dans l'admin
+                    $fieldPossibleResponses = $field->getPossibleValuesArray();
 
-                //On convertit array -> string
-                $responseFragment = implode(', ', $responses);
-                $fieldResponse->setValue($response);
+                    //On ajoute ceux sélectionnés par l'user
+                    foreach ($response[$field->getId()] as $responseFragment) {
+                        $responses[] = $fieldPossibleResponses[$responseFragment];
+                    }
+
+                    //On convertit array -> string
+                    $responseFragment = implode(', ', $responses);
+                    $fieldResponse->setValue($response);
+                    break;
+
+                default:
+                    $responseFragment = $response[$field->getId()];
             }
-            else $responseFragment = $response[$field->getId()];
 
             $fieldResponse->setValue($responseFragment);
 
@@ -158,25 +191,49 @@ class FormResponseContainer
         return $this;
     }
 
-    public function setCreatedAt($date)
+    /**
+     * @param \DateTime $date
+     *
+     * @return $this
+     */
+    public function setCreatedAt(\DateTime $date)
     {
         $this->createdAt = $date;
         return $this;
     }
 
+    /**
+     * @return \DateTime
+     */
     public function getCreatedAt()
     {
         return $this->createdAt;
     }
 
+    /**
+     * @return bool
+     */
     public function getIsReaded()
     {
         return $this->isReaded;
     }
 
+    /**
+     * @param $isReaded
+     *
+     * @return $this
+     */
     public function setIsReaded($isReaded)
     {
         $this->isReaded = $isReaded;
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getParentEntity()
+    {
+        return $this->customForm ?? CustomForm::class;
     }
 }

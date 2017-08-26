@@ -28,8 +28,7 @@
     <div class="container">
         {% block bodySubContent %}
             {% for pageElement in page.pageElements %}
-                {% set blockElement = pageElement.template %}
-                {% include blockElement %}
+                {% include pageElement.template %}
             {% endfor %}
         {% endblock %}
     </div>

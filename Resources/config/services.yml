@@ -39,10 +39,21 @@ services:
 
     dywee_cms.plugin_box_handler:
         class: Dywee\CMSBundle\Service\PageElementModalHandler
-        arguments: [  ]
 
     dywee_cms.plugin_box_listener:
         class: Dywee\CMSBundle\Listener\PageElementModalListener
         arguments: [ '@dywee_cms.plugin_box_handler' ]
         tags:
             - { name: kernel.event_subscriber }
+
+
+    ###########################
+    #                         #
+    #          PLUGIN         #
+    #                         #
+    ###########################
+
+    dywee_cms.custom_form_builder:
+        class: Dywee\CMSBundle\Service\CustomFormBuilder
+        arguments:
+            - '@form.factory'

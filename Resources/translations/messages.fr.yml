@@ -30,3 +30,6 @@ cms:
         list: Liste des alertes
         title: Titre
         add_button: Ajouter une alerte
+
+form:
+    sent: Formulaire envoyé

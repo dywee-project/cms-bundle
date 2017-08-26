@@ -20,6 +20,9 @@
 {% endblock %}
 
 {% block footerJavascript %}
-    <script src="{{ asset('bundles/dyweecms/js/form.js') }}"></script>
-    <script src="{{ asset('bundles/dyweecore/js/jquery-ui.min.js') }}"></script>
+    {{ parent() }}
+    <script>
+    var cms_ajax_url = '{{ path('cms_getPageElementDashboard_byAjax') }}';
+    </script>
+    <script src="{{ asset('build/dywee_cms.js') }}"></script>
 {% endblock %}

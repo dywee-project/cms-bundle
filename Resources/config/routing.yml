@@ -13,29 +13,3 @@ cms_getPageElementDashboard_byAjax:
 cms_install:
     path:     /cms/install
     defaults: {_controller: DyweeCMSBundle:Core:install}
-
-
-#####################################
-#                                   #
-#     ROUTING DES FORMULAIRES       #
-#                                   #
-#####################################
-
-
-cms_customFormResponse_table:
-    path:     /admin6833/modules/customFormResponse/{formId}/table
-    defaults: { _controller: DyweeCMSBundle:FormResponse:table }
-    requirements:
-        formId: \d+
-
-cms_customFormResponse_view:
-    path:     /admin6833/modules/customFormResponse/{id}/view
-    defaults: { _controller: DyweeCMSBundle:FormResponse:myView }
-    requirements:
-        id: \d+
-
-cms_customFormResponse_delete:
-    path:     /admin6833/modules/customFormResponse/{id}/delete
-    defaults: { _controller: DyweeCMSBundle:FormResponse:delete }
-    requirements:
-        id: \d+

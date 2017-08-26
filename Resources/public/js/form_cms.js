@@ -1,21 +1,32 @@
-$(document).ready(function() {
+$(document).ready(function () {
 
+    //Créer un conflit entre l'éditeur de texte et le plugin sortable
+    function setBoxSortable() {
+        console.log('sortable');
+        /* TODO enable sortable again
+        $("#dywee_cmsbundle_page_pageElements").sortable({
+            placeholder: "dywee-pageElement-placeholder",
+            forcePlaceholderSize: true,
+            handle: ".box-header",
+            update: function (event, ui) {
+                $.each($('.box'), function (index, box) {
+                    $(box).find('input[id$="_displayOrder"]').val(index + 1);
+                })
+            }
+        });
+        */
+    }
 
-    var modalLabel = '';
-    var urlForAjax = '';
-    var createButtonRedirection = '';
-
-    function ProcessAjaxForPageElement(type, $prototype)
-    {
+    function ProcessAjaxForPageElement(type, $prototype) {
         setBoxSortable();
+        console.log('olidebug', cms_ajax_url);
         $.ajax({
-            url: Routing.generate('cms_getPageElementDashboard_byAjax'),
+            url: cms_ajax_url,
             dataType: 'json',
             type: 'post',
             data: {objectName: type},
-            success: function(data)
-            {
-                switch(type) {
+            success: function (data) {
+                switch (type) {
                     case 'form':
                         $prototype.find('.box-header .box-title').html('Formulaire');
                         showDashboard(data, $prototype);
@@ -33,35 +44,35 @@ $(document).ready(function() {
         });
     }
 
-    function showDashboard(data, $prototype)
-    {
-        $inputToFill = $prototype.find('[id$="_content"]');
-
+    function showDashboard(data, $prototype) {
+        var $inputToFill = $prototype.find('[id$="_content"]');
         var value = $inputToFill.val();
 
-        $div = $prototype.find('.for-user');
+        var $div = $prototype.find('.for-user');
 
-        if($div.length == 0)
-            $div = $('<div class="for-user">');
+        if ($div.length === 0) {
+            var $div = $('<div class="for-user">');
+        }
 
         $div.html('');
 
-        if(data.length == 0)
+        if (data.length === 0) {
             $div.html('<p>Vous n\'avez pas encore créé d\'élements</p>');
+        }
 
         var uniqId = Math.random().toString(36).slice(-5);
 
-        $.each(data, function(index, item)
-        {
-            $radio = $('<input type="radio" name="' + uniqId + '">');
-            $toAdd = $('<div class="radio">').append($('<label>').html(item.name).prepend($radio))
+        $.each(data, function (index, item) {
+            var $radio = $('<input type="radio" name="' + uniqId + '">');
+            var $toAdd = $('<div class="radio">').append($('<label>').html(item.name).prepend($radio))
 
             $div.append($toAdd);
 
-            if(item.id == value)
+            if (item.id === value) {
                 $radio.attr('checked', 'checked');
+            }
 
-            $radio.click(function(e) {
+            $radio.click(function (e) {
                 $inputToFill.val(item.id);
             });
         });
@@ -71,19 +82,18 @@ $(document).ready(function() {
 
 
     function handleDataForPageElement(data) {
-        if(data.type == 'success')
+        var html = $('<p>').html('Une Erreur est survenue');
+
+        if (data.type === 'success') {
             var html = setTable(data.data, setPageElementValue);
-        else if(data.type == 'empty')
-        {
-            var $html = $('<p>Vous devez d\'abord configurer des éléments</p>');
+        } else if (data.type === 'empty') {
+            $html = $('<p>Vous devez d\'abord configurer des éléments</p>');
             var refreshButton = $("<button>").addClass('btn btn-default').html('<i class="fa fa-refresh"></i> Rafraichir').on('click', ajaxify);
             var createButton = $("<a>").addClass('btn btn-success').html('<i class="fa fa-plus"></i> Créer un élément').attr('href', Routing.generate('dywee_customForm_add')).attr('target', '_blanck');
         }
-        else
-            var html = $('<p>').html('Une Erreur est survenue');
 
         //console.log($("input[id$='"+currentIndex+"_content']").parents('div.box-body').html());
-        $("[id$='"+currentIndex+"_content']").parents('div.box-body').append(html).find('.loader').remove();
+        $("[id$='" + currentIndex + "_content']").parents('div.box-body').append(html).find('.loader').remove();
     }
 
     function setPageElementValue($link, id) {
@@ -104,7 +114,7 @@ $(document).ready(function() {
     $container.after($('<div class="col-xs-12"></div>').html($addLink));
 
     // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
-    $addLink.click(function(e) {
+    $addLink.click(function (e) {
         handleModal();
         e.preventDefault(); // évite qu'un # apparaisse dans l'URL
         return false;
@@ -114,31 +124,28 @@ $(document).ready(function() {
     var index = $container.children('div').length;
 
     // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
-    if (index == 0) {
+    if (index === 0) {
         addElement($container, 'text');
     } else {
         // Pour chaque catégorie déjà existante, on traite les champs
-        $('div#page_pageElements .box').each(function() {
+        $('div#page_pageElements .box').each(function () {
 
             var $field = $(this).find('[id$="_content"]');
             var type = $(this).find('[id$="_type"]').val();
 
             console.log('type ' + type + ' détecté');
 
-            switch(type)
-            {
+            switch (type) {
                 case 'text' :
                     $(this).find('.box-title').html(plugins[0].value);
 
                     $field.parent().removeClass('hide');
                     CKEDITOR.disableAutoInline = true;
-                    //trsteelConfig.extraPlugins = 'sourcedialog';
-                    //console.log(trsteelConfig);
-                    //CKEDITOR.inline( $field.attr('id'), trsteelConfig );
-                    CKEDITOR.inline( $field.attr('id') );
+                    CKEDITOR.inline($field.attr('id'));
                     break;
 
-                default: ProcessAjaxForPageElement(type, $(this));
+                default:
+                    ProcessAjaxForPageElement(type, $(this));
             }
 
             addDeleteLink($(this));
@@ -161,18 +168,16 @@ $(document).ready(function() {
         var html = $('<p>');
 
         //Mise en forme des choix pour la modal
-        $.each(plugins, function(i, data)
-        {
-            if(data.key)
-            {
+        $.each(plugins, function (i, data) {
+            if (data.key) {
                 var btn = $('<a href="#" class="btn btn-default"><i class="fa fa-' + data.icon + '"></i> ' + data.value + '</a>');
 
-                if(data.active == false)
+                if (data.active == false)
                     btn.addClass('disabled').append(' (en préparation)');
 
                 html.append($('<p>').append(btn));
 
-                btn.click(function(e) {
+                btn.click(function (e) {
                     addElement($container, data.key);
                     $("#dyweeModal").modal('hide');
                     e.preventDefault(); // évite qu'un # apparaisse dans l'URL
@@ -196,10 +201,10 @@ $(document).ready(function() {
         // - le texte "__name__label__" qu'il contient par le label du champ
         // - le texte "__name__" qu'il contient par le numéro du champ
 
-        var $prototype = $($container.find('div#page_pageElements').attr('data-prototype').replace(/__name__label__/g, 'Catégorie n°' + (index+1))
+        var $prototype = $($container.find('div#page_pageElements').attr('data-prototype').replace(/__name__label__/g, 'Catégorie n°' + (index + 1))
             .replace(/__name__/g, index));
 
-        $prototype.find('.box-title').html('type: '+type);
+        $prototype.find('.box-title').html('type: ' + type);
 
         // On ajoute au prototype un lien pour pouvoir supprimer la catégorie
         addDeleteLink($prototype);
@@ -216,12 +221,11 @@ $(document).ready(function() {
     }
 
     function processPrototype($prototype, type, index) {
-        currentIndex = index;
+        var currentIndex = index;
         $prototype.find("input[id$='_type']").val(type);
 
-        console.log('processPrototype | type: '+type);
-        switch(type)
-        {
+        console.log('processPrototype | type: ' + type);
+        switch (type) {
             case 'text':
                 var $field = $prototype.find("[id$='_content']").val('<p>Tapez votre texte ici</p>');
                 $field.parent().removeClass('hide');
@@ -245,3 +249,19 @@ $(document).ready(function() {
         }
     }
 });
+
+// La fonction qui ajoute un lien de suppression d'une catégorie
+function addDeleteLink($prototype) {
+    // Création du lien
+    var $deleteLink = $('<a href="#" class="btn btn-danger"><i class="fa fa-trash-o"></i> Supprimer</a>');
+
+    // Ajout du lien
+    $prototype.find(".box-footer").html($deleteLink);
+
+    // Ajout du listener sur le clic du lien
+    $deleteLink.click(function (e) {
+        $prototype.remove();
+        e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+        return false;
+    });
+}

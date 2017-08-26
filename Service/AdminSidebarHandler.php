@@ -37,7 +37,7 @@ class AdminSidebarHandler
                 [
                     'icon'  => 'fa fa-wp-forms',
                     'label' => 'cms.sidebar.form',
-                    'route' => $this->router->generate('cms_customForm_table')
+                    'route' => $this->router->generate('custom_form_table')
                 ],
                 [
                     'icon'  => 'fa fa-plus',
