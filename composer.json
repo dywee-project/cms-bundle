@@ -16,8 +16,8 @@
     "php": ">=7.1.0",
     "dywee/core-bundle": "dev-master",
     "stof/doctrine-extensions-bundle": "^1.2",
-    "egeloen/ckeditor-bundle": "^4.0",
-    "friendsofsymfony/jsrouting-bundle": "^1.6"
+    "friendsofsymfony/jsrouting-bundle": "^1.6",
+    "friendsofsymfony/ckeditor-bundle": "^2.0"
   },
   "require-dev": {
     "doctrine/doctrine-bundle": "^1.3"
