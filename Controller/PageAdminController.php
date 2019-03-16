@@ -3,9 +3,15 @@
 namespace Dywee\CMSBundle\Controller;
 
 use Dywee\CMSBundle\Entity\Page;
+use Dywee\CMSBundle\Entity\PageElement;
+use Dywee\CMSBundle\Entity\PageStat;
+use Dywee\CMSBundle\Entity\PageTextElement;
+use Dywee\CMSBundle\Form\PageType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 class PageAdminController extends Controller
 {

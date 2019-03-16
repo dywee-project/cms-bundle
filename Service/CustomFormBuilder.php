@@ -11,21 +11,21 @@ namespace Dywee\CMSBundle\Service;
 
 use Dywee\CMSBundle\Entity\CustomForm;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\FormFactory;
+use Symfony\Component\Form\FormFactoryInterface;
 
 class CustomFormBuilder
 {
     /**
-     * @var FormFactory
+     * @var FormFactoryInterface
      */
     private $formFactory;
 
     /**
      * CustomFormBuilder constructor.
      *
-     * @param FormFactory $formFactory
+     * @param FormFactoryInterface $formFactory
      */
-    public function __construct(FormFactory $formFactory)
+    public function __construct(FormFactoryInterface $formFactory)
     {
         $this->formFactory = $formFactory;
     }

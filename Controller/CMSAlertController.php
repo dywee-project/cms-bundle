@@ -6,7 +6,7 @@ use Dywee\CMSBundle\Entity\CMSAlert;
 use Dywee\CMSBundle\Form\CMSAlertType as AlertType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 class CMSAlertController extends Controller
 {

@@ -3,6 +3,8 @@
 namespace Dywee\CMSBundle\Controller;
 
 use Dywee\CMSBundle\DyweeCMSEvent;
+use Dywee\CMSBundle\Entity\Page;
+use Dywee\CMSBundle\Entity\PageLang;
 use Dywee\CMSBundle\Event\FooterBuilderEvent;
 use Dywee\CMSBundle\Event\NavbarBuilderEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
