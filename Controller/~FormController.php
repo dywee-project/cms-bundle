@@ -14,14 +14,12 @@ class CustomFormController extends ParentController
         $fb = $this->createFormBuilder(array());
 
         $index = 1;
-        foreach($customForm->getFields() as $field)
-        {
+        foreach ($customForm->getFields() as $field) {
             $options = array();
 
             $type = $field->getType();
 
-            switch($type)
-            {
+            switch ($type) {
                 case 'select':
                     $type = 'choice';
                     break;
@@ -38,13 +36,12 @@ class CustomFormController extends ParentController
                     break;
             }
 
-            if($type === 'choice')
-            {
+            if ($type === 'choice') {
                 $options['choices'] = $field->getPossibleValuesArray();
             }
 
             $options['required'] = $field->isRequired();
-            $options['label'] = $field->getLabel().($field->isRequired()?' *':'');
+            $options['label'] = $field->getLabel() . ($field->isRequired() ? ' *' : '');
             $options['attr'] = array(
                 'placeholder' => $field->getPlaceholder()
             );
@@ -108,8 +105,7 @@ class CustomFormController extends ParentController
 
         $form->handleRequest($request);
 
-        if($form->isValid())
-        {
+        if ($form->isValid()) {
             $response = new FormResponseContainer();
             $response->setFromForm($customForm, $form->getData());
 
@@ -140,14 +136,12 @@ class CustomFormController extends ParentController
 
         $customFormList = $customFormRepository->findForJson();
 
-        if(count($customFormList) > 0){
+        if (count($customFormList) > 0) {
             $response = array('type' => 'success', 'data' => $customFormList);
-        }
-        else{
+        } else {
             $response = array('type' => 'empty');
         }
 
         return new Response(json_encode($response));
     }
 }
-

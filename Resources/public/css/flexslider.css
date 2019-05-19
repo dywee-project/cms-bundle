@@ -7,7 +7,7 @@
  * http://www.gnu.org/licenses/gpl-2.0.html
  *
  * Contributing author: Tyler Smith (@mbmufffin)
- * 
+ *
  */
 /* ====================================================================================================================
  * FONT-FACE
@@ -237,7 +237,7 @@ html[xmlns] .flexslider .slides {
   margin: 0 1% 0 0;
 }
 .flex-control-thumbs li:nth-child(4){
-	margin:0;
+    margin:0;
 }
 .flex-control-thumbs img {
   width: 100%;

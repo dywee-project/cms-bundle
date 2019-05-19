@@ -46,7 +46,7 @@ class FormResponseContainer
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -77,14 +77,14 @@ class FormResponseContainer
 
     /**
      * Alias of setForm(CustomForm $form)
-     * 
+     *
      * @param CustomForm|null $form
      *
      * @return FormResponseContainer
      */
     public function setCustomForm(CustomForm $form = null)
     {
-       return $this->setForm($form);
+        return $this->setForm($form);
     }
 
     /**
@@ -99,7 +99,7 @@ class FormResponseContainer
 
     /**
      * Alias of getForm()
-     * 
+     *
      * @return CustomForm
      */
     public function getCustomForm()
@@ -151,13 +151,12 @@ class FormResponseContainer
     {
         $this->setForm($form);
 
-        foreach($form->getFields() as $field)
-        {
+        foreach ($form->getFields() as $field) {
             $fieldResponse = new FormResponse();
             $fieldResponse->setField($field);
 
             //Dans le cas où le type est un choice
-            switch($field->getType()) {
+            switch ($field->getType()) {
                 case 'select':
                     $fieldPossibleResponses = $field->getPossibleValuesArray();
                     $responseFragment = $fieldPossibleResponses[$response[$field->getId()]];

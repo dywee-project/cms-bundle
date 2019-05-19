@@ -2,7 +2,8 @@
 
 namespace Dywee\CMSBundle\Service;
 
-class PageElementModalHandler{
+class PageElementModalHandler
+{
     
     public function addPageElements()
     {

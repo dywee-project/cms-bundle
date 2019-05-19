@@ -128,4 +128,3 @@ class Notification
         return $this->state;
     }
 }
-

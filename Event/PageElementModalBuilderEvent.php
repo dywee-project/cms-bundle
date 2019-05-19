@@ -5,7 +5,8 @@ namespace Dywee\CMSBundle\Event;
 use Dywee\CMSBundle\Entity\Page;
 use Symfony\Component\EventDispatcher\Event;
 
-class PageElementModalBuilderEvent extends Event{
+class PageElementModalBuilderEvent extends Event
+{
     protected $data;
 
     public function __construct($data)
@@ -22,11 +23,11 @@ class PageElementModalBuilderEvent extends Event{
     {
         $return = '';
 
-        foreach($this->getData()['plugins'] as $plugin)
-        {
-            if(strlen($return > 1))
+        foreach ($this->getData()['plugins'] as $plugin) {
+            if (strlen($return > 1)) {
                 $return .= ',
                 ';
+            }
 
             $return .= '
             {
@@ -34,13 +35,13 @@ class PageElementModalBuilderEvent extends Event{
 
             $pluginContent = '';
 
-            foreach($plugin as $key => $value)
-            {
-                if(strlen($pluginContent) > 0)
+            foreach ($plugin as $key => $value) {
+                if (strlen($pluginContent) > 0) {
                     $pluginContent .= ',
                     ';
+                }
 
-                $pluginContent.= "$key: '$value'";
+                $pluginContent .= "$key: '$value'";
             }
 
             $return .= $pluginContent;

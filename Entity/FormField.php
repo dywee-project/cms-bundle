@@ -91,7 +91,7 @@ class FormField
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -114,7 +114,7 @@ class FormField
     /**
      * Get class
      *
-     * @return string 
+     * @return string
      */
     public function getClass()
     {
@@ -137,7 +137,7 @@ class FormField
     /**
      * Get htmlId
      *
-     * @return string 
+     * @return string
      */
     public function getHtmlId()
     {
@@ -160,7 +160,7 @@ class FormField
     /**
      * Get value
      *
-     * @return string 
+     * @return string
      */
     public function getValue()
     {
@@ -183,7 +183,7 @@ class FormField
     /**
      * Get type
      *
-     * @return string 
+     * @return string
      */
     public function getType()
     {
@@ -206,7 +206,7 @@ class FormField
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -252,7 +252,7 @@ class FormField
     /**
      * Get required
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getRequired()
     {
@@ -279,7 +279,7 @@ class FormField
     /**
      * Get label
      *
-     * @return string 
+     * @return string
      */
     public function getLabel()
     {
@@ -343,7 +343,7 @@ class FormField
     /**
      * Get possibleValues
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPossibleValues()
     {
@@ -352,14 +352,13 @@ class FormField
 
     public function setPossibleValuesText($possibleValues)
     {
-        foreach($this->getPossibleValues() as $pv)
+        foreach ($this->getPossibleValues() as $pv) {
             $this->removePossibleValue($pv);
+        }
 
-        if($possibleValues !== '')
-        {
+        if ($possibleValues !== '') {
             $possibleValues = explode(', ', $possibleValues);
-            foreach($possibleValues as $pv)
-            {
+            foreach ($possibleValues as $pv) {
                 $possibleValue = new FormFieldPossibleValue();
                 $possibleValue->setName($pv);
                 $this->addPossibleValue($possibleValue);
@@ -373,16 +372,19 @@ class FormField
     {
         $possibleValues = $this->getPossibleValuesArray();
 
-        if(count($possibleValues) > 0)
+        if (count($possibleValues) > 0) {
             return implode(', ', $possibleValues);
-        else return null;
+        } else {
+            return null;
+        }
     }
 
     public function getPossibleValuesArray()
     {
         $possibleValues = null;
-        foreach($this->getPossibleValues() as $pv)
+        foreach ($this->getPossibleValues() as $pv) {
             $possibleValues[] = $pv->getName();
+        }
 
         return $possibleValues;
     }

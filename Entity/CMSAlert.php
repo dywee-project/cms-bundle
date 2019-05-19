@@ -46,7 +46,7 @@ class CMSAlert
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -69,7 +69,7 @@ class CMSAlert
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
     public function getTitle()
     {
@@ -92,7 +92,7 @@ class CMSAlert
     /**
      * Get message
      *
-     * @return string 
+     * @return string
      */
     public function getMessage()
     {
@@ -115,7 +115,7 @@ class CMSAlert
     /**
      * Get active
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getActive()
     {

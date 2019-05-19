@@ -12,32 +12,26 @@ class FormResponseController extends ParentController
         $fb = $this->createFormBuilder(array());
 
         $index = 1;
-        foreach($responses->getFieldResponses() as $response)
-        {
+        foreach ($responses->getFieldResponses() as $response) {
             $field = $response->getField();
             $options = array();
             $options['data'] = $response->getValue();
 
             $type = $field->getType();
 
-            if($type == 'select')
-            {
+            if ($type == 'select') {
                 $type = 'text';
-            }
-            else if($type == 'checkbox')
-            {
+            } elseif ($type == 'checkbox') {
                 $type = 'text';
                 //$options['expanded'] = true;
                 //$options['multiple'] = true;
-            }
-            else if($type == 'radio')
-            {
+            } elseif ($type == 'radio') {
                 $type = 'text';
                 //$options['expanded'] = true;
             }
 
             $options['required'] = $field->isRequired();
-            $options['label'] = $field->getLabel().($field->isRequired()?' *':'');
+            $options['label'] = $field->getLabel() . ($field->isRequired() ? ' *' : '');
             $options['attr'] = array(
                 'placeholder' => $field->getPlaceholder()
             );

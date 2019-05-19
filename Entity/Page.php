@@ -167,7 +167,7 @@ class Page implements Translatable
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -190,7 +190,7 @@ class Page implements Translatable
     /**
      * Get type
      *
-     * @return integer 
+     * @return integer
      */
     public function getType()
     {
@@ -213,7 +213,7 @@ class Page implements Translatable
     /**
      * Get inMenu
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getInMenu()
     {
@@ -236,7 +236,7 @@ class Page implements Translatable
     /**
      * Get menuOrder
      *
-     * @return integer 
+     * @return integer
      */
     public function getMenuOrder()
     {
@@ -260,7 +260,7 @@ class Page implements Translatable
     /**
      * Get active
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getActive()
     {
@@ -283,7 +283,7 @@ class Page implements Translatable
     /**
      * Get state
      *
-     * @return integer 
+     * @return integer
      */
     public function getState()
     {
@@ -315,7 +315,7 @@ class Page implements Translatable
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -338,17 +338,17 @@ class Page implements Translatable
     /**
      * Get content
      *
-     * @return string 
+     * @return string
      */
     public function getContent()
     {
-        if($this->content != null)
+        if ($this->content != null) {
             return $this->content;
+        }
 
         $content = '';
 
-        foreach($this->getPageElements() as $pageElement)
-        {
+        foreach ($this->getPageElements() as $pageElement) {
             $content .= $pageElement->getHtml();
         }
 
@@ -371,7 +371,7 @@ class Page implements Translatable
     /**
      * Get menuName
      *
-     * @return string 
+     * @return string
      */
     public function getMenuName()
     {
@@ -402,7 +402,7 @@ class Page implements Translatable
     /**
      * Get updateDate
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdateDate()
     {
@@ -425,7 +425,7 @@ class Page implements Translatable
 
     public function getUrl()
     {
-        return $this->getSeoUrl() != ''?$this->getSeoUrl():$this->getId();
+        return $this->getSeoUrl() != '' ? $this->getSeoUrl() : $this->getId();
     }
 
     /**
@@ -478,7 +478,7 @@ class Page implements Translatable
     /**
      * Get childs
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getChildren()
     {
@@ -501,7 +501,7 @@ class Page implements Translatable
     /**
      * Get childArguments
      *
-     * @return string 
+     * @return string
      */
     public function getChildArguments()
     {
@@ -605,7 +605,7 @@ class Page implements Translatable
     /**
      * Get pageStat
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPageStat()
     {
@@ -628,7 +628,7 @@ class Page implements Translatable
     /**
      * Get lft
      *
-     * @return integer 
+     * @return integer
      */
     public function getLft()
     {
@@ -651,7 +651,7 @@ class Page implements Translatable
     /**
      * Get lvl
      *
-     * @return integer 
+     * @return integer
      */
     public function getLvl()
     {
@@ -674,7 +674,7 @@ class Page implements Translatable
     /**
      * Get rgt
      *
-     * @return integer 
+     * @return integer
      */
     public function getRgt()
     {
@@ -697,7 +697,7 @@ class Page implements Translatable
     /**
      * Get root
      *
-     * @return integer 
+     * @return integer
      */
     public function getRoot()
     {
@@ -732,7 +732,7 @@ class Page implements Translatable
     /**
      * Get pageElements
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPageElements()
     {
@@ -746,9 +746,11 @@ class Page implements Translatable
 
     public function hasForm()
     {
-        foreach($this->getPageElements() as $pageElement)
-            if($pageElement->getType() == 'form')
+        foreach ($this->getPageElements() as $pageElement) {
+            if ($pageElement->getType() == 'form') {
                 return true;
+            }
+        }
 
         return false;
     }
@@ -756,9 +758,11 @@ class Page implements Translatable
     public function getForms()
     {
         $return = array();
-        foreach($this->getPageElements() as $pageElement)
-            if($pageElement->getType() == 'form')
+        foreach ($this->getPageElements() as $pageElement) {
+            if ($pageElement->getType() == 'form') {
                 $return[] = $pageElement->getContent();
+            }
+        }
         return $return;
     }
 

@@ -44,7 +44,7 @@ class FormFieldPossibleValue
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -67,7 +67,7 @@ class FormFieldPossibleValue
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -90,7 +90,7 @@ class FormFieldPossibleValue
     /**
      * Get defaultValue
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getDefaultValue()
     {

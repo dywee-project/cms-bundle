@@ -58,7 +58,7 @@ class CustomForm
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -123,7 +123,7 @@ class CustomForm
     /**
      * Get formFields
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getFormFields()
     {
@@ -131,9 +131,18 @@ class CustomForm
     }
 
     /* ALIAS */
-    public function addField($field)    {   return $this->addFormField($field); }
-    public function removeField($field) {   $this->removeFormField($field);     }
-    public function getFields()         {   return $this->getFormFields();      }
+    public function addField($field)
+    {
+        return $this->addFormField($field);
+    }
+    public function removeField($field)
+    {
+        $this->removeFormField($field);
+    }
+    public function getFields()
+    {
+        return $this->getFormFields();
+    }
 
 
     /**
@@ -160,7 +169,7 @@ class CustomForm
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -183,7 +192,7 @@ class CustomForm
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -216,7 +225,7 @@ class CustomForm
     /**
      * Get responses
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getResponses()
     {
@@ -227,5 +236,4 @@ class CustomForm
     {
         return count($this->getResponses());
     }
-
 }

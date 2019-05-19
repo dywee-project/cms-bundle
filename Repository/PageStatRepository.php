@@ -12,7 +12,8 @@ use Doctrine\ORM\EntityRepository;
  */
 class PageStatRepository extends EntityRepository
 {
-    public function findLastStatsForPage($page, $detail = 'daily'){
+    public function findLastStatsForPage($page, $detail = 'daily')
+    {
 
         $date = new \DateTime("previous week");
         $date = $date->format('Y/m/d 00:00:00');
@@ -23,8 +24,9 @@ class PageStatRepository extends EntityRepository
             ->setParameters(array('page' => $page, 'date' => $date))
             ->orderBy('s.createdAt', 'asc');
 
-        if($detail == 'daily')
+        if ($detail == 'daily') {
             $qb->groupBy('createdAt');
+        }
 
         return $qb->getQuery()->getResult();
     }

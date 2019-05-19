@@ -45,7 +45,7 @@ class PageStat
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -68,7 +68,7 @@ class PageStat
     /**
      * Get createdAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getCreatedAt()
     {
@@ -92,7 +92,7 @@ class PageStat
     /**
      * Get page
      *
-     * @return \Dywee\CMSBundle\Entity\Page 
+     * @return \Dywee\CMSBundle\Entity\Page
      */
     public function getPage()
     {

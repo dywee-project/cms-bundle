@@ -69,7 +69,8 @@ class PageElement implements Translatable
 
 
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->addedAt = new \DateTime();
         $this->updatedAt = new \DateTime();
     }
@@ -78,7 +79,7 @@ class PageElement implements Translatable
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -101,7 +102,7 @@ class PageElement implements Translatable
     /**
      * Get displayOrder
      *
-     * @return integer 
+     * @return integer
      */
     public function getDisplayOrder()
     {
@@ -124,7 +125,7 @@ class PageElement implements Translatable
     /**
      * Get addedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getAddedAt()
     {
@@ -147,7 +148,7 @@ class PageElement implements Translatable
     /**
      * Get updatedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getUpdatedAt()
     {
@@ -170,7 +171,7 @@ class PageElement implements Translatable
     /**
      * Get page
      *
-     * @return \Dywee\CMSBundle\Entity\Page 
+     * @return \Dywee\CMSBundle\Entity\Page
      */
     public function getPage()
     {
@@ -193,7 +194,7 @@ class PageElement implements Translatable
     /**
      * Get type
      *
-     * @return string 
+     * @return string
      */
     public function getType()
     {
@@ -216,7 +217,7 @@ class PageElement implements Translatable
     /**
      * Get content
      *
-     * @return string 
+     * @return string
      */
     public function getContent()
     {
@@ -235,12 +236,17 @@ class PageElement implements Translatable
 
     public function getTemplate()
     {
-        switch($this->type)
-        {
-            case 'text': return 'DyweeCMSBundle:Render:text.html.twig';
-            case 'form': return 'DyweeCMSBundle:Render:form.html.twig';
-            case 'musicGallery': return 'DyweeModuleBundle:Render:musicGallery.html.twig'; break;
-            case 'carousel': return 'DyweeModuleBundle:Render:carousel.html.twig'; break;
+        switch ($this->type) {
+            case 'text':
+                return 'DyweeCMSBundle:Render:text.html.twig';
+            case 'form':
+                return 'DyweeCMSBundle:Render:form.html.twig';
+            case 'musicGallery':
+                return 'DyweeModuleBundle:Render:musicGallery.html.twig';
+            break;
+            case 'carousel':
+                return 'DyweeModuleBundle:Render:carousel.html.twig';
+            break;
         }
     }
 

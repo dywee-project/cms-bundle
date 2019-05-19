@@ -4,7 +4,8 @@ namespace Dywee\CMSBundle\Service;
 
 use Symfony\Component\Routing\Router;
 
-class AdminDashboardHandler{
+class AdminDashboardHandler
+{
 
     private $router;
 

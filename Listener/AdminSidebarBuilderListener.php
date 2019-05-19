@@ -8,7 +8,8 @@ use Dywee\CoreBundle\Event\SidebarBuilderEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 
-class AdminSidebarBuilderListener implements EventSubscriberInterface{
+class AdminSidebarBuilderListener implements EventSubscriberInterface
+{
     private $CMSAdminSidebarHandler;
 
     public function __construct(AdminSidebarHandler $CMSAdminSidebarHandler)
@@ -29,5 +30,4 @@ class AdminSidebarBuilderListener implements EventSubscriberInterface{
     {
         $adminSidebarBuilderEvent->addElement($this->CMSAdminSidebarHandler->getSideBarMenuElement());
     }
-
 }

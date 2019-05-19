@@ -67,7 +67,7 @@ class CustomFormBuilder
             }
 
             $options['required'] = $field->isRequired();
-            $options['label'] = $field->getLabel().($field->isRequired() ? ' *' : '');
+            $options['label'] = $field->getLabel() . ($field->isRequired() ? ' *' : '');
             $options['attr'] = [
                 'placeholder' => $field->getPlaceholder(),
             ];

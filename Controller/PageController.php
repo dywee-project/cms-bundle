@@ -161,7 +161,6 @@ class PageController extends Controller
 
                     //Traitement des formulaires
                     if ($form->handleRequest($request)->isValid()) {
-
                         $response = new FormResponseContainer();
                         $response->setFromForm($customForm, $form->getData());
 
@@ -183,13 +182,12 @@ class PageController extends Controller
                     }
 
                     //Rendu des formulaires
-                    $forms['form_'.$formId] = $form->createView();
+                    $forms['form_' . $formId] = $form->createView();
                 }
             }
 
             //On passe les formulaires à la vue
             $data['forms'] = $forms;
-
         }
 
         return $this->render('DyweeCMSBundle:Page:view.html.twig', $data);
@@ -287,5 +285,4 @@ class PageController extends Controller
 
         return $this->redirect($this->generateUrl('page_table'));
     }
-
 }

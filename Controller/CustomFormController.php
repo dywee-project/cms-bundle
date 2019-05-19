@@ -160,4 +160,3 @@ class CustomFormController extends ParentController
         return $this->render('DyweeCMSBundle:CustomForm:page.html.twig', array('page' => $page, 'customForm' => $customForm, 'form' => $form->createView()));
     }*/
 }
-

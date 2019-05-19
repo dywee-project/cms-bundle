@@ -1,7 +1,8 @@
 $(document).ready(function () {
 
     //Créer un conflit entre l'éditeur de texte et le plugin sortable
-    function setBoxSortable() {
+    function setBoxSortable()
+    {
         console.log('sortable');
         /* TODO enable sortable again
         $("#dywee_cmsbundle_page_pageElements").sortable({
@@ -17,7 +18,8 @@ $(document).ready(function () {
         */
     }
 
-    function ProcessAjaxForPageElement(type, $prototype) {
+    function ProcessAjaxForPageElement(type, $prototype)
+    {
         setBoxSortable();
         console.log('olidebug', cms_ajax_url);
         $.ajax({
@@ -44,7 +46,8 @@ $(document).ready(function () {
         });
     }
 
-    function showDashboard(data, $prototype) {
+    function showDashboard(data, $prototype)
+    {
         var $inputToFill = $prototype.find('[id$="_content"]');
         var value = $inputToFill.val();
 
@@ -81,7 +84,8 @@ $(document).ready(function () {
     }
 
 
-    function handleDataForPageElement(data) {
+    function handleDataForPageElement(data)
+    {
         var html = $('<p>').html('Une Erreur est survenue');
 
         if (data.type === 'success') {
@@ -96,7 +100,8 @@ $(document).ready(function () {
         $("[id$='" + currentIndex + "_content']").parents('div.box-body').append(html).find('.loader').remove();
     }
 
-    function setPageElementValue($link, id) {
+    function setPageElementValue($link, id)
+    {
         var field_id = $link.parents('div.box-body').find('[id$="_content"]').val(id);
     }
 
@@ -151,7 +156,6 @@ $(document).ready(function () {
             addDeleteLink($(this));
             index++;
         });
-
     }
 
     //Correction de l'index qui prend en compte le bouton
@@ -164,7 +168,8 @@ $(document).ready(function () {
     /***                                               *****/
     /*******************************************************/
 
-    function handleModal() {
+    function handleModal()
+    {
         var html = $('<p>');
 
         //Mise en forme des choix pour la modal
@@ -172,8 +177,9 @@ $(document).ready(function () {
             if (data.key) {
                 var btn = $('<a href="#" class="btn btn-default"><i class="fa fa-' + data.icon + '"></i> ' + data.value + '</a>');
 
-                if (data.active == false)
+                if (data.active == false) {
                     btn.addClass('disabled').append(' (en préparation)');
+                }
 
                 html.append($('<p>').append(btn));
 
@@ -196,7 +202,8 @@ $(document).ready(function () {
     }
 
     // La fonction qui ajoute un formulaire Categorie
-    function addElement($container, type) {
+    function addElement($container, type)
+    {
         // Dans le contenu de l'attribut « data-prototype », on remplace :
         // - le texte "__name__label__" qu'il contient par le label du champ
         // - le texte "__name__" qu'il contient par le numéro du champ
@@ -220,7 +227,8 @@ $(document).ready(function () {
         setBoxSortable();
     }
 
-    function processPrototype($prototype, type, index) {
+    function processPrototype($prototype, type, index)
+    {
         var currentIndex = index;
         $prototype.find("input[id$='_type']").val(type);
 
@@ -251,7 +259,8 @@ $(document).ready(function () {
 });
 
 // La fonction qui ajoute un lien de suppression d'une catégorie
-function addDeleteLink($prototype) {
+function addDeleteLink($prototype)
+{
     // Création du lien
     var $deleteLink = $('<a href="#" class="btn btn-danger"><i class="fa fa-trash-o"></i> Supprimer</a>');
 

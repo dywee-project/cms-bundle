@@ -29,8 +29,7 @@ class CMSAlertController extends Controller
         $alert = new CMSAlert();
         $form = $this->createForm(AlertType::class, $alert);
 
-        if($form->handleRequest($request)->isValid())
-        {
+        if ($form->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($alert);
             $em->flush();
@@ -47,8 +46,7 @@ class CMSAlertController extends Controller
     {
         $form = $this->createForm(AlertType::class, $alert);
 
-        if($form->handleRequest($request)->isValid())
-        {
+        if ($form->handleRequest($request)->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($alert);
             $em->flush();

@@ -4,7 +4,8 @@ namespace Dywee\CMSBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 
-class FooterBuilderEvent extends Event{
+class FooterBuilderEvent extends Event
+{
     protected $data;
 
     public function __construct($data)

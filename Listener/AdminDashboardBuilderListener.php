@@ -8,7 +8,8 @@ use Dywee\CoreBundle\Event\DashboardBuilderEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 
-class AdminDashboardBuilderListener implements EventSubscriberInterface{
+class AdminDashboardBuilderListener implements EventSubscriberInterface
+{
     private $adminDashboardHandler;
 
     public function __construct(AdminDashboardHandler $adminDashboardHandler)
@@ -29,5 +30,4 @@ class AdminDashboardBuilderListener implements EventSubscriberInterface{
     {
         $adminDashboardBuilderEvent->addElement($this->adminDashboardHandler->getElement());
     }
-
 }

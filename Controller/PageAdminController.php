@@ -27,14 +27,14 @@ class PageAdminController extends Controller
         $date = new \DateTime("previous week");
         $date->modify('-1 day');
 
-        for($i = 0; $i <= 7; $i++)
-        {
+        for ($i = 0; $i <= 7; $i++) {
             $key = $date->modify('+1 day');
             $stats[$key->format('Y-m-d')] = array('createdAt' => $key->format('d M'), 'vues' => 0);
         }
 
-        foreach($vues as $vue)
+        foreach ($vues as $vue) {
             $stats[$vue['createdAt']]['vues'] = $vue['vues'];
+        }
 
         return $this->render('DyweeCMSBundle:Admin:view.html.twig', array('page' => $page, 'stats' => $stats));
     }
