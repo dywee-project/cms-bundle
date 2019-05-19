@@ -2,8 +2,6 @@
 
 namespace Dywee\CMSBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 class NotificationController extends ParentController
 {
     protected $entityName = 'Notification';

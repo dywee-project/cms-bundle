@@ -2,19 +2,27 @@
 
 namespace Dywee\CMSBundle\Service;
 
-class AdminDashboardHandler
-{
+use Symfony\Component\Routing\Router;
+
+class AdminDashboardHandler{
+
+    private $router;
+
+    public function __construct(Router $router)
+    {
+        $this->router = $router;
+    }
 
     public function getElement()
     {
-        $menu = [
-            'key'   => 'cms',
-            'cards' => [
-                [
-                    'controller' => 'DyweeCMSBundle:Dashboard:Card',
-                ],
-            ],
-        ];
+        $menu = array(
+            'key' => 'cms',
+            'cards' => array(
+                array(
+                    'controller' => 'DyweeCMSBundle:Dashboard:Card'
+                )
+            )
+        );
 
         return $menu;
     }

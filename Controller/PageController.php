@@ -5,7 +5,6 @@ namespace Dywee\CMSBundle\Controller;
 use Dywee\CMSBundle\DyweeCMSEvent;
 use Dywee\CMSBundle\Entity\CustomForm;
 use Dywee\CMSBundle\Entity\FormResponseContainer;
-use Dywee\CMSBundle\Entity\Notification;
 use Dywee\CMSBundle\Entity\Page;
 use Dywee\CMSBundle\Entity\PageStat;
 use Dywee\CMSBundle\Event\HomepageBuilderEvent;
@@ -15,7 +14,7 @@ use Dywee\CMSBundle\Form\PageType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 
 
 class PageController extends Controller
