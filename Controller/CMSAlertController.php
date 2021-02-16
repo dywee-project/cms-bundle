@@ -4,11 +4,12 @@ namespace Dywee\CMSBundle\Controller;
 
 use Dywee\CMSBundle\Entity\CMSAlert;
 use Dywee\CMSBundle\Form\CMSAlertType as AlertType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class CMSAlertController extends Controller
+class CMSAlertController extends AbstractController
 {
     /**
      * @Route(name="cms_alert_table", path="cms/alert")

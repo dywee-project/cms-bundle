@@ -11,13 +11,14 @@ use Dywee\CMSBundle\Event\HomepageBuilderEvent;
 use Dywee\CMSBundle\Event\PageBuilderEvent;
 use Dywee\CMSBundle\Event\PageElementModalBuilderEvent;
 use Dywee\CMSBundle\Form\PageType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 
-class PageController extends Controller
+class PageController extends AbstractController
 {
     /**
      * @Route(name="cms_homepage", path="/")
@@ -134,11 +135,11 @@ class PageController extends Controller
         if ($page->getType() === Page::TYPE_HOMEPAGE) {
             $event = new HomepageBuilderEvent($data);
 
-            $this->get('event_dispatcher')->dispatch(DyweeCMSEvent::BUILD_HOMEPAGE, $event);
+            $this->get('event_dispatcher')->dispatch($event, DyweeCMSEvent::BUILD_HOMEPAGE);
         } else {
             $event = new PageBuilderEvent($data);
 
-            $this->get('event_dispatcher')->dispatch(DyweeCMSEvent::BUILD_PAGE, $event);
+            $this->get('event_dispatcher')->dispatch($event, DyweeCMSEvent::BUILD_PAGE);
         }
 
         $data = array_merge($data, $event->getData());
@@ -222,7 +223,7 @@ class PageController extends Controller
         $eventToDispatch = $page->getType(
         ) == Page::TYPE_HOMEPAGE ? DyweeCMSEvent::BUILD_HOMEPAGE_ADMIN_PLUGIN_BOX : DyweeCMSEvent::BUILD_ADMIN_PLUGIN_BOX;
 
-        $this->get('event_dispatcher')->dispatch($eventToDispatch, $event);
+        $this->get('event_dispatcher')->dispatch($event, $eventToDispatch);
 
         return $this->render('DyweeCMSBundle:Page:add.html.twig', $event->getJSData());
     }
@@ -254,7 +255,7 @@ class PageController extends Controller
         $eventToDispatch = $page->getType(
         ) === Page::TYPE_HOMEPAGE ? DyweeCMSEvent::BUILD_HOMEPAGE_ADMIN_PLUGIN_BOX : DyweeCMSEvent::BUILD_ADMIN_PLUGIN_BOX;
 
-        $this->get('event_dispatcher')->dispatch($eventToDispatch, $event);
+        $this->get('event_dispatcher')->dispatch($event, $eventToDispatch);
 
         return $this->render('DyweeCMSBundle:Page:edit.html.twig', $event->getJSData());
     }

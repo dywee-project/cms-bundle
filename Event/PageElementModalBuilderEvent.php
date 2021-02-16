@@ -3,7 +3,7 @@
 namespace Dywee\CMSBundle\Event;
 
 use Dywee\CMSBundle\Entity\Page;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class PageElementModalBuilderEvent extends Event
 {

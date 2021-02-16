@@ -3,9 +3,10 @@
 namespace Dywee\CMSBundle\Controller;
 
 use Dywee\CMSBundle\Entity\Page;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class CoreController extends Controller
+class CoreController extends AbstractController
 {
     public function installAction()
     {

@@ -13,11 +13,11 @@
     }
   ],
   "require": {
-    "php": ">=7.4",
+    "php": "^8.0",
     "dywee/core-bundle": "*",
-    "stof/doctrine-extensions-bundle": "^1.2",
-    "friendsofsymfony/jsrouting-bundle": "^2.3",
-    "friendsofsymfony/ckeditor-bundle": "^2.0"
+    "stof/doctrine-extensions-bundle": "^1.5",
+    "friendsofsymfony/jsrouting-bundle": "^2.7",
+    "friendsofsymfony/ckeditor-bundle": "^2.3"
   },
   "autoload": {
     "psr-4": {

@@ -3,9 +3,10 @@
 namespace Dywee\CMSBundle\Controller;
 
 use Dywee\CMSBundle\Entity\Page;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class DashboardController extends Controller
+class DashboardController extends AbstractController
 {
     public function cardAction()
     {
