@@ -1,4 +1,4 @@
-{%  extends "DyweeCMSBundle::admin.html.twig" %}
+{% extends '@DyweeCMSBundle/admin.html.twig' %}
 
 {% block body %}
 <div class="row">
@@ -12,7 +12,7 @@
             <div class="box-header with-border">
                 <h2 class="box-title">Liste de vos formulaires</h2>
             </div>
-            {% include 'DyweeCMSBundle:CustomForm:miniTable.html.twig' %}
+            {% include '@DyweeCMSBundle/CustomForm/miniTable.html.twig' %}
         </div>
     </div>
     <div class="col-md-6">

@@ -70,7 +70,7 @@ class PageController extends AbstractController
 
         $data = ['page' => $page];
 
-        return $this->render('DyweeCMSBundle:Page:view.html.twig', $data);
+        return $this->render('@DyweeCMSBundle/Page/view.html.twig', $data);
     }
 
     /**
@@ -82,7 +82,7 @@ class PageController extends AbstractController
         $pr = $this->getDoctrine()->getManager()->getRepository('DyweeCMSBundle:Page');
         $ps = $pr->findAll();
 
-        return $this->render('DyweeCMSBundle:Page:table.html.twig', ['pageList' => $ps]);
+        return $this->render('@DyweeCMSBundle/Page/table.html.twig', ['pageList' => $ps]);
     }
 
     /**
@@ -191,7 +191,7 @@ class PageController extends AbstractController
             $data['forms'] = $forms;
         }
 
-        return $this->render('DyweeCMSBundle:Page:view.html.twig', $data);
+        return $this->render('@DyweeCMSBundle/Page/view.html.twig', $data);
     }
 
     /**
@@ -225,7 +225,7 @@ class PageController extends AbstractController
 
         $this->get('event_dispatcher')->dispatch($event, $eventToDispatch);
 
-        return $this->render('DyweeCMSBundle:Page:add.html.twig', $event->getJSData());
+        return $this->render('@DyweeCMSBundle/Page/add.html.twig', $event->getJSData());
     }
 
     /**
@@ -257,7 +257,7 @@ class PageController extends AbstractController
 
         $this->get('event_dispatcher')->dispatch($event, $eventToDispatch);
 
-        return $this->render('DyweeCMSBundle:Page:edit.html.twig', $event->getJSData());
+        return $this->render('@DyweeCMSBundle/Page/edit.html.twig', $event->getJSData());
     }
 
     /**

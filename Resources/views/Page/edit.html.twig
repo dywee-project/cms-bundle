@@ -1,6 +1,6 @@
 {# Dywee\CMSBundle\Resources\View\CMS\edit.html.twig #}
 
-{% extends "DyweeCMSBundle::admin.html.twig" %}
+{% extends '@DyweeCMSBundle/admin.html.twig' %}
 
 {% block metaTitle %}
     Modification d'une page {{ parent() }}
@@ -11,7 +11,7 @@
         <div class="col-md-12">
             <h1>Modification de {{ page.name }}</h1>
 
-            {% include "DyweeCMSBundle:Page:form.html.twig" %}
+            {% include "@DyweeCMSBundle/Page/form.html.twig" %}
         </div>
     </div>
 {% endblock %}

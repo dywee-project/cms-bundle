@@ -1,4 +1,4 @@
-{%  extends "DyweeCMSBundle::admin.html.twig" %}
+{% extends '@DyweeCMSBundle/admin.html.twig' %}
 
 {% block metaTitle %}
     Création d'un formulaire {{ parent() }}
@@ -13,7 +13,7 @@
                     <h1 class="box-title">Création d'un formulaire</h1>
                 </div>
                 <div class="box-body">
-                    {% include "DyweeCMSBundle:CustomForm:form.html.twig" %}
+                    {% include "@DyweeCMSBundle/CustomForm/form.html.twig" %}
                 </div>
             </div>
         </div>

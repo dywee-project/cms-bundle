@@ -51,6 +51,6 @@ class FormResponseController extends ParentController
         $em->persist($responses);
         $em->flush();
 
-        return $this->render('DyweeCMSBundle:FormResponse:view.html.twig', array('response' => $form->createView(), 'customForm' => $responses->getForm()));
+        return $this->render('@DyweeCMSBundle/FormResponse/view.html.twig', array('response' => $form->createView(), 'customForm' => $responses->getForm()));
     }
 }

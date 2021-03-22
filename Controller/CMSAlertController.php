@@ -19,7 +19,7 @@ class CMSAlertController extends AbstractController
         $alertRepository = $this->getDoctrine()->getRepository('DyweeCMSBundle:CMSAlert');
         $alerts = $alertRepository->findAll();
 
-        return $this->render('DyweeCMSBundle:CMSAlert:table.html.twig', array('alerts' => $alerts));
+        return $this->render('@DyweeCMSBundle/CMSAlert/table.html.twig', array('alerts' => $alerts));
     }
 
     /**
@@ -37,7 +37,7 @@ class CMSAlertController extends AbstractController
 
             return $this->redirectToRoute('cms_alert_table');
         }
-        return $this->render('DyweeCMSBundle:CMSAlert:add.html.twig', array('form' => $form->createView()));
+        return $this->render('@DyweeCMSBundle/CMSAlert/add.html.twig', array('form' => $form->createView()));
     }
 
     /**
@@ -54,7 +54,7 @@ class CMSAlertController extends AbstractController
 
             return $this->redirectToRoute('cms_alert_table');
         }
-        return $this->render('DyweeCMSBundle:CMSAlert:edit.html.twig', array('form' => $form->createView()));
+        return $this->render('@DyweeCMSBundle/CMSAlert/edit.html.twig', array('form' => $form->createView()));
     }
 
     /**
@@ -80,6 +80,6 @@ class CMSAlertController extends AbstractController
         $alertRepository = $this->getDoctrine()->getRepository('DyweeCMSBundle:Alert');
         $alerts = $alertRepository->findByActive(true);
 
-        return $this->render('DyweeCMSBundle:CMSAlert:display.html.twig', array('alerts' => $alerts));
+        return $this->render('@DyweeCMSBundle/CMSAlert/display.html.twig', array('alerts' => $alerts));
     }
 }

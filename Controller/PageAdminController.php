@@ -37,6 +37,6 @@ class PageAdminController extends AbstractController
             $stats[$vue['createdAt']]['vues'] = $vue['vues'];
         }
 
-        return $this->render('DyweeCMSBundle:Admin:view.html.twig', array('page' => $page, 'stats' => $stats));
+        return $this->render('@DyweeCMSBundle/Admin/view.html.twig', array('page' => $page, 'stats' => $stats));
     }
 }

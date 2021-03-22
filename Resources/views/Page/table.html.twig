@@ -1,6 +1,6 @@
 {# Dywee\CMSBundle\Resources\View\CMS\table.html.twig #}
 
-{%  extends "DyweeCMSBundle::admin.html.twig" %}
+{% extends '@DyweeCMSBundle/admin.html.twig' %}
 
 {% block metaTitle %}
     Liste de vos pages {{ parent() }}
@@ -17,7 +17,7 @@
                     </div>
                     <h1 class="box-title">Liste des Pages</h1>
                 </div>
-                {% include 'DyweeCMSBundle:Page:miniTable.html.twig' %}
+                {% include '@DyweeCMSBundle/Page/miniTable.html.twig' %}
             </div>
 
         </div>

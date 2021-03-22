@@ -1,4 +1,4 @@
-{%  extends "DyweeCMSBundle::admin.html.twig" %}
+{% extends '@DyweeCMSBundle/admin.html.twig' %}
 
 {% block metaTitle %}
     Modification d'une alerte {{ parent() }}
@@ -13,7 +13,7 @@
                     <h1 class="box-title">Modification d'une alerte</h1>
                 </div>
                 <div class="box-body">
-                    {% include "DyweeCMSBundle:CMSAlert:form.html.twig" %}
+                    {% include "@DyweeCMSBundle/CMSAlert/form.html.twig" %}
                 </div>
             </div>
         </div>

@@ -12,6 +12,6 @@ class DashboardController extends AbstractController
     {
         $count = $this->getDoctrine()->getRepository('DyweeCMSBundle:Page')->countPage(Page::STATE_PUBLISHED);
 
-        return $this->render('DyweeCMSBundle:Dashboard:card.html.twig', array('count' => $count));
+        return $this->render('@DyweeCMSBundle/Dashboard/card.html.twig', array('count' => $count));
     }
 }

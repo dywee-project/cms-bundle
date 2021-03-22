@@ -22,7 +22,7 @@ class MenuController extends AbstractController
 
             $this->get('event_dispatcher')->dispatch($event, DyweeCMSEvent::BUILD_NAVBAR);
 
-            return $this->render('DyweeCMSBundle:Nav:menu.html.twig', $event->getData());
+            return $this->render('@DyweeCMSBundle/Nav/menu.html.twig', $event->getData());
         }
 
         if ($position === 'footer') {
@@ -30,7 +30,7 @@ class MenuController extends AbstractController
 
             $this->get('event_dispatcher')->dispatch($event, DyweeCMSEvent::BUILD_NAVBAR);
 
-            return $this->render('DyweeCMSBundle:Nav:footer.html.twig', $event->getData());
+            return $this->render('@DyweeCMSBundle/Nav/footer.html.twig', $event->getData());
         }
     }
 }
