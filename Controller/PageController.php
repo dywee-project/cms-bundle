@@ -159,9 +159,10 @@ class PageController extends AbstractController
                 if ($customForm) {
                     //Le form n'est pas un form à proprement parler mais un objet de type CustomForm
                     $form = $formBuilderService->buildForm($customForm);
+                    $form->handleRequest($request);
 
                     //Traitement des formulaires
-                    if ($form->handleRequest($request)->isValid()) {
+                    if ($form->isSubmitted() && $form->isValid()) {
                         $response = new FormResponseContainer();
                         $response->setFromForm($customForm, $form->getData());
 
@@ -207,8 +208,9 @@ class PageController extends AbstractController
         $em = $this->getDoctrine()->getManager();
 
         $form = $this->get('form.factory')->create(PageType::class, $page);
+        $form->handleRequest($request);
 
-        if ($form->handleRequest($request)->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $page->setUpdatedBy($this->getUser());
 
             $em->persist($page);

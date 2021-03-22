@@ -29,8 +29,9 @@ class CMSAlertController extends AbstractController
     {
         $alert = new CMSAlert();
         $form = $this->createForm(AlertType::class, $alert);
+        $form->handleRequest($request);
 
-        if ($form->handleRequest($request)->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($alert);
             $em->flush();
@@ -46,8 +47,9 @@ class CMSAlertController extends AbstractController
     public function updateAction(CMSAlert $alert, Request $request)
     {
         $form = $this->createForm(AlertType::class, $alert);
+        $form->handleRequest($request);
 
-        if ($form->handleRequest($request)->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($alert);
             $em->flush();
